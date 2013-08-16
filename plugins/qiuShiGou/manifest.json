@@ -1,0 +1,16 @@
+{
+    "version": "0.0.1",
+    "name": "求失狗",
+    "id": "qiuShiGou",
+    "description": "求失狗",
+    "developer": {
+        "name": "Zeno Zeng",
+        "email": "work@zenoes.com",
+        "url": "http://zenoes.com"
+    },
+    "permissions": {
+        "storage": {
+            "description": "需要来存储`我关注的物品`"
+        }
+    }
+}
