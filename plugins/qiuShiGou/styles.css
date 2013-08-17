@@ -1,4 +1,8 @@
 .section.qiuShiGou{background:#e7cea9;color:#533125;height:100%}.section.qiuShiGou a{color:#533125}
 .section.qiuShiGou img{max-width:100%}
-.section.qiuShiGou .header{border-bottom:5px solid #644236;text-align:center}.section.qiuShiGou .header img{width:80%}
-.section.qiuShiGou .menu li{background:#fff1db;border-radius:20px;cursor:pointer;font-size:1.5em;margin:.5em;padding:.3em;text-align:center}
+.section.qiuShiGou input,.section.qiuShiGou textarea,.section.qiuShiGou select{border:none;display:block;font-size:1em;margin:1em 0;background:#fff1db;padding:.5em 2%;width:96%}
+.section.qiuShiGou select,.section.qiuShiGou input[type="button"]{cursor:pointer;padding:.5em 0;width:100%}
+.section.qiuShiGou .header{border-bottom:5px solid #644236;cursor:pointer}.section.qiuShiGou .header img:first-child{padding-left:2%;padding-right:5%;width:30%}
+.section.qiuShiGou .header img:last-child{width:60%}
+.section.qiuShiGou .menu{padding:0 2em}.section.qiuShiGou .menu li{background:#fff1db;border-radius:20px;cursor:pointer;font-size:1.5em;width:60%;margin:.8em auto;padding:.3em;text-align:center}
+.section.qiuShiGou .upload{padding:0 2em}

@@ -244,18 +244,14 @@ var QSCMobile = (function() {
      * Fetch the data of `url`, and callback(data)
      *
      * @param {String} url Target Url
+     * @param {Object} data Args
+     * @param {Function} callback function to callback
      * @param {Function} callback function to callback
      */
-    var get = function(url, callback) {
-        switch (url) {
-            case 'kebiao':
-            url = "http://m.myqsc.com/jw/kebiao";
-            break;
-            case 'xiaoli':
-            url = "http://m.myqsc.com/share/xiaoli";
-            break;
-        }
-        return implement.call('get', [url, callback]);
+    var get = function(url, data, success, fail) {
+        $.ajax({
+            
+        });
     };
 
     /**

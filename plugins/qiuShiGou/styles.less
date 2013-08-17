@@ -9,23 +9,47 @@
     img {
         max-width: 100%;
     }
+    input, textarea, select {
+        border: none;
+        display: block;
+        font-size: 1em;
+        margin: 1em 0;
+        background: #fff1db;
+        padding: .5em 2%;
+        width: 96%;
+    }
+    select, input[type="button"] {
+        cursor: pointer;
+        padding: .5em 0;
+        width: 100%;
+    }
     .header {
         border-bottom: 5px solid #533125 + #111;
-        text-align: center;
-        img {
-            width: 80%;
+        cursor: pointer;
+        img:first-child {
+            padding-left: 2%;
+            padding-right: 5%;
+            width: 30%;
+        }
+        img:last-child {
+            width: 60%;
         }
     }
     .menu {
+        padding: 0 2em;
         li {
             background: #fff1db;
             border-radius: 20px;
             cursor: pointer;
             font-size: 1.5em;
-            margin: .5em;
+            width: 60%;
+            margin: .8em auto;
             padding: .3em;
             text-align: center;
         }
+    }
+    .upload {
+        padding: 0 2em;
     }
 }
 
