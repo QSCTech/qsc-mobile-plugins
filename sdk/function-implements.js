@@ -250,7 +250,7 @@ var QSCMobile = (function() {
      */
     var get = function(url, data, success, fail) {
         $.ajax({
-            
+
         });
     };
 
@@ -325,6 +325,7 @@ var QSCMobile = (function() {
         load: load,
         view: view,
         platform: platform,
+        storage: storage,
         implement: implement,
         device: device,
         get: get,

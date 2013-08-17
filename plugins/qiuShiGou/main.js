@@ -11,7 +11,11 @@ QSCMobile.plugin.qiuShiGou = (function() {
     // 数据层抽象
 
     Data = (function() {
+
+        var _this;
+
         function Data() {
+            _this = this;
             this.api = '//m.myqsc.com/qiuShiGou/';
         }
 
@@ -27,6 +31,19 @@ QSCMobile.plugin.qiuShiGou = (function() {
         };
 
         /**
+         * 获取关注的物品的 ID
+         *
+         * @return {Array} 关注的物品的 ID
+         */
+        Data.prototype.starred = function() {
+            var starred = M.storage.getItem('qiuShiGouStarred');
+            if(!starred) {
+                starred = [];
+            }
+            return starred;
+        };
+
+        /**
          * 上传新的物品信息
          *
          * @param {Object} data 物品信息
@@ -35,7 +52,13 @@ QSCMobile.plugin.qiuShiGou = (function() {
          */
         Data.prototype.upload = function(data, success, fail) {
             data.method = 'upload';
-            this.get(data, success, fail);
+            data.uuid = Math.uuid();
+            var successFn = function() {
+                var uuid = data.uuid,
+                    starred = _this.starred().push(uuid);
+                M.storage.setItem('qiuShiGouStarred', starred);
+            };
+            this.get(data, successFn, fail);
         };
 
         return Data;
@@ -60,14 +83,46 @@ QSCMobile.plugin.qiuShiGou = (function() {
             M.load.css('plugins/qiuShiGou/styles.css');
         }
 
-        View.prototype.list = function(method, page) {
-            var success = function(data) {
-                alert(data);
+        View.prototype.list = function(query, prepend) {
+            // var success = function(data) {
+            //     alert(data);
+            // };
+            // var fail = function() {
+            //     _this.msg('获取数据失败，请检查网络连接');
+            // };
+            // data.get(query, success, fail);
+
+            var currentPage = query.page ? query.page : 1;
+
+            // fake data
+            var sample = function() {
+                var random = parseInt(Math.random() * 100);
+                return {uuid: Math.uuid(), name: '校园卡'+random, detail: '很萌的', campus: '紫金港校区', place: '小剧场217', contact: '10086'};
             };
-            var fail = function() {
-                _this.msg('获取数据失败，请检查网络连接');
-            };
-            data.get({method: method, page: page}, success, fail);
+            var data = [];
+            for(var i = 0; i<10; i++) {
+                data.push(sample());
+            }
+            var htmlString = data.map(function(elem) {
+                // .info 默认收起
+                var html ='<li><div class="title">'+elem.name+' - '+elem.campus+'</div>'
+                         + '<div class="info">地点：'+elem.place+'<br>具体描述：'+elem.detail+'<br>联系方式：'+elem.contact+'</div></li>';
+                return html;
+            });
+            if(!prepend) prepend = '';
+            htmlString = '<ul class="list">'+prepend+htmlString.join('')+'<a class="prev">上一页</a> / <a class="next">下一页</a></ul>';
+            $('.section.qiuShiGou .main').html(htmlString);
+            $('.section.qiuShiGou .main li').click(function() {
+                $(this).find('.info').slideToggle();
+            });
+            $('.section.qiuShiGou .main .prev').click(function() {
+                query.page--;
+                _this.list(query, prepend);
+            });
+            $('.section.qiuShiGou .main .next').click(function() {
+                query.page++;
+                _this.list(query, prepend);
+            });
         };
 
         View.prototype.msg = function(msg) {
@@ -75,13 +130,18 @@ QSCMobile.plugin.qiuShiGou = (function() {
             $('.section.qiuShiGou .main').html(htmlString);
         };
 
-        View.prototype.search = function() {
-            var htmlString = 'search';
-            $('.section.qiuShiGou .main').html(htmlString);
+        View.prototype.search = function(keyword, page) {
+            var query = {keyword: keyword, page: page};
+            var prepend = '<input type="text" class="search" placeholder="搜索">';
+            this.list(query, prepend);
         };
 
         View.prototype.upload = function() {
             var htmlString = '<div class="upload">'
+                           + '<select class="type">'
+                           + '<option>失物招领</option>'
+                           + '<option>寻物启事</option>'
+                           + '</select>'
                            + '<input class="name" placeholder="物品名，如：校园卡，钥匙">'
                            + '<textarea class="detail" placeholder="物品具体描述，如钱包颜色，校园卡姓名等等"></textarea>'
                            + '<select class="campus">'
@@ -98,7 +158,7 @@ QSCMobile.plugin.qiuShiGou = (function() {
             $('.section.qiuShiGou .main').html(htmlString);
             $('.section.qiuShiGou input[type="button"]').click(function() {
                 var obj = {};
-                ['name', 'detail', 'campus', 'place', 'contact'].forEach(function(elem) {
+                ['name', 'detail', 'type', 'campus', 'place', 'contact'].forEach(function(elem) {
                     obj.elem = $('.section.qiuShiGou .upload .'+elem).val();
                 });
                 var success = function() {
@@ -113,17 +173,20 @@ QSCMobile.plugin.qiuShiGou = (function() {
 
         // 失物招领
         View.prototype.found = function(page) {
-            this.list('found', page);
+            var query = {type: 'found', page: page};
+            this.list(query);
         };
 
         // 寻物启事
         View.prototype.lost = function(page) {
-            this.list('lost', page);
+            var query = {type: 'lost', page: page};
+            this.list(query);
         };
 
         // 我关注的
         View.prototype.starred = function(page) {
-            this.list('starred', page);
+            var query = {uuids: data.starred(), page: page};
+            this.list(query);
         };
 
         View.prototype.index = function() {
@@ -134,7 +197,7 @@ QSCMobile.plugin.qiuShiGou = (function() {
                            + '<li class="search">物品搜索</li>'
                            + '<li class="found">失物招领</li>'
                            + '<li class="lost">寻物启事</li>'
-                           + '<li class="mine">我发布的</li>'
+                           + '<li class="starred">我发布的</li>'
                            + '</ul>'
                            + '</div>';
             $('.section.qiuShiGou').html(htmlString);
@@ -143,7 +206,7 @@ QSCMobile.plugin.qiuShiGou = (function() {
             });
             $('.section.qiuShiGou li').on('click', function() {
                 var view = $(this).attr('class'),
-                    allow = ["search", "upload", "found", "lost", "mine", "index"];
+                    allow = ["search", "upload", "found", "lost", "starred", "index"];
                 if(allow.indexOf(view) > -1) {
                     _this[view].call(_this);
                 }
@@ -195,7 +258,7 @@ QSCMobile.plugin.qiuShiGou = (function() {
         if(data.starred)
           return JSON.stringify(data.starred);
         else
-          return "<h1>求失狗</h1>";
+          return "<h1>求失狗</h1><p>获取更新失败</p>";
     };
 
     return {

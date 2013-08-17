@@ -23,6 +23,25 @@
         padding: .5em 0;
         width: 100%;
     }
+    .list {
+        padding: 0 2em;
+        li {
+            margin: .5em 0;
+            cursor: pointer;
+            font-size: 1em;
+            .title {
+                width: 100%;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+            .info {
+                padding: 1em 0;
+                line-height: 2em;
+                display: none;
+                font-size: .8em;
+            }
+        }
+    }
     .header {
         border-bottom: 5px solid #533125 + #111;
         cursor: pointer;
