@@ -19,54 +19,72 @@ QSCMobile.plugin.qiuShiGou = (function() {
         });
     };
 
-    /**
-     * 内部方法
-     */
-    var view = (function() {
-        var search = function() {
+    var View, view;
+
+    View = (function() {
+
+        var _this;
+
+        function View() {
+            _this = this;
+            this.headerString = '<div class="header">'
+                              + '<img src="plugins/qiuShiGou/logo.png">'
+                              + '<img src="plugins/qiuShiGou/text.png">'
+                              + '</div>';
+        }
+
+        View.prototype.search = function() {
             var htmlString = 'search';
             $('.section.qiuShiGou').html(htmlString);
         };
-        var upload = function() {
+
+        View.prototype.upload = function() {
             var htmlString = 'upload';
             $('.section.qiuShiGou').html(htmlString);
         };
-        var recent = function() {
-        }
-        var index = function() {
-            var htmlString = '<div class="header"><img src="plugins/qiuShiGou/text.png"></div>'
+
+        View.prototype.found = function() {
+            var htmlString = 'found';
+            $('.section.qiuShiGou').html(htmlString);
+        };
+
+        View.prototype.lost = function() {
+            var htmlString = 'lost';
+            $('.section.qiuShiGou').html(htmlString);
+        };
+
+        View.prototype.mine = function() {
+            var htmlString = 'mine';
+            $('.section.qiuShiGou').html(htmlString);
+        };
+
+        View.prototype.index = function() {
+            var htmlString = this.headerString
                            + '<ul class="menu">'
-                           + '<li class="upload">发布物品信息</li>'
-                           + '<li class="search">物品快速搜索</li>'
-                           + '<li class="">查看失物招领</li>'
-                           + '<li class="">查看寻物启事</li>'
-                           + '<li class="">查看我发布的</li>'
+                           + '<li class="upload">发布信息</li>'
+                           + '<li class="search">物品搜索</li>'
+                           + '<li class="found">失物招领</li>'
+                           + '<li class="lost">寻物启事</li>'
+                           + '<li class="mine">我发布的</li>'
                            + '</ul>';
             $('.section.qiuShiGou').html(htmlString);
             $('.section.qiuShiGou li').on('click', function() {
-                console.log("click");
-                var c = $(this).attr('class');
-                console.log(c);
-                switch (c) {
-                    case 'upload':
-                    upload();
-                    break;
-                    case 'search':
-                    search();
-                    break;
+                var view = $(this).attr('class'),
+                    allow = ["search", "upload", "found", "lost", "mine", "index"];
+                if(allow.indexOf(view) > -1) {
+                    _this[view].call(_this);
                 }
             });
         };
-        return {
-            // 对外只需暴露index就够了
-            index: index
-        }
+
+        return View;
     })();
 
     /**
      * QSCMobile.view.redraw() 将会根据这里的返回结果重绘section
      */
     var section = function() {
+        view = new View();
         view.index();
     };
 
