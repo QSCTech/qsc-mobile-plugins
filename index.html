@@ -1,12 +1,7 @@
 <!doctype html>
 <meta charset="UTF-8">
-<link href="sdk/css/styles.css" rel="stylesheet" type="text/css">
+<link href="sdk/css/sdk.css" rel="stylesheet" type="text/css">
 <script src="sdk/jquery-2.0.3.js"></script>
-<script src="sdk/Math.uuid.js"></script>
-<script src="sdk/function-implements.js"></script>
-<script src="sdk/function-implements-web.js"></script>
-<script src="sdk/fake-data.js"></script>
-<script src="sdk/init.js"></script>
 <body>
   <div id="ctrl">
     <strong>QSC Mobile SDK</strong><br>
@@ -23,5 +18,24 @@
     </div>
   </div>
   <div id="wrap">
+    <object data="sdk.html" height="450" width="300">
   </div>
+  <script>
+  $(window).on('hashchange', function() {
+    window.location.reload();
+  });
+
+  var id = window.location.hash.replace(/#/g, '');
+  if(id.length < 1) {
+    window.location.hash = 'qiuShiGou';
+  }
+
+  $('#view div').click(function() {
+    $('.current').removeClass('current');
+    $(this).addClass('current');
+    var area = $(this).attr('id');
+    window.plugin[area]();
+  });
+  </script>
 </body>
+

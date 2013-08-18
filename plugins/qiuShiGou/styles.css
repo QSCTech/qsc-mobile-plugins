@@ -1,4 +1,4 @@
-.section.qiuShiGou{background:#e7cea9;color:#533125;height:100%}.section.qiuShiGou a{color:#533125}
+.section.qiuShiGou{background:#e7cea9;color:#533125;min-height:100%}.section.qiuShiGou a{color:#533125}
 .section.qiuShiGou img{max-width:100%}
 .section.qiuShiGou input,.section.qiuShiGou textarea,.section.qiuShiGou select{border:none;display:block;font-size:1em;margin:1em 0;background:#fff1db;padding:.5em 2%;width:96%}
 .section.qiuShiGou select,.section.qiuShiGou input[type="button"]{cursor:pointer;padding:.5em 0;width:100%}

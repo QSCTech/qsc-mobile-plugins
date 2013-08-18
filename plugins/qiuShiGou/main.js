@@ -148,6 +148,7 @@ QSCMobile.plugin.qiuShiGou = (function() {
                            + '<option>紫金港校区</option>'
                            + '<option>玉泉校区</option>'
                            + '<option>西溪校区</option>'
+                           + '<option>华家池校区</option>'
                            + '<option>之江校区</option>'
                            + '<option>舟山校区</option>'
                            + '</select>'
@@ -227,7 +228,8 @@ QSCMobile.plugin.qiuShiGou = (function() {
          * 获取数据成功后回调
          */
         var success = function(data) {
-            data.starred = data;
+            if(data && data.starred)
+              data.starred = data;
             callback();
         };
 

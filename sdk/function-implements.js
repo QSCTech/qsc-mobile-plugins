@@ -249,9 +249,7 @@ var QSCMobile = (function() {
      * @param {Function} callback function to callback
      */
     var get = function(url, data, success, fail) {
-        $.ajax({
-
-        });
+        success();
     };
 
     /**
@@ -309,8 +307,10 @@ var QSCMobile = (function() {
                     QSCMobile.plugin[pluginId].construtor(function() {
                         QSCMobile.plugin[pluginId].isReady = true;
                         var callbacks = QSCMobile.plugin[pluginId].readyCallbacks;
-                        for(var i = 0; i < callbacks.length; i++) {
-                            callbacks[i]();
+                        if(callbacks) {
+                          for(var i = 0; i < callbacks.length; i++) {
+                              callbacks[i]();
+                          }
                         }
                     });
                     if(callback)

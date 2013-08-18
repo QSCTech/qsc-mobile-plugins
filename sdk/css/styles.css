@@ -411,10 +411,5 @@ a .icon-rotate-90:before,a .icon-rotate-180:before,a .icon-rotate-270:before,a .
 .icon-vk:before{content:"\f189"}
 .icon-weibo:before{content:"\f18a"}
 .icon-renren:before{content:"\f18b"}
-body{background:#eee}
-#wrap{box-shadow:0 0 8px #999;position:fixed;top:50%;left:50%;margin-left:-150px;margin-top:-225px;width:300px;height:450px;background:#fff}
-#ctrl{display:block;position:fixed;top:50%;left:0;line-height:2em;margin-top:-225px;height:400px;width:140px;padding:25px 12px;color:#777;background:#e0e0e0;font-size:12px}
-#ctrl a{color:#777;text-decoration:none}
-#ctrl .current{color:#fe4c40}
-#ctrl strong{line-height:3em}
-#view div{cursor:pointer}
+html{height:100%}
+body{height:100%}
