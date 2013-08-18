@@ -4,7 +4,7 @@ $(document).ready(function() {
 
     var html = '<div class="card '+id+'"></div>'
              + '<div class="section '+id+'"></div>';
-    $("body").html(html);
+    $("#wrap").html(html);
 
     QSCMobile.plugin.load(id, function() {
         window.plugin = QSCMobile.plugin[id];
