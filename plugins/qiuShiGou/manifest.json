@@ -12,5 +12,11 @@
         "storage": {
             "description": "需要来存储`我关注的物品`"
         }
-    }
+    },
+    "web_accessible_resources": [
+        "logo.png",
+        "main.js",
+        "styles.css",
+        "text.png"
+    ]
 }
