@@ -1,8 +1,8 @@
 {
-    "version": "0.0.1",
-    "name": "求失狗",
     "id": "qiuShiGou",
-    "description": "求失狗",
+    "name": "求失狗",
+    "description": "求失狗 -- 失物招领，寻物启事平台",
+    "version": "0.0.2",
     "developer": {
         "name": "Zeno Zeng",
         "email": "work@zenoes.com",
@@ -14,9 +14,11 @@
         }
     },
     "web_accessible_resources": [
-        "logo.png",
-        "main.js",
-        "styles.css",
-        "text.png"
+        "card.html",
+        "section.html",
+        "images/logo.png",
+        "images/text.png"
+        "js/main.js",
+        "css/styles.css"
     ]
 }
