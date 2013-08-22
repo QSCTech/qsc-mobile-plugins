@@ -1,6 +1,30 @@
-/* css 请用 .section.qiuShiGou 包着，避免污染全局样式 */
-.section.qiuShiGou {
+// basic reset
+body {
     background: #e7cea9;
+}
+
+#header {
+    border-bottom: 5px solid #533125 + #111;
+    cursor: pointer;
+    img:first-child {
+        float: left;
+        padding-left: 3%;
+        width: 30%;
+    }
+    img:last-child {
+        padding-right: 3%;
+        float: right;
+        width: 60%;
+    }
+    &:after {
+        clear: both;
+        display: block;
+        content: '';
+    }
+}
+
+
+#wrap {
     color: #533125;
     min-height: 100%; // 保证撑满
     a {
@@ -23,6 +47,7 @@
         padding: .5em 0;
         width: 100%;
     }
+    
     .list {
         padding: 0 2em;
         li {
@@ -42,18 +67,6 @@
             }
         }
     }
-    .header {
-        border-bottom: 5px solid #533125 + #111;
-        cursor: pointer;
-        img:first-child {
-            padding-left: 2%;
-            padding-right: 5%;
-            width: 30%;
-        }
-        img:last-child {
-            width: 60%;
-        }
-    }
     .menu {
         padding: 0 2em;
         li {
@@ -61,7 +74,7 @@
             border-radius: 20px;
             cursor: pointer;
             font-size: 1.5em;
-            width: 60%;
+            width: 80%;
             margin: .8em auto;
             padding: .3em;
             text-align: center;

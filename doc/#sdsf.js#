@@ -1,0 +1,3 @@
+QSCMobile.storage.getItem('config', function(data) {
+    alert(data);
+})

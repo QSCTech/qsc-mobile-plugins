@@ -7,12 +7,10 @@ View = (function() {
     function View(data) {
         _this = this;
         this.data = data;
-        this.headerString = '<div class="header">'
-                          + '<img src="plugins/qiuShiGou/logo.png">'
-                          + '<img src="plugins/qiuShiGou/text.png">'
-                          + '</div>';
-        // View 初始化的时候，载入CSS文件
-        // 文件是相对 index.html 的路径
+
+        $('#header').on('click', function() {
+            _this.index();
+        });
     }
 
     View.prototype.list = function(query, prepend) {
@@ -43,15 +41,15 @@ View = (function() {
         });
         if(!prepend) prepend = '';
         htmlString = '<ul class="list">'+prepend+htmlString.join('')+'<a class="prev">上一页</a> / <a class="next">下一页</a></ul>';
-        $('.section.qiuShiGou .main').html(htmlString);
-        $('.section.qiuShiGou .main li').click(function() {
+        $('#content').html(htmlString);
+        $('li').click(function() {
             $(this).find('.info').slideToggle();
         });
-        $('.section.qiuShiGou .main .prev').click(function() {
+        $('.prev').click(function() {
             query.page--;
             _this.list(query, prepend);
         });
-        $('.section.qiuShiGou .main .next').click(function() {
+        $('.next').click(function() {
             query.page++;
             _this.list(query, prepend);
         });
@@ -59,7 +57,7 @@ View = (function() {
 
     View.prototype.msg = function(msg) {
         var htmlString = '<div class="msg">' + msg + '</div>';
-        $('.section.qiuShiGou .main').html(htmlString);
+        $('#content').html(htmlString);
     };
 
     View.prototype.search = function(keyword, page) {
@@ -88,11 +86,11 @@ View = (function() {
                        + '<input class="contact" placeholder="联系方式 / 联系地点">'
                        + '<input type="button" value="发布">'
                        + '</div>';
-        $('.section.qiuShiGou .main').html(htmlString);
-        $('.section.qiuShiGou input[type="button"]').click(function() {
+        $('#content').html(htmlString);
+        $('input[type="button"]').click(function() {
             var obj = {};
             ['name', 'detail', 'type', 'campus', 'place', 'contact'].forEach(function(elem) {
-                obj.elem = $('.section.qiuShiGou .upload .'+elem).val();
+                obj.elem = $('.upload .'+elem).val();
             });
             var success = function() {
                 _this.msg('上传成功');
@@ -123,8 +121,7 @@ View = (function() {
     };
 
     View.prototype.index = function() {
-        var htmlString = this.headerString
-                       + '<div class="main">'
+        var htmlString = '<div class="main">'
                        + '<ul class="menu">'
                        + '<li class="upload">发布信息</li>'
                        + '<li class="search">物品搜索</li>'
@@ -133,11 +130,8 @@ View = (function() {
                        + '<li class="starred">我发布的</li>'
                        + '</ul>'
                        + '</div>';
-        $('.section.qiuShiGou').html(htmlString);
-        $('.section.qiuShiGou .header').on('click', function() {
-            _this.index();
-        });
-        $('.section.qiuShiGou li').on('click', function() {
+        $('#content').html(htmlString);
+        $('li').on('click', function() {
             var view = $(this).attr('class'),
                 allow = ["search", "upload", "found", "lost", "starred", "index"];
             if(allow.indexOf(view) > -1) {

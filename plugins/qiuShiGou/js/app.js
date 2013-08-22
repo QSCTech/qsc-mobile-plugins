@@ -1,4 +1,7 @@
 var data, view;
 
 data = new Data();
-view = new View(data);
+$(document).ready(function() {
+    view = new View(data);
+    view.index();
+});
