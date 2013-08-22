@@ -14,8 +14,8 @@
         }
     },
     "web_accessible_resources": [
-        "card.html",
-        "section.html",
+        "background.js",
+        "index.html",
         "images/logo.png",
         "images/text.png",
         "js/main.js",
