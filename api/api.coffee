@@ -21,7 +21,7 @@ class QSCMobile
   @param {Object} msg.success - The callback that handles data when success
   @param {Object} msg.error - The callback that handles error
   ###
-  sendRequest: (msg) ->
+  sendMessage: (msg) ->
     {fn, args, success, error} = msg
     @requestCount++
     id = @requestCount
@@ -29,7 +29,10 @@ class QSCMobile
     @callbacks[id].success = success
     @callbacks[id].error = error
     msg = JSON.stringify {id: id, fn: fn, args: args}
-    window.location.hash = msg
+    if window.webSDK?
+      window.location.hash = msg
+    else
+      window.location.href = msg
 
   ###
   平台向 Webview 返回消息时直接注入调用
@@ -43,7 +46,7 @@ class QSCMobile
   @param {String} msg.data - 函数返回数据
   @param {String} msg.error - 错误信息
   ###
-  onRequest: (msg) ->
+  onMessage: (msg) ->
     {id, data, error} = msg
     if error
       @callbacks[id].error?(error)
