@@ -34,6 +34,9 @@ class QSCMobile
   ###
   平台向 Webview 返回消息时直接注入调用
 
+  @example
+    M.onRequest({id: 123, data: 'hello world'});
+
   @private
   @param {Object} msg - msg
   @param {Interger} msg.id - Request ID
@@ -49,7 +52,29 @@ class QSCMobile
 
 
   ###
-  KVDB
+  QSC Mobile View API
+
+  @example
+    M.view.card('qiuShiGou', 'title', 'Here is some contents');
+
+  @mixin
+  ###
+
+  view:
+
+    ###
+    按照参数绘制 card
+    
+    @param {String} pluginID pluginID
+    @param {String} title card title
+    @param {String} content card content
+    ###
+    card: (pluginID, title, content) ->
+      args = {pluginID: pluginID, title: title, content: content}
+      @sendMessage {fn: 'draw.card', args: args}
+
+  ###
+  QSC Mobile KVDB API
 
   @example
     M.kvdb.set('key', 'value', onsuccess, onerror);
@@ -122,3 +147,76 @@ class QSCMobile
         error: error
       @sendMessage msg
   
+  ###
+  QSCMobile Config API
+
+  @example
+    M.config.set('key', 'value', onsuccess, onerror);
+
+  @mixin    
+  ###
+
+  config:
+
+    set: (key, value, success, error) ->
+
+    get: (key, success, error) ->
+
+    remove: (key, success, error) ->
+    
+
+  ###
+  QSCMobile Config API
+
+  @example
+    var onsuccess = function(data) {
+      console.log("Stuid is "+data);
+    }
+    var onerror = function(e) {
+      console.log("Error: "+e);
+    }
+    M.user.stuid(onsuccess, onerror);
+
+  @mixin    
+  ###
+
+  user:
+
+    ###
+    学号
+
+    @param {Function} success The callback that handles data when success
+    @param {Function} error The callback that handles error
+    ###
+    stuid: (success, error) -> @sendMessage {fn: 'user.stuid', success: success, error: error}
+
+    ###
+    密码
+
+    @private
+    
+    @param {Function} success The callback that handles data when success
+    @param {Function} error The callback that handles error
+    ###
+    pwd: (success, error) -> @sendMessage {fn: 'user.pwd', success: success, error: error}
+
+    ###
+    用户名
+
+    @param {Function} success The callback that handles data when success
+    @param {Function} error The callback that handles error
+    ###
+    id: (success, error) -> @sendMessage {fn: 'user.id', success: success, error: error}
+
+    ###
+    真实名字
+
+    @private
+
+    @param {Function} success The callback that handles data when success
+    @param {Function} error The callback that handles error
+    ###
+    name: (success, error) -> @sendMessage {fn: 'user.name', success: success, error: error}
+
+    
+M = new QSCMobile
