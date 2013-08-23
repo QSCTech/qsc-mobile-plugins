@@ -71,7 +71,7 @@ class QSCMobile
     ###
     card: (pluginID, title, content) ->
       args = {pluginID: pluginID, title: title, content: content}
-      @sendMessage {fn: 'draw.card', args: args}
+      @sendMessage {fn: 'view.card', args: args}
 
   ###
   QSC Mobile KVDB API
@@ -88,13 +88,15 @@ class QSCMobile
     写入记录
 
     @param {String} key key
-    @param {*} value value
+    @param {String | Object} value value
     @param {Function} success The callback that handles data when success
     @param {Function} error The callback that handles error
     ###
     set: (key, value, success, error) ->
+      unless typeof value is 'string'
+        value = JSON.stringify value
       msg =
-        fn: 'KVDB.set'
+        fn: 'kvdb.set'
         args:
           key: key
           value: value
@@ -105,16 +107,24 @@ class QSCMobile
     ###
     取出记录
 
+    @note 若存入是 Object 或 JSON String 则取出时自动解析为 Object
+
     @param {String} key key
     @param {Function} success The callback that handles data when success
     @param {Function} error The callback that handles error
     ###
     get: (key, success, error) ->
+      callback = (data) ->
+        try
+          data = JSON.parse data
+          success?(data)
+        catch e
+          success?(data)
       msg =
-        fn: 'KVDB.get'
+        fn: 'kvdb.get'
         args:
           key: key
-        success: success
+        success: callback
         error: error
       @sendMessage msg
     
@@ -127,7 +137,7 @@ class QSCMobile
     ###
     remove: (key, success, error) ->
       msg =
-        fn: 'KVDB.remove'
+        fn: 'kvdb.remove'
         args:
           key: key
         success: success
@@ -142,7 +152,7 @@ class QSCMobile
     ###
     clear: (success, error) ->
       msg =
-        fn: 'KVDB.clear'
+        fn: 'kvdb.clear'
         success: success
         error: error
       @sendMessage msg
@@ -200,23 +210,4 @@ class QSCMobile
     ###
     pwd: (success, error) -> @sendMessage {fn: 'user.pwd', success: success, error: error}
 
-    ###
-    用户名
-
-    @param {Function} success The callback that handles data when success
-    @param {Function} error The callback that handles error
-    ###
-    id: (success, error) -> @sendMessage {fn: 'user.id', success: success, error: error}
-
-    ###
-    真实名字
-
-    @private
-
-    @param {Function} success The callback that handles data when success
-    @param {Function} error The callback that handles error
-    ###
-    name: (success, error) -> @sendMessage {fn: 'user.name', success: success, error: error}
-
-    
 M = new QSCMobile
