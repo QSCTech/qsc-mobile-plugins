@@ -1,15 +1,11 @@
 ###
 QSCMobile API
-JSDOC3: http://usejsdoc.org
 ###
 
 class QSCMobile
 
   ###
-  @constructor 
   @param {Object} opts - config options
-  @example Constructor
-     M = new QSCMobile({debug: true})
   ###
   construtor: (@opts) ->
     @callbacks = {}
@@ -51,45 +47,25 @@ class QSCMobile
     else
       @callbacks[id].success?(data)
 
-  ###
-  USER
-
-  @namespace
-  ###
-
-  user:
-    stuid: (success, error) -> @sendMessage {fn: 'user.stuid', success: success, error: error}
-    pwd: (success, error) -> @sendMessage {fn: 'user.pwd', success: success, error: error}
-    id: (success, error) -> @sendMessage {fn: 'user.id', success: success, error: error}
-    name: (success, error) -> @sendMessage {fn: 'user.name', success: success, error: error}
-
-  ###
-  按照 data 绘制 card
-  
-  @param {String} pluginID - pluginID
-  @param {String} title - card title
-  @param {String} content - card content
-  ###
-  drawCard: (pluginID, title, content) ->
-    args = {pluginID: pluginID, title: title, content: content}
-    @sendMessage {fn: 'draw.card', args: args}
-    
 
   ###
   KVDB
 
-  @namespace
+  @example
+    M.kvdb.set('key', 'value', onsuccess, onerror);
+
+  @mixin
   ###
 
-  KVDB:
+  kvdb:
 
     ###
-    KVDB.set
+    写入记录
 
-    @param {String} key - key
-    @param {*} value - value
-    @param {Function} success - The callback that handles data when success
-    @param {Function} error - The callback that handles error
+    @param {String} key key
+    @param {*} value value
+    @param {Function} success The callback that handles data when success
+    @param {Function} error The callback that handles error
     ###
     set: (key, value, success, error) ->
       msg =
@@ -102,11 +78,11 @@ class QSCMobile
       @sendMessage msg
 
     ###
-    KVDB.get
+    取出记录
 
-    @param {String} key - key
-    @param {Function} success - The callback that handles data when success
-    @param {Function} error - The callback that handles error
+    @param {String} key key
+    @param {Function} success The callback that handles data when success
+    @param {Function} error The callback that handles error
     ###
     get: (key, success, error) ->
       msg =
@@ -118,11 +94,11 @@ class QSCMobile
       @sendMessage msg
     
     ###
-    KVDB.remove
+    删除记录
 
     @param {String} key - key
-    @param {Function} success - The callback that handles data when success
-    @param {Function} error - The callback that handles error
+    @param {Function} success The callback that handles data when success
+    @param {Function} error The callback that handles error
     ###
     remove: (key, success, error) ->
       msg =
@@ -134,10 +110,10 @@ class QSCMobile
       @sendMessage msg
 
     ###
-    KVDB.get
+    清空记录
 
-    @param {Function} success - The callback that handles data when success
-    @param {Function} error - The callback that handles error
+    @param {Function} success The callback that handles data when success
+    @param {Function} error The callback that handles error
     ###
     clear: (success, error) ->
       msg =
@@ -145,5 +121,4 @@ class QSCMobile
         success: success
         error: error
       @sendMessage msg
-      
-M = new QSCMobile
+  
