@@ -29,7 +29,7 @@ class QSCMobile
     @callbacks[id].success = success
     @callbacks[id].error = error
     msg = JSON.stringify {id: id, fn: fn, args: args}
-    if window.webSDK?
+    if window.SDK?
       window.location.hash = msg
     else
       window.location.href = msg
@@ -38,7 +38,7 @@ class QSCMobile
   平台向 Webview 返回消息时直接注入调用
 
   @example
-    M.onRequest({id: 123, data: 'hello world'});
+    M.onMessage({id: 123, data: 'hello world'});
 
   @private
   @param {Object} msg - msg

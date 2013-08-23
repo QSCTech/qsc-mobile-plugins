@@ -32,7 +32,7 @@ QSCMobile = (function() {
   */
 
 
-  QSCMobile.prototype.sendRequest = function(msg) {
+  QSCMobile.prototype.sendMessage = function(msg) {
     var args, error, fn, id, success;
     fn = msg.fn, args = msg.args, success = msg.success, error = msg.error;
     this.requestCount++;
@@ -45,14 +45,18 @@ QSCMobile = (function() {
       fn: fn,
       args: args
     });
-    return window.location.hash = msg;
+    if (window.SDK != null) {
+      return window.location.hash = msg;
+    } else {
+      return window.location.href = msg;
+    }
   };
 
   /*
   平台向 Webview 返回消息时直接注入调用
   
   @example
-    M.onRequest({id: 123, data: 'hello world'});
+    M.onMessage({id: 123, data: 'hello world'});
   
   @private
   @param {Object} msg - msg
@@ -62,7 +66,7 @@ QSCMobile = (function() {
   */
 
 
-  QSCMobile.prototype.onRequest = function(msg) {
+  QSCMobile.prototype.onMessage = function(msg) {
     var data, error, id, _base, _base1;
     id = msg.id, data = msg.data, error = msg.error;
     if (error) {
