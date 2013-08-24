@@ -41,5 +41,5 @@ class Platform
       callback: callbackName
     request = JSON.stringify request
     prefix = 'data:text/qscmobile-msg;base64,'
-    msg = prefix + window.Base64.encode64(msg)
-    window.location.href = msg
+    request = prefix + window.Base64.encode64(request)
+    window.location.href = request

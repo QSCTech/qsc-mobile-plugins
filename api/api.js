@@ -191,7 +191,7 @@ Platform = (function() {
 
 
   Platform.prototype.sendRequest = function(request) {
-    var args, callback, callbackName, error, errorFn, fn, msg, prefix, random, success;
+    var args, callback, callbackName, error, errorFn, fn, prefix, random, success;
     fn = request.fn, args = request.args, success = request.success, error = request.error;
     errorFn = error;
     random = (Math.random() + '').replace(new RegExp('0\.', ''), '');
@@ -213,8 +213,8 @@ Platform = (function() {
     };
     request = JSON.stringify(request);
     prefix = 'data:text/qscmobile-msg;base64,';
-    msg = prefix + window.Base64.encode64(msg);
-    return window.location.href = msg;
+    request = prefix + window.Base64.encode64(request);
+    return window.location.href = request;
   };
 
   return Platform;
@@ -368,15 +368,45 @@ Config = (function(_super) {
     return Config.__super__.constructor.apply(this, arguments);
   }
 
+  /*
+  写入设置
+  
+  @param {String} key key
+  @param {String | Object} value value
+  @param {Function} success The callback that handles data when success
+  @param {Function} error The callback that handles error
+  */
+
+
   Config.prototype.set = function(key, value, success, error) {
     key = "__config:" + key;
     return this.__super__.set(key, value, success, error);
   };
 
+  /*
+  取出设置
+  
+  @note 若存入是 Object 或 JSON String 则取出时自动解析为 Object
+  
+  @param {String} key key
+  @param {Function} success The callback that handles data when success
+  @param {Function} error The callback that handles error
+  */
+
+
   Config.prototype.get = function(key, success, error) {
     key = "__config:" + key;
     return this.__super__.get(key, success, error);
   };
+
+  /*
+  删除设置
+  
+  @param {String} key - key
+  @param {Function} success The callback that handles data when success
+  @param {Function} error The callback that handles error
+  */
+
 
   Config.prototype.remove = function(key, success, error) {
     key = "__config:" + key;
