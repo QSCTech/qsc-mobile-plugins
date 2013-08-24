@@ -31,10 +31,7 @@ class QSCMobile
     msg = JSON.stringify {id: id, fn: fn, args: args}
     prefix = 'data:text/qscmobile-msg;base64,'
     msg = prefix + window.Base64.encode64(msg)
-    if window.SDK?
-      window.location.hash = msg
-    else
-      window.location.href = msg
+    window.location.href = msg
 
   ###
   平台向 Webview 返回消息时直接注入调用

@@ -9,7 +9,7 @@
   <div id="ctrl">
     <strong>QSC Mobile SDK</strong><br>
     Version: 0.0.1<br>
-    API: V21.20130815<br>
+    API: V23.20130824<br>
     Author: <a href="http://zenoes.com">Zeno Zeng</a><br>
     <strong>Use mousewheel to scroll</strong><br>
 
@@ -21,35 +21,8 @@
       <div id="card">Card View</div>
     </div>
   </div>
+
   <div id="wrap">
-    <object data="../plugins/qiuShiGou/index.html" height="450" width="300">
   </div>
   
-  <script>
-  $(window).on('hashchange', function() {
-    window.location.reload();
-  });
-
-  var id = window.location.hash.replace(/#/g, '');
-  if(id.length < 1) {
-    window.location.hash = 'qiuShiGou';
-  }
-
-  $('#view div').click(function() {
-    $('.current').removeClass('current');
-    $(this).addClass('current');
-    var area = $(this).attr('id');
-    window.plugin[area]();
-  });
-  </script>
-
-  <script>
-  setTimeout(function() {
-    // perfect scorllbar
-    var html = $('object').contents().find('html');
-    html.css({overflow: 'hidden', height: '100%'});
-    console.log(html);
-    html.perfectScrollbar();
-  }, 1000);
-  </script>
 </body>
