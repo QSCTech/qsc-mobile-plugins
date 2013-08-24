@@ -162,7 +162,8 @@ QSCMobile API
 
 
 QSCMobile = (function() {
-  var _this = this;
+  var sendMessage,
+    _this = this;
 
   function QSCMobile() {}
 
@@ -189,7 +190,7 @@ QSCMobile = (function() {
   */
 
 
-  QSCMobile.prototype.sendMessage = function(msg) {
+  sendMessage = function(msg) {
     var args, error, fn, id, prefix, success;
     fn = msg.fn, args = msg.args, success = msg.success, error = msg.error;
     this.requestCount++;
@@ -328,7 +329,7 @@ QSCMobile = (function() {
         success: callback,
         error: error
       };
-      return QSCMobile.sendMessage(msg);
+      return sendMessage(msg);
     },
     /*
     删除记录
@@ -381,15 +382,15 @@ QSCMobile = (function() {
   QSCMobile.prototype.config = {
     set: function(key, value, success, error) {
       key = "__config:" + key;
-      return QSCMobile.KVDB.set(key, value, success, error);
+      return QSCMobile.kvdb.set(key, value, success, error);
     },
     get: function(key, success, error) {
       key = "__config:" + key;
-      return QSCMobile.KVDB.get(key, success, error);
+      return QSCMobile.kvdb.get(key, success, error);
     },
     remove: function(key, success, error) {
       key = "__config:" + key;
-      return QSCMobile.KVDB.remove(key, success, error);
+      return QSCMobile.kvdb.remove(key, success, error);
     }
   };
 
