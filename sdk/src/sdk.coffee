@@ -2,7 +2,11 @@ class SDK
 
   construtor: ->
     window.onhashchange = (event) =>
-      @onMessage event.newURL
+      url = event.newURL
+      prefix = 'data:text/qscmobile-msg;base64,'
+      if url.indexOf(prefix) > -1
+        url = url.replace('data:text\/qscmobile-msg;base64', '')
+        @onMessage url
 
   onMessage: (msg) ->
     {id, fn, args} = JSON.parse(msg)

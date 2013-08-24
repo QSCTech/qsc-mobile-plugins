@@ -29,6 +29,8 @@ class QSCMobile
     @callbacks[id].success = success
     @callbacks[id].error = error
     msg = JSON.stringify {id: id, fn: fn, args: args}
+    prefix = 'data:text/qscmobile-msg;base64,'
+    msg = prefix + window.Base64.encode64(msg)
     if window.SDK?
       window.location.hash = msg
     else

@@ -1,2 +1,2 @@
-coffee -bc api.coffee
-codo --private api.coffee -o ../doc/api
+coffee -bcj src/base64.coffee src/api.coffee
+codo --private src/api.coffee -o ../doc/api
