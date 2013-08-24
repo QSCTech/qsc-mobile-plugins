@@ -10,6 +10,13 @@ QSC Mobile View API
 class View extends Platform
 
   ###
+  Constructor
+
+  @param {String} pluginID pluginID
+  ###
+  constructor: (@pluginID) ->
+
+  ###
   按照参数绘制 card
   
   @param {String} pluginID pluginID

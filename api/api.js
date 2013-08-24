@@ -12,7 +12,7 @@
  * Date: Sat Jan 7 17:30:44 ICT 2012
 */
 
-var CHARACTERS, CHARMAP, Config, INVALID_CHARACTERS, InvalidSequenceError, KVDB, M, Platform, User, View, char, decode, encode, fromCharCode, i, pack, unpack, _i, _len, _ref, _ref1, _ref2,
+var CHARACTERS, CHARMAP, Config, INVALID_CHARACTERS, InvalidSequenceError, KVDB, Platform, QSCMobile, User, View, char, decode, encode, fromCharCode, i, pack, unpack, _i, _len, _ref, _ref1, _ref2,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
   _this = this;
@@ -173,8 +173,8 @@ Platform = (function() {
   */
 
 
-  Platform.prototype.construtor = function(opts) {
-    this.opts = opts;
+  Platform.prototype.construtor = function(pluginID) {
+    this.pluginID = pluginID;
     this.callbacks = {};
     return this.requestCount = 0;
   };
@@ -206,7 +206,9 @@ Platform = (function() {
       }
     };
     window[callbackName] = callback;
+    console.log(this.pluginID);
     request = {
+      pluginID: this.pluginID,
       fn: fn,
       args: args,
       callback: callbackName
@@ -225,8 +227,16 @@ KVDB = (function(_super) {
 
   __extends(KVDB, _super);
 
-  function KVDB() {
+  /*
+  Constructor
+  
+  @param {String} pluginID pluginID
+  */
+
+
+  function KVDB(pluginID) {
     var _this = this;
+    this.pluginID = pluginID;
     this.clear = function(success, error) {
       return KVDB.prototype.clear.apply(_this, arguments);
     };
@@ -239,7 +249,6 @@ KVDB = (function(_super) {
     this.set = function(key, value, success, error) {
       return KVDB.prototype.set.apply(_this, arguments);
     };
-    return KVDB.__super__.constructor.apply(this, arguments);
   }
 
   /*
@@ -354,8 +363,16 @@ Config = (function(_super) {
 
   __extends(Config, _super);
 
-  function Config() {
+  /*
+  Constructor
+  
+  @param {String} pluginID pluginID
+  */
+
+
+  function Config(pluginID) {
     var _this = this;
+    this.pluginID = pluginID;
     this.remove = function(key, success, error) {
       return Config.prototype.remove.apply(_this, arguments);
     };
@@ -365,7 +382,6 @@ Config = (function(_super) {
     this.set = function(key, value, success, error) {
       return Config.prototype.set.apply(_this, arguments);
     };
-    return Config.__super__.constructor.apply(this, arguments);
   }
 
   /*
@@ -421,8 +437,15 @@ User = (function(_super) {
 
   __extends(User, _super);
 
-  function User() {
-    return User.__super__.constructor.apply(this, arguments);
+  /*
+  Constructor
+  
+  @param {String} pluginID pluginID
+  */
+
+
+  function User(pluginID) {
+    this.pluginID = pluginID;
   }
 
   /*
@@ -477,12 +500,19 @@ View = (function(_super) {
 
   __extends(View, _super);
 
-  function View() {
+  /*
+  Constructor
+  
+  @param {String} pluginID pluginID
+  */
+
+
+  function View(pluginID) {
     var _this = this;
+    this.pluginID = pluginID;
     this.card = function(pluginID, title, content) {
       return View.prototype.card.apply(_this, arguments);
     };
-    return View.__super__.constructor.apply(this, arguments);
   }
 
   /*
@@ -511,9 +541,18 @@ View = (function(_super) {
 
 })(Platform);
 
-M = {
-  kvdb: new KVDB,
-  view: new View,
-  config: new Config,
-  user: new User
-};
+QSCMobile = (function() {
+
+  function QSCMobile(pluginID) {
+    var api, _j, _len1, _ref3;
+    this.pluginID = pluginID;
+    _ref3 = ['KVDB', 'Config', 'View', 'User'];
+    for (_j = 0, _len1 = _ref3.length; _j < _len1; _j++) {
+      api = _ref3[_j];
+      this[api.toLowerCase()] = new window[api](this.pluginID);
+    }
+  }
+
+  return QSCMobile;
+
+})();

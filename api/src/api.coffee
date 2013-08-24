@@ -1,5 +1,4 @@
-M =
-  kvdb: new KVDB
-  view: new View
-  config: new Config
-  user: new User
+class QSCMobile
+  constructor: (@pluginID) ->
+    for api in ['KVDB', 'Config', 'View', 'User']
+      @[api.toLowerCase()] = new window[api] @pluginID

@@ -1,6 +1,14 @@
 class User extends Platform
 
   ###
+  Constructor
+
+  @param {String} pluginID pluginID
+  ###
+  constructor: (@pluginID) ->
+
+
+  ###
   学号
 
   @param {Function} success The callback that handles data when success

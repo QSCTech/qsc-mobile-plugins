@@ -5,6 +5,13 @@ QSCMobile Config API
 class Config extends KVDB
 
   ###
+  Constructor
+
+  @param {String} pluginID pluginID
+  ###
+  constructor: (@pluginID) ->
+
+  ###
   写入设置
 
   @param {String} key key

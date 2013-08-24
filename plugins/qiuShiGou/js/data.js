@@ -1,4 +1,6 @@
-var Data;
+var Data, M;
+
+M = new QSCMobile('qiuShiGou');
 
 Data = (function() {
 

@@ -1,6 +1,13 @@
 class KVDB extends Platform
 
   ###
+  Constructor
+
+  @param {String} pluginID pluginID
+  ###
+  constructor: (@pluginID) ->
+
+  ###
   写入记录
 
   @param {String} key key
