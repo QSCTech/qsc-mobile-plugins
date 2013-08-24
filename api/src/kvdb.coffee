@@ -18,7 +18,7 @@ class KVDB extends Platform
         value: value
       success: success
       error: error
-    @sendRequest.send msg
+    @sendRequest msg
 
   ###
   取出记录
@@ -42,7 +42,7 @@ class KVDB extends Platform
         key: key
       success: callback
       error: error
-    @sendRequest.send msg
+    @sendRequest msg
   
   ###
   删除记录
@@ -58,7 +58,7 @@ class KVDB extends Platform
         key: key
       success: success
       error: error
-    @sendRequest.send msg
+    @sendRequest msg
 
   ###
   清空记录
@@ -71,5 +71,5 @@ class KVDB extends Platform
       fn: 'kvdb.clear'
       success: success
       error: error
-    @sendRequest.send msg
+    @sendRequest msg
 

@@ -12,9 +12,10 @@
  * Date: Sat Jan 7 17:30:44 ICT 2012
 */
 
-var CHARACTERS, CHARMAP, INVALID_CHARACTERS, InvalidSequenceError, M, QSCMobile, char, decode, encode, fromCharCode, i, pack, unpack, _i, _len, _ref, _ref1, _ref2,
+var CHARACTERS, CHARMAP, Config, INVALID_CHARACTERS, InvalidSequenceError, KVDB, M, Platform, User, View, char, decode, encode, fromCharCode, i, pack, unpack, _i, _len, _ref, _ref1, _ref2,
   __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  _this = this;
 
 fromCharCode = String.fromCharCode;
 
@@ -157,22 +158,22 @@ this.Base64 = {
 };
 
 /*
-QSCMobile API
+Platform
+
+@private
 */
 
 
-QSCMobile = (function() {
-  var sendMessage,
-    _this = this;
+Platform = (function() {
 
-  function QSCMobile() {}
+  function Platform() {}
 
   /*
   @param {Object} opts - config options
   */
 
 
-  QSCMobile.prototype.construtor = function(opts) {
+  Platform.prototype.construtor = function(opts) {
     this.opts = opts;
     this.callbacks = {};
     return this.requestCount = 0;
@@ -180,271 +181,309 @@ QSCMobile = (function() {
 
   /*
   向平台发送请求
-  
   @private
-  @param {Object} msg - msg
-  @param {String} msg.fn - 平台应执行的函数
-  @param {Object} msg.args - 函数参数
-  @param {Object} msg.success - The callback that handles data when success
-  @param {Object} msg.error - The callback that handles error
+  @param {Object} request - request
+  @param {String} request.fn - 平台应执行的函数
+  @param {Object} request.args - 函数参数
+  @param {Object} request.success - The callback that handles data when success
+  @param {Object} request.error - The callback that handles error
   */
 
 
-  sendMessage = function(msg) {
-    var args, error, fn, id, prefix, success;
-    fn = msg.fn, args = msg.args, success = msg.success, error = msg.error;
-    this.requestCount++;
-    id = this.requestCount;
-    this.callbacks[id] = {};
-    this.callbacks[id].success = success;
-    this.callbacks[id].error = error;
-    msg = JSON.stringify({
-      id: id,
+  Platform.prototype.sendRequest = function(request) {
+    var args, callback, callbackName, error, errorFn, fn, msg, prefix, random, success;
+    fn = request.fn, args = request.args, success = request.success, error = request.error;
+    errorFn = error;
+    random = (Math.random() + '').replace(new RegExp('0\.', ''), '');
+    callbackName = "QSCMobile" + random + "_" + (new Date().getTime());
+    callback = function(data) {
+      var _ref3;
+      _ref3 = data, data = _ref3.data, error = _ref3.error;
+      if (error) {
+        return typeof errorFn === "function" ? errorFn(error) : void 0;
+      } else {
+        return typeof success === "function" ? success(data) : void 0;
+      }
+    };
+    window[callbackName] = callback;
+    request = {
       fn: fn,
-      args: args
-    });
+      args: args,
+      callback: callbackName
+    };
+    request = JSON.stringify(request);
     prefix = 'data:text/qscmobile-msg;base64,';
     msg = prefix + window.Base64.encode64(msg);
     return window.location.href = msg;
   };
 
+  return Platform;
+
+})();
+
+KVDB = (function(_super) {
+
+  __extends(KVDB, _super);
+
+  function KVDB() {
+    var _this = this;
+    this.clear = function(success, error) {
+      return KVDB.prototype.clear.apply(_this, arguments);
+    };
+    this.remove = function(key, success, error) {
+      return KVDB.prototype.remove.apply(_this, arguments);
+    };
+    this.get = function(key, success, error) {
+      return KVDB.prototype.get.apply(_this, arguments);
+    };
+    this.set = function(key, value, success, error) {
+      return KVDB.prototype.set.apply(_this, arguments);
+    };
+    return KVDB.__super__.constructor.apply(this, arguments);
+  }
+
   /*
-  平台向 Webview 返回消息时直接注入调用
+  写入记录
   
-  @example
-    M.onMessage({id: 123, data: 'hello world'});
+  @param {String} key key
+  @param {String | Object} value value
+  @param {Function} success The callback that handles data when success
+  @param {Function} error The callback that handles error
+  */
+
+
+  KVDB.prototype.set = function(key, value, success, error) {
+    var msg;
+    if (typeof value !== 'string') {
+      value = JSON.stringify(value);
+    }
+    msg = {
+      fn: 'kvdb.set',
+      args: {
+        key: key,
+        value: value
+      },
+      success: success,
+      error: error
+    };
+    return this.sendRequest(msg);
+  };
+
+  /*
+  取出记录
+  
+  @note 若存入是 Object 或 JSON String 则取出时自动解析为 Object
+  
+  @param {String} key key
+  @param {Function} success The callback that handles data when success
+  @param {Function} error The callback that handles error
+  */
+
+
+  KVDB.prototype.get = function(key, success, error) {
+    var callback, msg;
+    callback = function(data) {
+      try {
+        data = JSON.parse(data);
+        return typeof success === "function" ? success(data) : void 0;
+      } catch (e) {
+        return typeof success === "function" ? success(data) : void 0;
+      }
+    };
+    msg = {
+      fn: 'kvdb.get',
+      args: {
+        key: key
+      },
+      success: callback,
+      error: error
+    };
+    return this.sendRequest(msg);
+  };
+
+  /*
+  删除记录
+  
+  @param {String} key - key
+  @param {Function} success The callback that handles data when success
+  @param {Function} error The callback that handles error
+  */
+
+
+  KVDB.prototype.remove = function(key, success, error) {
+    var msg;
+    msg = {
+      fn: 'kvdb.remove',
+      args: {
+        key: key
+      },
+      success: success,
+      error: error
+    };
+    return this.sendRequest(msg);
+  };
+
+  /*
+  清空记录
+  
+  @param {Function} success The callback that handles data when success
+  @param {Function} error The callback that handles error
+  */
+
+
+  KVDB.prototype.clear = function(success, error) {
+    var msg;
+    msg = {
+      fn: 'kvdb.clear',
+      success: success,
+      error: error
+    };
+    return this.sendRequest(msg);
+  };
+
+  return KVDB;
+
+})(Platform);
+
+/*
+QSCMobile Config API
+*/
+
+
+Config = (function(_super) {
+
+  __extends(Config, _super);
+
+  function Config() {
+    var _this = this;
+    this.remove = function(key, success, error) {
+      return Config.prototype.remove.apply(_this, arguments);
+    };
+    this.get = function(key, success, error) {
+      return Config.prototype.get.apply(_this, arguments);
+    };
+    this.set = function(key, value, success, error) {
+      return Config.prototype.set.apply(_this, arguments);
+    };
+    return Config.__super__.constructor.apply(this, arguments);
+  }
+
+  Config.prototype.set = function(key, value, success, error) {
+    key = "__config:" + key;
+    return this.__super__.set(key, value, success, error);
+  };
+
+  Config.prototype.get = function(key, success, error) {
+    key = "__config:" + key;
+    return this.__super__.get(key, success, error);
+  };
+
+  Config.prototype.remove = function(key, success, error) {
+    key = "__config:" + key;
+    return this.__super__.remove(key, success, error);
+  };
+
+  return Config;
+
+})(KVDB);
+
+User = (function(_super) {
+
+  __extends(User, _super);
+
+  function User() {
+    return User.__super__.constructor.apply(this, arguments);
+  }
+
+  /*
+  学号
+  
+  @param {Function} success The callback that handles data when success
+  @param {Function} error The callback that handles error
+  */
+
+
+  User.prototype.stuid = function(success, error) {
+    return this.sendRequest({
+      fn: 'user.stuid',
+      success: success,
+      error: error
+    });
+  };
+
+  /*
+  密码
   
   @private
-  @param {Object} msg - msg
-  @param {Interger} msg.id - Request ID
-  @param {String} msg.data - 函数返回数据
-  @param {String} msg.error - 错误信息
+  
+  @param {Function} success The callback that handles data when success
+  @param {Function} error The callback that handles error
   */
 
 
-  QSCMobile.prototype.onMessage = function(msg) {
-    var data, error, id, _base, _base1;
-    id = msg.id, data = msg.data, error = msg.error;
-    if (error) {
-      return typeof (_base = this.callbacks[id]).error === "function" ? _base.error(error) : void 0;
-    } else {
-      return typeof (_base1 = this.callbacks[id]).success === "function" ? _base1.success(data) : void 0;
-    }
+  User.prototype.pwd = function(success, error) {
+    return this.sendRequest({
+      fn: 'user.pwd',
+      success: success,
+      error: error
+    });
   };
+
+  return User;
+
+})(Platform);
+
+/*
+QSC Mobile View API
+
+@example
+  M.view.card('qiuShiGou', 'title', 'Here is some contents');
+
+@mixin
+*/
+
+
+View = (function(_super) {
+
+  __extends(View, _super);
+
+  function View() {
+    var _this = this;
+    this.card = function(pluginID, title, content) {
+      return View.prototype.card.apply(_this, arguments);
+    };
+    return View.__super__.constructor.apply(this, arguments);
+  }
 
   /*
-  QSC Mobile View API
+  按照参数绘制 card
   
-  @example
-    M.view.card('qiuShiGou', 'title', 'Here is some contents');
-  
-  @mixin
+  @param {String} pluginID pluginID
+  @param {String} title card title
+  @param {String} content card content
   */
 
 
-  QSCMobile.prototype.view = {
-    /*
-    按照参数绘制 card
-    
-    @param {String} pluginID pluginID
-    @param {String} title card title
-    @param {String} content card content
-    */
-
-    card: function(pluginID, title, content) {
-      var args;
-      args = {
-        pluginID: pluginID,
-        title: title,
-        content: content
-      };
-      return QSCMobile.sendMessage({
-        fn: 'view.card',
-        args: args
-      });
-    }
+  View.prototype.card = function(pluginID, title, content) {
+    var args;
+    args = {
+      pluginID: pluginID,
+      title: title,
+      content: content
+    };
+    return this.sendRequest({
+      fn: 'view.card',
+      args: args
+    });
   };
 
-  /*
-  QSC Mobile KVDB API
-  
-  @example
-    M.kvdb.set('key', 'value', onsuccess, onerror);
-  
-  @mixin
-  */
+  return View;
 
+})(Platform);
 
-  QSCMobile.prototype.kvdb = {
-    /*
-    写入记录
-    
-    @param {String} key key
-    @param {String | Object} value value
-    @param {Function} success The callback that handles data when success
-    @param {Function} error The callback that handles error
-    */
-
-    set: function(key, value, success, error) {
-      var msg;
-      if (typeof value !== 'string') {
-        value = JSON.stringify(value);
-      }
-      msg = {
-        fn: 'kvdb.set',
-        args: {
-          key: key,
-          value: value
-        },
-        success: success,
-        error: error
-      };
-      return QSCMobile.sendMessage(msg);
-    },
-    /*
-    取出记录
-    
-    @note 若存入是 Object 或 JSON String 则取出时自动解析为 Object
-    
-    @param {String} key key
-    @param {Function} success The callback that handles data when success
-    @param {Function} error The callback that handles error
-    */
-
-    get: function(key, success, error) {
-      var callback, msg;
-      callback = function(data) {
-        try {
-          data = JSON.parse(data);
-          return typeof success === "function" ? success(data) : void 0;
-        } catch (e) {
-          return typeof success === "function" ? success(data) : void 0;
-        }
-      };
-      msg = {
-        fn: 'kvdb.get',
-        args: {
-          key: key
-        },
-        success: callback,
-        error: error
-      };
-      return sendMessage(msg);
-    },
-    /*
-    删除记录
-    
-    @param {String} key - key
-    @param {Function} success The callback that handles data when success
-    @param {Function} error The callback that handles error
-    */
-
-    remove: function(key, success, error) {
-      var msg;
-      msg = {
-        fn: 'kvdb.remove',
-        args: {
-          key: key
-        },
-        success: success,
-        error: error
-      };
-      return QSCMobile.sendMessage(msg);
-    },
-    /*
-    清空记录
-    
-    @param {Function} success The callback that handles data when success
-    @param {Function} error The callback that handles error
-    */
-
-    clear: function(success, error) {
-      var msg;
-      msg = {
-        fn: 'kvdb.clear',
-        success: success,
-        error: error
-      };
-      return QSCMobile.sendMessage(msg);
-    }
-  };
-
-  /*
-  QSCMobile Config API
-  
-  @example
-    M.config.set('key', 'value', onsuccess, onerror);
-  
-  @mixin
-  */
-
-
-  QSCMobile.prototype.config = {
-    set: function(key, value, success, error) {
-      key = "__config:" + key;
-      return QSCMobile.kvdb.set(key, value, success, error);
-    },
-    get: function(key, success, error) {
-      key = "__config:" + key;
-      return QSCMobile.kvdb.get(key, success, error);
-    },
-    remove: function(key, success, error) {
-      key = "__config:" + key;
-      return QSCMobile.kvdb.remove(key, success, error);
-    }
-  };
-
-  /*
-  QSCMobile Config API
-  
-  @example
-    var onsuccess = function(data) {
-      console.log("Stuid is "+data);
-    }
-    var onerror = function(e) {
-      console.log("Error: "+e);
-    }
-    M.user.stuid(onsuccess, onerror);
-  
-  @mixin
-  */
-
-
-  QSCMobile.prototype.user = {
-    /*
-    学号
-    
-    @param {Function} success The callback that handles data when success
-    @param {Function} error The callback that handles error
-    */
-
-    stuid: function(success, error) {
-      return QSCMobile.sendMessage({
-        fn: 'user.stuid',
-        success: success,
-        error: error
-      });
-    },
-    /*
-    密码
-    
-    @private
-    
-    @param {Function} success The callback that handles data when success
-    @param {Function} error The callback that handles error
-    */
-
-    pwd: function(success, error) {
-      return QSCMobile.sendMessage({
-        fn: 'user.pwd',
-        success: success,
-        error: error
-      });
-    }
-  };
-
-  return QSCMobile;
-
-}).call(this);
-
-M = new QSCMobile;
+M = {
+  kvdb: new KVDB,
+  view: new View,
+  config: new Config,
+  user: new User
+};
