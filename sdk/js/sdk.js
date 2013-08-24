@@ -5,6 +5,7 @@ SDK = (function() {
 
   function SDK() {
     var id;
+    this.debug = true;
     $(window).on('hashchange', function() {
       return window.location.reload();
     });
@@ -17,38 +18,12 @@ SDK = (function() {
   }
 
   SDK.prototype.loadPlugin = function(pluginID) {
-    var object, src,
+    var iframe, obj, prop, src,
       _this = this;
     src = "../plugins/" + pluginID + "/index.html";
-    object = $('<iframe id="plugin-section"></iframe>')[0].cloneNode(true);
-    object.height = 450;
-    object.width = 300;
-    object.src = src;
-    object.onload = function() {
+    iframe = $('<iframe id="plugin-section" height="450" width="300" src="' + src + '"></iframe>')[0];
+    iframe.onload = function() {
       var style;
-      _this.pluginWindow = document.getElementById('plugin-section').contentWindow;
-      _this.pluginWindow.Platform.prototype.sendRequest = function(request) {
-        var args, callback, callbackName, error, errorFn, fn, random, success;
-        fn = request.fn, args = request.args, success = request.success, error = request.error;
-        errorFn = error;
-        random = (Math.random() + '').replace(new RegExp('0\.', ''), '');
-        callbackName = "QSCMobile" + random + "_" + (new Date().getTime());
-        callback = function(data) {
-          var _ref;
-          _ref = data, data = _ref.data, error = _ref.error;
-          if (error) {
-            return typeof errorFn === "function" ? errorFn(error) : void 0;
-          } else {
-            return typeof success === "function" ? success(data) : void 0;
-          }
-        };
-        window[callbackName] = callback;
-        return window.parent.sdk.onRequest({
-          fn: fn,
-          args: args,
-          callback: callbackName
-        });
-      };
       style = $('<link>')[0].cloneNode(true);
       style.href = "../../sdk/css/scrollbar.css";
       style.rel = 'stylesheet';
@@ -66,18 +41,74 @@ SDK = (function() {
       };
       return $('iframe').contents().find('head').append(style);
     };
-    return $('#wrap').html(object);
+    $('#wrap').html(iframe);
+    this.window = document.getElementById('plugin-section').contentWindow;
+    obj = this.window.Object;
+    if (!obj.prototype.watch) {
+      prop = {
+        enumerable: false,
+        configurable: true,
+        writable: false,
+        value: function(prop, handle) {
+          var getter, newval, oldval, setter;
+          oldval = this.prop;
+          newval = oldval;
+          getter = function() {
+            return newval;
+          };
+          setter = function(val) {
+            oldval = newval;
+            return newval = handle.call(this, prop, oldval, val);
+          };
+          return obj.defineProperty(this, prop, {
+            get: getter,
+            set: setter,
+            enumerable: true,
+            configurable: true
+          });
+        }
+      };
+      obj.defineProperty(obj.prototype, "watch", prop);
+    }
+    return this.window.watch('Platform', function(prop, oldval, val) {
+      val.prototype.sendRequest = function(request) {
+        var args, callbackName, error, errorFn, fn, random, success;
+        fn = request.fn, args = request.args, success = request.success, error = request.error;
+        errorFn = error;
+        random = (Math.random() + '').replace(new RegExp('0\.', ''), '');
+        callbackName = "QSCMobile" + random + "_" + (new Date().getTime());
+        _this.window[callbackName] = function(data) {
+          var _ref;
+          _ref = data, data = _ref.data, error = _ref.error;
+          if (error) {
+            return typeof errorFn === "function" ? errorFn(error) : void 0;
+          } else {
+            return typeof success === "function" ? success(data) : void 0;
+          }
+        };
+        return _this.onRequest({
+          fn: fn,
+          args: args,
+          callback: callbackName
+        });
+      };
+      return val;
+    });
   };
 
   SDK.prototype.onRequest = function(request) {
     var args, callback, data, fn, part1, part2, _base, _ref;
     fn = request.fn, args = request.args, callback = request.callback;
-    console.log(["QSCMobile-Plugins-API-Request", fn, args]);
+    if (this.debug) {
+      console.log("QSCMobile-Plugins-API-Request               ->   " + (JSON.stringify([fn, args])));
+    }
     _ref = fn.split('.'), part1 = _ref[0], part2 = _ref[1];
     fn = this[part1][part2];
     data = fn.call(this, args);
-    console.log(["QSCMobile-Plugins-API-Request-Callback-Data", data.data, data.error]);
-    return typeof (_base = this.pluginWindow)[callback] === "function" ? _base[callback](data) : void 0;
+    if (this.debug) {
+      console.log("QSCMobile-Plugins-API-Request-Callback-Data ->   " + (JSON.stringify([data.data, data.error])));
+    }
+    return typeof (_base = this.window)[callback] === "function" ? _base[callback](data) : void 0;
   };
 
   SDK.prototype.user = {
