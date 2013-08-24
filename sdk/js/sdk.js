@@ -16,122 +16,126 @@ SDK = (function() {
     }
   }
 
-  SDK.prototype.onPluginLoad = function(e) {
-    var style;
-    style = $('<link>')[0].cloneNode(true);
-    style.href = "../../sdk/css/scrollbar.css";
-    style.rel = 'stylesheet';
-    style.type = 'text/css';
-    style.onload = function() {
-      var widthWithoutScrollbar;
-      widthWithoutScrollbar = $('object').contents().find('html').width();
-      $('#wrap').css({
-        width: widthWithoutScrollbar + 'px',
-        'padding-left': 300 - widthWithoutScrollbar + 'px'
-      });
-      return $('#wrap').animate({
-        opacity: 1
-      });
-    };
-    return $('object').contents().find('head').append(style);
-  };
-
   SDK.prototype.loadPlugin = function(pluginID) {
     var object, src,
       _this = this;
     src = "../plugins/" + pluginID + "/index.html";
-    object = $('<object></object>')[0].cloneNode(true);
+    object = $('<iframe id="plugin-section"></iframe>')[0].cloneNode(true);
     object.height = 450;
     object.width = 300;
-    object.data = src;
-    object.onload = function(e) {
-      return _this.onPluginLoad(e);
+    object.src = src;
+    object.onload = function() {
+      var style;
+      _this.pluginWindow = document.getElementById('plugin-section').contentWindow;
+      _this.pluginWindow.Platform.prototype.sendRequest = function(request) {
+        var args, callback, callbackName, error, errorFn, fn, random, success;
+        fn = request.fn, args = request.args, success = request.success, error = request.error;
+        errorFn = error;
+        random = (Math.random() + '').replace(new RegExp('0\.', ''), '');
+        callbackName = "QSCMobile" + random + "_" + (new Date().getTime());
+        callback = function(data) {
+          var _ref;
+          _ref = data, data = _ref.data, error = _ref.error;
+          if (error) {
+            return typeof errorFn === "function" ? errorFn(error) : void 0;
+          } else {
+            return typeof success === "function" ? success(data) : void 0;
+          }
+        };
+        window[callbackName] = callback;
+        return window.parent.sdk.onRequest({
+          fn: fn,
+          args: args,
+          callback: callbackName
+        });
+      };
+      style = $('<link>')[0].cloneNode(true);
+      style.href = "../../sdk/css/scrollbar.css";
+      style.rel = 'stylesheet';
+      style.type = 'text/css';
+      style.onload = function() {
+        var widthWithoutScrollbar;
+        widthWithoutScrollbar = $('iframe').contents().find('html').width();
+        $('#wrap').css({
+          width: widthWithoutScrollbar + 'px',
+          'padding-left': 300 - widthWithoutScrollbar + 'px'
+        });
+        return $('#wrap').animate({
+          opacity: 1
+        });
+      };
+      return $('iframe').contents().find('head').append(style);
     };
     return $('#wrap').html(object);
   };
 
-  SDK.prototype.onMessage = function(url) {
-    var args, fn, id, part1, part2, prefix, _ref, _ref1;
-    prefix = 'data:text/qscmobile-msg;base64,';
-    if (url.indexOf(prefix) > -1) {
-      url = url.replace('data:text\/qscmobile-msg;base64', '');
-      this.onMessage(url);
-    }
-    _ref = JSON.parse(msg), id = _ref.id, fn = _ref.fn, args = _ref.args;
-    _ref1 = fn.split('.'), part1 = _ref1[0], part2 = _ref1[1];
+  SDK.prototype.onRequest = function(request) {
+    var args, callback, data, fn, part1, part2, _base, _ref;
+    fn = request.fn, args = request.args, callback = request.callback;
+    console.log(["QSCMobile-Plugins-API-Request", fn, args]);
+    _ref = fn.split('.'), part1 = _ref[0], part2 = _ref[1];
     fn = this[part1][part2];
-    return fn.call(this, {
-      id: id,
-      args: args
-    });
+    data = fn.call(this, args);
+    console.log(["QSCMobile-Plugins-API-Request-Callback-Data", data.data, data.error]);
+    return typeof (_base = this.pluginWindow)[callback] === "function" ? _base[callback](data) : void 0;
   };
-
-  SDK.prototype.sendMessage = function(msg) {};
 
   SDK.prototype.user = {
     stuid: function() {
-      return "3000000000";
+      return {
+        data: "3000000000"
+      };
     },
     pwd: function() {
-      return "123456";
+      return {
+        data: "123456"
+      };
     }
   };
 
   SDK.prototype.kvdb = {
     get: function(args) {
-      var id, key, msg, _ref;
-      _ref = args, id = _ref.id, args = _ref.args;
+      var key, msg;
       key = args.key;
-      msg = {
-        id: id
-      };
+      msg = {};
       try {
         msg.data = localStorage.getItem(key);
       } catch (e) {
         msg.error = e;
       }
-      return this.sendMessage(msg);
+      return msg;
     },
     set: function(args) {
-      var id, key, msg, value, _ref;
-      _ref = args, id = _ref.id, args = _ref.args;
+      var key, msg, value;
       key = args.key, value = args.value;
-      msg = {
-        id: id
-      };
+      msg = {};
       try {
         msg.data = localStorage.setItem(key, value);
       } catch (e) {
         msg.error = e;
       }
-      return this.sendMessage(msg);
+      return msg;
     },
     remove: function(args) {
-      var id, key, msg, _ref;
-      _ref = args, id = _ref.id, args = _ref.args;
+      var key, msg;
       key = args.key;
-      msg = {
-        id: id
-      };
+      msg = {};
       try {
         msg.data = localStorage.removeItem(key);
       } catch (e) {
         msg.error = e;
       }
-      return this.sendMessage(msg);
+      return msg;
     },
     clear: function(args) {
-      var id, msg;
-      id = args.id;
-      msg = {
-        id: id
-      };
+      var msg;
+      msg = {};
       try {
         msg.data = localStorage.clear();
       } catch (e) {
         msg.error = e;
       }
-      return this.sendMessage(msg);
+      return msg;
     }
   };
 
@@ -141,7 +145,6 @@ SDK = (function() {
 
 $(function() {
   return $(document).ready(function() {
-    window.sdk = new SDK;
-    return console.log(sdk);
+    return window.sdk = new SDK;
   });
 });

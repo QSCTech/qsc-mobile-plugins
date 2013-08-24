@@ -206,7 +206,6 @@ Platform = (function() {
       }
     };
     window[callbackName] = callback;
-    console.log(this.pluginID);
     request = {
       pluginID: this.pluginID,
       fn: fn,

@@ -10,86 +10,101 @@ class SDK
     else
       @loadPlugin(id)
   
-  onPluginLoad: (e) ->
-    style = $('<link>')[0].cloneNode(true)
-    style.href = "../../sdk/css/scrollbar.css"
-    style.rel = 'stylesheet'
-    style.type = 'text/css'
-    style.onload = ->
-      widthWithoutScrollbar = $('object').contents().find('html').width()
-      $('#wrap').css({width: widthWithoutScrollbar+'px', 'padding-left': 300 - widthWithoutScrollbar + 'px'})
-      $('#wrap').animate({opacity: 1});
-    $('object').contents().find('head').append(style);
-
   loadPlugin: (pluginID) ->
     src = "../plugins/#{pluginID}/index.html"
-    object = $('<object></object>')[0].cloneNode(true);
+    object = $('<iframe id="plugin-section"></iframe>')[0].cloneNode(true);
     object.height = 450
     object.width = 300
-    object.data = src
-    object.onload = (e) => @onPluginLoad(e)
+    object.src = src
+    object.onload = =>
+      
+      # 重载插件内部的 sendRequest
+      @pluginWindow = document.getElementById('plugin-section').contentWindow
+      @pluginWindow.Platform.prototype.sendRequest = (request) ->
+        {fn, args, success, error} = request
+        errorFn = error
+        random = (Math.random()+'').replace(new RegExp('0\.', ''), '')
+        callbackName = "QSCMobile#{random}_#{(new Date().getTime())}"
+        callback = (data) ->
+          {data, error} = data
+          if error
+            errorFn?(error)
+          else
+            success?(data)
+        window[callbackName] = callback
+        window.parent.sdk.onRequest({fn: fn, args: args, callback: callbackName})
+        
+
+      # hide scrollbar
+      style = $('<link>')[0].cloneNode(true)
+      style.href = "../../sdk/css/scrollbar.css"
+      style.rel = 'stylesheet'
+      style.type = 'text/css'
+      style.onload = ->
+        widthWithoutScrollbar = $('iframe').contents().find('html').width()
+        $('#wrap').css({width: widthWithoutScrollbar+'px', 'padding-left': 300 - widthWithoutScrollbar + 'px'})
+        $('#wrap').animate({opacity: 1})
+      $('iframe').contents().find('head').append(style)
     $('#wrap').html object
 
-  onMessage: (url) ->
-    prefix = 'data:text/qscmobile-msg;base64,'
-    if url.indexOf(prefix) > -1
-      url = url.replace('data:text\/qscmobile-msg;base64', '')
-      @onMessage url
-    {id, fn, args} = JSON.parse(msg)
+  onRequest: (request) ->
+    {fn, args, callback} = request
+    console.log ["QSCMobile-Plugins-API-Request", fn, args]
     [part1, part2] = fn.split('.')
     fn = this[part1][part2]
-    fn.call this, {id: id, args: args}
+    data = fn.call this, args
+    console.log ["QSCMobile-Plugins-API-Request-Callback-Data", data.data, data.error]
+    @pluginWindow[callback]?(data)
 
-  sendMessage: (msg) ->
+  #######################
+  #
+  # 函数具体实现
+  # 
+  #######################
 
   user:
 
-    stuid: -> "3000000000"
+    stuid: -> {data: "3000000000"}
 
-    pwd: -> "123456"
+    pwd: -> {data: "123456"}
 
   kvdb:
 
     get: (args) ->
-      {id, args} = args
       {key} = args
-      msg = {id: id}
+      msg = {}
       try
         msg.data = localStorage.getItem key
       catch e
         msg.error = e
-      @sendMessage msg
+      msg
 
     set: (args) ->
-      {id, args} = args
       {key, value} = args
-      msg = {id: id}
+      msg = {}
       try
         msg.data = localStorage.setItem key, value
       catch e
         msg.error = e
-      @sendMessage msg
+      msg
 
     remove: (args) ->
-      {id, args} = args
       {key} = args
-      msg = {id: id}
+      msg = {}
       try
         msg.data = localStorage.removeItem key
       catch e
         msg.error = e
-      @sendMessage msg
+      msg
 
     clear: (args) ->
-      {id} = args
-      msg = {id: id}
+      msg = {}
       try
         msg.data = localStorage.clear()
       catch e
         msg.error = e
-      @sendMessage msg
+      msg
 
 $ ->
   $(document).ready ->
     window.sdk = new SDK
-    console.log sdk

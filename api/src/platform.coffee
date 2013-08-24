@@ -35,7 +35,6 @@ class Platform
       else
         success?(data)
     window[callbackName] = callback
-    console.log @pluginID
     request =
       pluginID: @pluginID
       fn: fn
