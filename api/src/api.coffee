@@ -171,11 +171,16 @@ class QSCMobile
   config:
 
     set: (key, value, success, error) ->
+      key = "__config:#{key}"
+      @KVDB.set key, value, success, error
 
     get: (key, success, error) ->
+      key = "__config:#{key}"
+      @KVDB.get key, success, error
 
     remove: (key, success, error) ->
-    
+      key = "__config:#{key}"
+      @KVDB.remove key, success, error
 
   ###
   QSCMobile Config API
