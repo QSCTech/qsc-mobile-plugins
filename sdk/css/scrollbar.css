@@ -1,0 +1,11 @@
+/* ::-webkit-scrollbar { */
+/*     width: 0px; */
+/*     position: fixed; */
+/*     background: rgba(0, 0, 0, 0); */
+/* } */
+
+     
+
+html {
+    overflow-y: scroll; 
+}

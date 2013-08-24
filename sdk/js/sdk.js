@@ -17,20 +17,23 @@ SDK = (function() {
   }
 
   SDK.prototype.onPluginLoad = function(e) {
-    var doc;
-    console.log(e);
-    doc = $('object').contents();
-    return $(doc).ready(function() {
-      var body;
-      console.log($('object').contents());
-      body = $('object').contents().find('body');
-      console.log(body);
-      body.css({
-        overflow: 'hidden',
-        height: '100%'
+    var style;
+    style = $('<link>')[0].cloneNode(true);
+    style.href = "../../sdk/css/scrollbar.css";
+    style.rel = 'stylesheet';
+    style.type = 'text/css';
+    style.onload = function() {
+      var widthWithoutScrollbar;
+      widthWithoutScrollbar = $('object').contents().find('html').width();
+      $('#wrap').css({
+        width: widthWithoutScrollbar + 'px',
+        'padding-left': 300 - widthWithoutScrollbar + 'px'
       });
-      return html.perfectScrollbar();
-    });
+      return $('#wrap').animate({
+        opacity: 1
+      });
+    };
+    return $('object').contents().find('head').append(style);
   };
 
   SDK.prototype.loadPlugin = function(pluginID) {

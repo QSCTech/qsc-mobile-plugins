@@ -11,15 +11,15 @@ class SDK
       @loadPlugin(id)
   
   onPluginLoad: (e) ->
-    console.log e
-
-    doc = $('object').contents()
-    $(doc).ready ->
-      console.log $('object').contents()
-      body = $('object').contents().find('body')
-      console.log body
-      body.css({overflow: 'hidden', height: '100%'})
-      html.perfectScrollbar()
+    style = $('<link>')[0].cloneNode(true)
+    style.href = "../../sdk/css/scrollbar.css"
+    style.rel = 'stylesheet'
+    style.type = 'text/css'
+    style.onload = ->
+      widthWithoutScrollbar = $('object').contents().find('html').width()
+      $('#wrap').css({width: widthWithoutScrollbar+'px', 'padding-left': 300 - widthWithoutScrollbar + 'px'})
+      $('#wrap').animate({opacity: 1});
+    $('object').contents().find('head').append(style);
 
   loadPlugin: (pluginID) ->
     src = "../plugins/#{pluginID}/index.html"

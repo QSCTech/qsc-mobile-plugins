@@ -8,6 +8,10 @@ SDK: 开发中
 
 Build Script: 暂缓
 
+## Doc
+
+http://qsctech.github.io/qsc-mobile-plugins/doc/api/
+
 ## Plugins
 
 - 求失狗
