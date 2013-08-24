@@ -162,6 +162,7 @@ QSCMobile API
 
 
 QSCMobile = (function() {
+  var _this = this;
 
   function QSCMobile() {}
 
@@ -256,7 +257,7 @@ QSCMobile = (function() {
         title: title,
         content: content
       };
-      return this.sendMessage({
+      return QSCMobile.sendMessage({
         fn: 'view.card',
         args: args
       });
@@ -297,7 +298,7 @@ QSCMobile = (function() {
         success: success,
         error: error
       };
-      return this.sendMessage(msg);
+      return QSCMobile.sendMessage(msg);
     },
     /*
     取出记录
@@ -327,7 +328,7 @@ QSCMobile = (function() {
         success: callback,
         error: error
       };
-      return this.sendMessage(msg);
+      return QSCMobile.sendMessage(msg);
     },
     /*
     删除记录
@@ -347,7 +348,7 @@ QSCMobile = (function() {
         success: success,
         error: error
       };
-      return this.sendMessage(msg);
+      return QSCMobile.sendMessage(msg);
     },
     /*
     清空记录
@@ -363,7 +364,7 @@ QSCMobile = (function() {
         success: success,
         error: error
       };
-      return this.sendMessage(msg);
+      return QSCMobile.sendMessage(msg);
     }
   };
 
@@ -380,15 +381,15 @@ QSCMobile = (function() {
   QSCMobile.prototype.config = {
     set: function(key, value, success, error) {
       key = "__config:" + key;
-      return this.KVDB.set(key, value, success, error);
+      return QSCMobile.KVDB.set(key, value, success, error);
     },
     get: function(key, success, error) {
       key = "__config:" + key;
-      return this.KVDB.get(key, success, error);
+      return QSCMobile.KVDB.get(key, success, error);
     },
     remove: function(key, success, error) {
       key = "__config:" + key;
-      return this.KVDB.remove(key, success, error);
+      return QSCMobile.KVDB.remove(key, success, error);
     }
   };
 
@@ -417,7 +418,7 @@ QSCMobile = (function() {
     */
 
     stuid: function(success, error) {
-      return this.sendMessage({
+      return QSCMobile.sendMessage({
         fn: 'user.stuid',
         success: success,
         error: error
@@ -433,7 +434,7 @@ QSCMobile = (function() {
     */
 
     pwd: function(success, error) {
-      return this.sendMessage({
+      return QSCMobile.sendMessage({
         fn: 'user.pwd',
         success: success,
         error: error
@@ -443,6 +444,6 @@ QSCMobile = (function() {
 
   return QSCMobile;
 
-})();
+}).call(this);
 
 M = new QSCMobile;

@@ -71,7 +71,7 @@ class QSCMobile
     @param {String} title card title
     @param {String} content card content
     ###
-    card: (pluginID, title, content) ->
+    card: (pluginID, title, content) =>
       args = {pluginID: pluginID, title: title, content: content}
       @sendMessage {fn: 'view.card', args: args}
 
@@ -94,7 +94,7 @@ class QSCMobile
     @param {Function} success The callback that handles data when success
     @param {Function} error The callback that handles error
     ###
-    set: (key, value, success, error) ->
+    set: (key, value, success, error) =>
       unless typeof value is 'string'
         value = JSON.stringify value
       msg =
@@ -115,7 +115,7 @@ class QSCMobile
     @param {Function} success The callback that handles data when success
     @param {Function} error The callback that handles error
     ###
-    get: (key, success, error) ->
+    get: (key, success, error) =>
       callback = (data) ->
         try
           data = JSON.parse data
@@ -137,7 +137,7 @@ class QSCMobile
     @param {Function} success The callback that handles data when success
     @param {Function} error The callback that handles error
     ###
-    remove: (key, success, error) ->
+    remove: (key, success, error) =>
       msg =
         fn: 'kvdb.remove'
         args:
@@ -152,7 +152,7 @@ class QSCMobile
     @param {Function} success The callback that handles data when success
     @param {Function} error The callback that handles error
     ###
-    clear: (success, error) ->
+    clear: (success, error) =>
       msg =
         fn: 'kvdb.clear'
         success: success
@@ -170,15 +170,15 @@ class QSCMobile
 
   config:
 
-    set: (key, value, success, error) ->
+    set: (key, value, success, error) =>
       key = "__config:#{key}"
       @KVDB.set key, value, success, error
 
-    get: (key, success, error) ->
+    get: (key, success, error) =>
       key = "__config:#{key}"
       @KVDB.get key, success, error
 
-    remove: (key, success, error) ->
+    remove: (key, success, error) =>
       key = "__config:#{key}"
       @KVDB.remove key, success, error
 
@@ -205,7 +205,7 @@ class QSCMobile
     @param {Function} success The callback that handles data when success
     @param {Function} error The callback that handles error
     ###
-    stuid: (success, error) -> @sendMessage {fn: 'user.stuid', success: success, error: error}
+    stuid: (success, error) => @sendMessage {fn: 'user.stuid', success: success, error: error}
 
     ###
     密码
@@ -215,6 +215,6 @@ class QSCMobile
     @param {Function} success The callback that handles data when success
     @param {Function} error The callback that handles error
     ###
-    pwd: (success, error) -> @sendMessage {fn: 'user.pwd', success: success, error: error}
+    pwd: (success, error) => @sendMessage {fn: 'user.pwd', success: success, error: error}
 
 M = new QSCMobile

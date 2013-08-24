@@ -16,8 +16,8 @@ Data = (function() {
      * @param {Function} callback function to callback when success
      * @param {Function} callback function to callback when fail
      */
-    Data.prototype.get = function(args, success, fail) {
-        M.get(this.api, args, success, fail);
+    Data.prototype.get = function(args, success, error) {
+        $.ajax({url: this.api, data: args, success: success, error: error});
     };
 
     /**
@@ -25,12 +25,14 @@ Data = (function() {
      *
      * @return {Array} 关注的物品的 ID
      */
-    Data.prototype.starred = function() {
-        var starred = M.storage.getItem('qiuShiGouStarred');
-        if(!starred) {
-            starred = [];
-        }
-        return starred;
+    Data.prototype.starred = function(callback) {
+        var starred = M.kvdb.get('qiuShiGouStarred', function(data) {
+            if(!starred) {
+                starred = [];
+            }
+            if(callback)
+              callback(starred);
+        });
     };
 
     /**
@@ -44,9 +46,11 @@ Data = (function() {
         data.method = 'upload';
         data.uuid = Math.uuid();
         var successFn = function() {
-            var uuid = data.uuid,
-                starred = _this.starred().push(uuid);
-            M.storage.setItem('qiuShiGouStarred', starred);
+            var uuid = data.uuid;
+            _this.starred(function(starred) {
+                starred.push(uuid);
+                M.kvdb.set('qiuShiGouStarred', starred);
+            });
         };
         this.get(data, successFn, fail);
     };
