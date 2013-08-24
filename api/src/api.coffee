@@ -128,6 +128,7 @@ class QSCMobile
           key: key
         success: callback
         error: error
+      console.log @
       @sendMessage msg
     
     ###
