@@ -1,0 +1,24 @@
+[
+  {
+    "version": "25",
+    "web_accessible_resources": [
+      "api.js"
+    ],
+    "path": "api"
+  },
+  {
+    "version": "1",
+    "web_accessible_resources": [
+      "base.css",
+      "jquery.js",
+      "underscore.js",
+      "font-awesome/css/font-awesome.css",
+      "font-awesome/font/FontAwesome.otf",
+      "font-awesome/font/fontawesome-webfont.eot",
+      "font-awesome/font/fontawesome-webfont.svg",
+      "font-awesome/font/fontawesome-webfont.ttf",
+      "font-awesome/font/fontawesome-webfont.woff"
+    ],
+    "path": "lib"
+  }
+]

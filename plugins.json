@@ -1,0 +1,30 @@
+[
+  {
+    "id": "qiuShiGou",
+    "name": "求失狗",
+    "description": "求失狗 -- 失物招领，寻物启事平台",
+    "version": "0.0.2",
+    "developer": {
+      "name": "Zeno Zeng",
+      "email": "work@zenoes.com",
+      "url": "http://zenoes.com"
+    },
+    "permissions": {
+      "storage": {
+        "description": "需要来存储`我关注的物品`"
+      }
+    },
+    "web_accessible_resources": [
+      "index.html",
+      "background.js",
+      "js/Math.uuid.js",
+      "js/data.js",
+      "js/view.js",
+      "js/app.js",
+      "css/styles.css",
+      "images/logo.png",
+      "images/text.png"
+    ],
+    "path": "plugins/qiuShiGou"
+  }
+]
