@@ -1,0 +1,6 @@
+{
+    "version": "25",
+    "web_accessible_resources": [
+        "api.js"
+    ]
+}
