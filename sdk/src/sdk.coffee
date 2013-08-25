@@ -6,8 +6,8 @@ class SDK extends API
   ###
   constructor: (@pluginID, @debug = on) ->
     console.log "Starting QSC Mobile Plugin SDK"
+    @show()
     @background()
-    @section()
 
   ###
   重载 iframe 沙盒 #iframeID 中的API
@@ -60,15 +60,14 @@ class SDK extends API
     @overloadAPI 'background'
 
   ###
-  显示 Card
+  显示 Card，并在 iframe 沙盒 #section 中运行插件的Section视图
   ###
-  card: ->
-    
+  show: ->
+    html = "<div class=\"card #{@pluginID}\">
+    </div>"
+    $('#cards').append(html)
 
-  ###
-  在 iframe 沙盒 #section 中运行插件的Section视图
-  ###
-  section: ->
+    $('#section').contents().find('head')
     src = "../plugins/#{@pluginID}/index.html"
     iframe = $('<iframe id="section" height="450" width="300" src="'+src+'"></iframe>')[0]
     iframe.onload = ->
@@ -77,10 +76,11 @@ class SDK extends API
       style.onload = ->
         width = $('#section').contents().find('html').width()
         scrollbarWidth = 300 - width
-        $('#wrap').css({width: width, 'padding-left': scrollbarWidth})
+        $('#section-wrap').css({width: width, 'padding-left': scrollbarWidth})
+        $('#card-wrap').css({width: width})
         $('#wrap').animate({opacity: 1})
       $('#section').contents().find('head').append(style)
-    $('#wrap').html iframe
+    $('#section-wrap').html iframe
     @overloadAPI 'section'
 
   ###

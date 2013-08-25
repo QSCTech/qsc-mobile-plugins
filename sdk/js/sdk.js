@@ -16,8 +16,8 @@ API = (function() {
     card: function(args) {
       var content, pluginID, title;
       pluginID = args.pluginID, title = args.title, content = args.content;
-      $("#cards ." + pluginID + " .title").html(title);
-      return $("#cards ." + pluginID + " .content").html(content);
+      $("#card .title").html(title);
+      return $("#card .content").html(content);
     }
   };
 
@@ -121,8 +121,8 @@ SDK = (function(_super) {
     this.pluginID = pluginID;
     this.debug = debug != null ? debug : true;
     console.log("Starting QSC Mobile Plugin SDK");
+    this.show();
     this.background();
-    this.section();
   }
 
   /*
@@ -203,19 +203,15 @@ SDK = (function(_super) {
   };
 
   /*
-  显示 Card
+  显示 Card，并在 iframe 沙盒 #section 中运行插件的Section视图
   */
 
 
-  SDK.prototype.card = function() {};
-
-  /*
-  在 iframe 沙盒 #section 中运行插件的Section视图
-  */
-
-
-  SDK.prototype.section = function() {
-    var iframe, src;
+  SDK.prototype.show = function() {
+    var html, iframe, src;
+    html = "<div class=\"card " + this.pluginID + "\">    </div>";
+    $('#cards').append(html);
+    $('#section').contents().find('head');
     src = "../plugins/" + this.pluginID + "/index.html";
     iframe = $('<iframe id="section" height="450" width="300" src="' + src + '"></iframe>')[0];
     iframe.onload = function() {
@@ -225,9 +221,12 @@ SDK = (function(_super) {
         var scrollbarWidth, width;
         width = $('#section').contents().find('html').width();
         scrollbarWidth = 300 - width;
-        $('#wrap').css({
+        $('#section-wrap').css({
           width: width,
           'padding-left': scrollbarWidth
+        });
+        $('#card-wrap').css({
+          width: width
         });
         return $('#wrap').animate({
           opacity: 1
@@ -235,7 +234,7 @@ SDK = (function(_super) {
       };
       return $('#section').contents().find('head').append(style);
     };
-    $('#wrap').html(iframe);
+    $('#section-wrap').html(iframe);
     return this.overloadAPI('section');
   };
 

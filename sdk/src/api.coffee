@@ -8,8 +8,8 @@ class API
 
     card: (args) ->
       {pluginID, title, content} = args
-      $("#cards .#{pluginID} .title").html title
-      $("#cards .#{pluginID} .content").html content
+      $("#card .title").html title
+      $("#card .content").html content
 
   ###
   User 函数具体实现
