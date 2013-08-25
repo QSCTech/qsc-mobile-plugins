@@ -257,6 +257,19 @@ KVDB = (function(_super) {
   @param {String | Object} value value
   @param {Function} success The callback that handles data when success
   @param {Function} error The callback that handles error
+  
+  @example
+    var M = new QSCMobile('qiuShiGou');
+    M.kvdb.set('key', 'string');
+    M.kvdb.set('key', {hello: world});
+  
+    var success = function(data) {
+      console.log(data);
+    };
+    var error = function(e) {
+      console.log(e);
+    };
+    M.kvdb.set('key', 'string', success, error);
   */
 
 
@@ -285,6 +298,16 @@ KVDB = (function(_super) {
   @param {String} key key
   @param {Function} success The callback that handles data when success
   @param {Function} error The callback that handles error
+  
+  @example
+    var M = new QSCMobile('qiuShiGou');
+    var success = function(data) {
+      console.log(data);
+    };
+    var error = function(e) {
+      console.log(e);
+    };
+    M.kvdb.get('key', success, error);
   */
 
 
@@ -315,6 +338,16 @@ KVDB = (function(_super) {
   @param {String} key - key
   @param {Function} success The callback that handles data when success
   @param {Function} error The callback that handles error
+  
+  @example
+    var M = new QSCMobile('qiuShiGou');
+    var success = function() {
+      console.log('success');
+    };
+    var error = function(e) {
+      console.log(e);
+    };
+    M.kvdb.remove('key', success, error);
   */
 
 
@@ -336,6 +369,16 @@ KVDB = (function(_super) {
   
   @param {Function} success The callback that handles data when success
   @param {Function} error The callback that handles error
+  
+  @example
+    var M = new QSCMobile('qiuShiGou');
+    var success = function() {
+      console.log('success');
+    };
+    var error = function(e) {
+      console.log(e);
+    };
+    M.kvdb.clear(success, error);
   */
 
 
@@ -390,6 +433,19 @@ Config = (function(_super) {
   @param {String | Object} value value
   @param {Function} success The callback that handles data when success
   @param {Function} error The callback that handles error
+  
+  @example
+    var M = new QSCMobile('qiuShiGou');
+    M.config.set('key', 'string');
+    M.config.set('key', {hello: world});
+  
+    var success = function(data) {
+      console.log(data);
+    };
+    var error = function(e) {
+      console.log(e);
+    };
+    M.config.set('key', 'string', success, error);
   */
 
 
@@ -406,6 +462,16 @@ Config = (function(_super) {
   @param {String} key key
   @param {Function} success The callback that handles data when success
   @param {Function} error The callback that handles error
+  
+  @example
+    var M = new QSCMobile('qiuShiGou');
+    var success = function(data) {
+      console.log(data);
+    };
+    var error = function(e) {
+      console.log(e);
+    };
+    M.config.get('key', success, error);
   */
 
 
@@ -420,6 +486,16 @@ Config = (function(_super) {
   @param {String} key - key
   @param {Function} success The callback that handles data when success
   @param {Function} error The callback that handles error
+  
+  @example
+    var M = new QSCMobile('qiuShiGou');
+    var success = function() {
+      console.log('success');
+    };
+    var error = function(e) {
+      console.log(e);
+    };
+    M.config.remove('key', success, error);
   */
 
 
@@ -452,6 +528,16 @@ User = (function(_super) {
   
   @param {Function} success The callback that handles data when success
   @param {Function} error The callback that handles error
+  
+  @example
+    var M = new QSCMobile('qiuShiGou');
+    var success = function(stuid) {
+      console.log(stuid);
+    };
+    var error = function(e) {
+      console.log(e);
+    };
+    M.user.stuid(success, error);
   */
 
 
@@ -470,6 +556,16 @@ User = (function(_super) {
   
   @param {Function} success The callback that handles data when success
   @param {Function} error The callback that handles error
+  
+  @example
+    var M = new QSCMobile('qiuShiGou');
+    var success = function(pwd) {
+      console.log(pwd);
+    };
+    var error = function(e) {
+      console.log(e);
+    };
+    M.user.pwd(success, error);
   */
 
 
@@ -487,11 +583,6 @@ User = (function(_super) {
 
 /*
 QSC Mobile View API
-
-@example
-  M.view.card('qiuShiGou', 'title', 'Here is some contents');
-
-@mixin
 */
 
 
@@ -509,7 +600,7 @@ View = (function(_super) {
   function View(pluginID) {
     var _this = this;
     this.pluginID = pluginID;
-    this.card = function(pluginID, title, content) {
+    this.card = function(data) {
       return View.prototype.card.apply(_this, arguments);
     };
   }
@@ -517,22 +608,21 @@ View = (function(_super) {
   /*
   按照参数绘制 card
   
-  @param {String} pluginID pluginID
-  @param {String} title card title
-  @param {String} content card content
+  @example
+    M = new QSCMobile('qiuShiGou');
+    M.view.card({title: '求失狗', content: '求失狗卡片正文内容\n这是内容第二行'});
+  
+  @param {Object} data
+  @param {String} data.title card title
+  @param {String} data.content card content
   */
 
 
-  View.prototype.card = function(pluginID, title, content) {
-    var args;
-    args = {
-      pluginID: pluginID,
-      title: title,
-      content: content
-    };
+  View.prototype.card = function(data) {
+    data.pluginID = this.pluginID;
     return this.sendRequest({
       fn: 'view.card',
-      args: args
+      args: data
     });
   };
 
@@ -541,6 +631,12 @@ View = (function(_super) {
 })(Platform);
 
 QSCMobile = (function() {
+  /*
+  @param {String} pluginID pluginID
+  
+  @example
+    var M = new QSCMobile('qiuShiGou');
+  */
 
   function QSCMobile(pluginID) {
     var api, _j, _len1, _ref3;

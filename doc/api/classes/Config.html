@@ -225,6 +225,23 @@
     </p>
     <div class='docstring'>
   <p>写入设置</p>
+  <div class='examples'>
+    <h3>Examples:</h3>
+    <h4>
+      
+    </h4>
+    <pre><code class='coffee'>var M = new QSCMobile(&#39;qiuShiGou&#39;);
+M.config.set(&#39;key&#39;, &#39;string&#39;);
+M.config.set(&#39;key&#39;, {hello: world});
+
+var success = function(data) {
+  console.log(data);
+};
+var error = function(e) {
+  console.log(e);
+};
+M.config.set(&#39;key&#39;, &#39;string&#39;, success, error);</code></pre>
+  </div>
 </div>
 <div class='tags'>
   <h3>Parameters:</h3>
@@ -275,6 +292,20 @@
     若存入是 Object 或 JSON String 则取出时自动解析为 Object
   </div>
   <p>取出设置</p>
+  <div class='examples'>
+    <h3>Examples:</h3>
+    <h4>
+      
+    </h4>
+    <pre><code class='coffee'>var M = new QSCMobile(&#39;qiuShiGou&#39;);
+var success = function(data) {
+  console.log(data);
+};
+var error = function(e) {
+  console.log(e);
+};
+M.config.get(&#39;key&#39;, success, error);</code></pre>
+  </div>
 </div>
 <div class='tags'>
   <h3>Parameters:</h3>
@@ -313,6 +344,20 @@
     </p>
     <div class='docstring'>
   <p>删除设置</p>
+  <div class='examples'>
+    <h3>Examples:</h3>
+    <h4>
+      
+    </h4>
+    <pre><code class='coffee'>var M = new QSCMobile(&#39;qiuShiGou&#39;);
+var success = function() {
+  console.log(&#39;success&#39;);
+};
+var error = function(e) {
+  console.log(e);
+};
+M.config.remove(&#39;key&#39;, success, error);</code></pre>
+  </div>
 </div>
 <div class='tags'>
   <h3>Parameters:</h3>
@@ -350,7 +395,7 @@
     </div>
     <div id='footer'>
   Generated on
-  Sat Aug 24 2013 20:33:16 GMT+0800 (CST)
+  Sun Aug 25 2013 13:48:34 GMT+0800 (CST)
   by
   <a href='https://github.com/netzpirat/codo' title='CoffeeScript API documentation generator'>Codo</a>
   v1.7.1

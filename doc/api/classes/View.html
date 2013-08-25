@@ -120,13 +120,6 @@
       <h2>Overview</h2>
       <div class='docstring'>
   <p>QSC Mobile View API</p>
-  <div class='examples'>
-    <h3>Examples:</h3>
-    <h4>
-      
-    </h4>
-    <pre><code class='coffee'>M.view.card(&#39;qiuShiGou&#39;, &#39;title&#39;, &#39;Here is some contents&#39;);</code></pre>
-  </div>
 </div>
 <div class='tags'>
 </div>
@@ -146,7 +139,7 @@
   <li>
     <span class='signature'>
       <a href='#card-instance'>
-        - (void) <strong>card</strong>(pluginID, title, content)
+        - (void) <strong>card</strong>(data)
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -194,25 +187,31 @@
       <div class='methods'>
   <div class='method_details'>
     <p class='signature' id='card-instance'>
-      - (void) <strong>card</strong>(pluginID, title, content)
+      - (void) <strong>card</strong>(data)
       (bound)
     </p>
     <div class='docstring'>
   <p>按照参数绘制 card</p>
+  <div class='examples'>
+    <h3>Examples:</h3>
+    <h4>
+      
+    </h4>
+    <pre><code class='coffee'>M = new QSCMobile(&#39;qiuShiGou&#39;);
+M.view.card({title: &#39;求失狗&#39;, content: &#39;求失狗卡片正文内容\n这是内容第二行&#39;});</code></pre>
+  </div>
 </div>
 <div class='tags'>
   <h3>Parameters:</h3>
   <ul class='param'>
     <li>
-      <span class='name'>pluginID</span>
+      <span class='name'>data</span>
       <span class='type'>
-        (<tt>String</tt>)
+        (<tt>Object</tt>)
       </span>
-      &mdash;
-      <span class='desc'>pluginID</span>
     </li>
     <li>
-      <span class='name'>title</span>
+      <span class='name'>data.title</span>
       <span class='type'>
         (<tt>String</tt>)
       </span>
@@ -220,7 +219,7 @@
       <span class='desc'>card title</span>
     </li>
     <li>
-      <span class='name'>content</span>
+      <span class='name'>data.content</span>
       <span class='type'>
         (<tt>String</tt>)
       </span>
@@ -234,7 +233,7 @@
     </div>
     <div id='footer'>
   Generated on
-  Sat Aug 24 2013 20:33:16 GMT+0800 (CST)
+  Sun Aug 25 2013 13:48:34 GMT+0800 (CST)
   by
   <a href='https://github.com/netzpirat/codo' title='CoffeeScript API documentation generator'>Codo</a>
   v1.7.1

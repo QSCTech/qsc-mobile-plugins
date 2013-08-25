@@ -14,6 +14,20 @@ class KVDB extends Platform
   @param {String | Object} value value
   @param {Function} success The callback that handles data when success
   @param {Function} error The callback that handles error
+
+  @example
+    var M = new QSCMobile('qiuShiGou');
+    M.kvdb.set('key', 'string');
+    M.kvdb.set('key', {hello: world});
+
+    var success = function(data) {
+      console.log(data);
+    };
+    var error = function(e) {
+      console.log(e);
+    };
+    M.kvdb.set('key', 'string', success, error);
+
   ###
   set: (key, value, success, error) =>
     unless typeof value is 'string'
@@ -35,6 +49,17 @@ class KVDB extends Platform
   @param {String} key key
   @param {Function} success The callback that handles data when success
   @param {Function} error The callback that handles error
+
+  @example
+    var M = new QSCMobile('qiuShiGou');
+    var success = function(data) {
+      console.log(data);
+    };
+    var error = function(e) {
+      console.log(e);
+    };
+    M.kvdb.get('key', success, error);
+
   ###
   get: (key, success, error) =>
     callback = (data) ->
@@ -57,6 +82,17 @@ class KVDB extends Platform
   @param {String} key - key
   @param {Function} success The callback that handles data when success
   @param {Function} error The callback that handles error
+
+  @example
+    var M = new QSCMobile('qiuShiGou');
+    var success = function() {
+      console.log('success');
+    };
+    var error = function(e) {
+      console.log(e);
+    };
+    M.kvdb.remove('key', success, error);
+
   ###
   remove: (key, success, error) =>
     msg =
@@ -72,6 +108,17 @@ class KVDB extends Platform
 
   @param {Function} success The callback that handles data when success
   @param {Function} error The callback that handles error
+
+  @example
+    var M = new QSCMobile('qiuShiGou');
+    var success = function() {
+      console.log('success');
+    };
+    var error = function(e) {
+      console.log(e);
+    };
+    M.kvdb.clear(success, error);
+
   ###
   clear: (success, error) =>
     msg =

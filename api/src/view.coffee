@@ -1,10 +1,5 @@
 ###
 QSC Mobile View API
-
-@example
-  M.view.card('qiuShiGou', 'title', 'Here is some contents');
-
-@mixin
 ###
 
 class View extends Platform
@@ -18,11 +13,15 @@ class View extends Platform
 
   ###
   按照参数绘制 card
+
+  @example
+    M = new QSCMobile('qiuShiGou');
+    M.view.card({title: '求失狗', content: '求失狗卡片正文内容\n这是内容第二行'});
   
-  @param {String} pluginID pluginID
-  @param {String} title card title
-  @param {String} content card content
+  @param {Object} data
+  @param {String} data.title card title
+  @param {String} data.content card content
   ###
-  card: (pluginID, title, content) =>
-    args = {pluginID: pluginID, title: title, content: content}
-    @sendRequest {fn: 'view.card', args: args}
+  card: (data) =>
+    data.pluginID = @pluginID
+    @sendRequest {fn: 'view.card', args: data}

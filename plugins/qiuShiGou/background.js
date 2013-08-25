@@ -1,9 +1,8 @@
+var M = new QSCMobile('qiuShiGou')
+
 setInterval(function() {
-    var msg = {
-        action: 'redrawCard',
-        pluginID: 'qiuShiGou',
+    M.view.card({
         title: '求失狗',
         content: (new Date()).getTime()+'\n'+Math.random()
-    };
-    QSCMobile.sendMessage(msg);
+    });
 }, 1000);
