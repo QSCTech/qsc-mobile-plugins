@@ -18,12 +18,11 @@ manifest = (dirs, filename, callback) ->
       if pending is 0
         console.log "Generating #{filename}"
         data = JSON.stringify packages, null, 2
-        console.log data
         fs.writeFile filename, data, callback
 
 build = (callback) ->
 
-  manifest ['api', 'lib'], 'platform.json', ->
+  manifest ['api', 'lib'], 'resources.json', ->
     fs.readdir 'plugins', (err, dirs) ->
       throw err if err
       dirs = dirs.map (dir) -> "plugins/#{dir}"

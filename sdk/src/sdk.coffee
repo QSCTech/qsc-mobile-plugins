@@ -92,6 +92,13 @@ class SDK
   # 
   #######################
 
+  view:
+
+    card: (args) ->
+      {pluginID, title, content} = args
+      $("#cards .#{pluginID} .title").html title
+      $("#cards .#{pluginID} .content").html content
+
   user:
 
     stuid: -> {data: "3000000000"}
