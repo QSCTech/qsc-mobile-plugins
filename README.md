@@ -20,7 +20,6 @@ http://qsctech.github.io/qsc-mobile-plugins/doc/api/
 
 fork 这个仓库，然后直接 pull request 过来就可以了
 
-
 ## 面向内部开发者
 
 我们以 gh-pages 分支为稳定分支，从 gh-pages 分支拉取文件更新。
