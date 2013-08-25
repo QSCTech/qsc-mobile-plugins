@@ -20,10 +20,8 @@
         "js/data.js",
         "js/view.js",
         "js/app.js",
-        
         "css/styles.css",
-        
         "images/logo.png",
-        "images/text.png",
+        "images/text.png"
     ]
 }
