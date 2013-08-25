@@ -1,6 +1,11 @@
 class SDK extends API
 
+  ###
+  @param {String} pluginID pluginID
+  @param {Boolean} debug debug
+  ###
   constructor: (@pluginID, @debug = on) ->
+    console.log "Starting QSC Mobile Plugin SDK"
     @background()
     @section()
 
@@ -55,6 +60,12 @@ class SDK extends API
     @overloadAPI 'background'
 
   ###
+  显示 Card
+  ###
+  card: ->
+    
+
+  ###
   在 iframe 沙盒 #section 中运行插件的Section视图
   ###
   section: ->
@@ -79,10 +90,13 @@ class SDK extends API
   ###
   onRequest: (win, request) ->
     {fn, args, callback} = request
-    console.log "QSCMobile-Plugins-API-Request               ->   #{JSON.stringify([fn, args])}" if @debug
+    console.log "\n\nQSCMobile-Plugins-API-Request-ID: #{callback}"
+    json = JSON.stringify {fn: fn, args: args}, null, 4
+    console.log "\nRequest: #{json}" if @debug
     [part1, part2] = fn.split('.')
     fn = this[part1][part2]
     data = fn.call this, args
-    console.log "QSCMobile-Plugins-API-Request-Callback-Data ->   #{JSON.stringify([data.data, data.error])}" if @debug
+    json = JSON.stringify {data: data.data, error: data.error}, null, 4
+    console.log "\nResults: #{json}" if @debug
     win[callback]?(data)
 

@@ -111,9 +111,16 @@ SDK = (function(_super) {
 
   __extends(SDK, _super);
 
+  /*
+  @param {String} pluginID pluginID
+  @param {Boolean} debug debug
+  */
+
+
   function SDK(pluginID, debug) {
     this.pluginID = pluginID;
     this.debug = debug != null ? debug : true;
+    console.log("Starting QSC Mobile Plugin SDK");
     this.background();
     this.section();
   }
@@ -196,6 +203,13 @@ SDK = (function(_super) {
   };
 
   /*
+  显示 Card
+  */
+
+
+  SDK.prototype.card = function() {};
+
+  /*
   在 iframe 沙盒 #section 中运行插件的Section视图
   */
 
@@ -233,16 +247,25 @@ SDK = (function(_super) {
 
 
   SDK.prototype.onRequest = function(win, request) {
-    var args, callback, data, fn, part1, part2, _ref;
+    var args, callback, data, fn, json, part1, part2, _ref;
     fn = request.fn, args = request.args, callback = request.callback;
+    console.log("\n\nQSCMobile-Plugins-API-Request-ID: " + callback);
+    json = JSON.stringify({
+      fn: fn,
+      args: args
+    }, null, 4);
     if (this.debug) {
-      console.log("QSCMobile-Plugins-API-Request               ->   " + (JSON.stringify([fn, args])));
+      console.log("\nRequest: " + json);
     }
     _ref = fn.split('.'), part1 = _ref[0], part2 = _ref[1];
     fn = this[part1][part2];
     data = fn.call(this, args);
+    json = JSON.stringify({
+      data: data.data,
+      error: data.error
+    }, null, 4);
     if (this.debug) {
-      console.log("QSCMobile-Plugins-API-Request-Callback-Data ->   " + (JSON.stringify([data.data, data.error])));
+      console.log("\nResults: " + json);
     }
     return typeof win[callback] === "function" ? win[callback](data) : void 0;
   };

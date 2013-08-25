@@ -5,4 +5,10 @@
 <script>
 var id = window.location.hash.replace(new RegExp('#', 'g'), '')
 document.write(id);
+
+var head = document.getElementsByTagName('HEAD').item(0),
+    script = document.createElement("script");
+script.type = "text/javascript";
+script.src = '../plugins/'+id+'/background.js';
+head.appendChild(script);
 </script>
