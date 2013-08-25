@@ -55,8 +55,16 @@ View = (function() {
         });
     };
 
-    View.prototype.msg = function(msg) {
-        var htmlString = '<div class="msg">' + msg + '</div>';
+    View.prototype.header = function(title) {
+        var htmlString = '<span class="title">'+title+'</span> | <a href="index.html">回到首页</a>';
+        $('#header').html(htmlString);
+    };
+
+    View.prototype.msg = function(msg, title) {
+        if(!title)
+          title = '遇到错误了';
+        this.header(title);
+        var htmlString = '<div class="msg"><img src="images/logo.png"><p>' + msg + '</p></div>';
         $('#content').html(htmlString);
     };
 
@@ -98,7 +106,7 @@ View = (function() {
             var fail = function() {
                 _this.msg('上传失败，请检查您的网络连接');
             };
-            this.data.upload(obj, success, fail);
+            _this.data.upload(obj, success, fail);
         });
     };
 
