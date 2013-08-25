@@ -11,7 +11,6 @@
  *
  * Date: Sat Jan 7 17:30:44 ICT 2012
 */
-
 var CHARACTERS, CHARMAP, Config, INVALID_CHARACTERS, InvalidSequenceError, KVDB, Platform, QSCMobile, User, View, char, decode, encode, fromCharCode, i, pack, unpack, _i, _len, _ref, _ref1, _ref2,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
