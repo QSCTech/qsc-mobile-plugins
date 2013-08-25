@@ -14,11 +14,16 @@
         }
     },
     "web_accessible_resources": [
-        "background.js",
         "index.html",
+        "background.js",
+        "js/Math.uuid.js",
+        "js/data.js",
+        "js/view.js",
+        "js/app.js",
+        
+        "css/styles.css",
+        
         "images/logo.png",
         "images/text.png",
-        "js/main.js",
-        "css/styles.css"
     ]
 }
