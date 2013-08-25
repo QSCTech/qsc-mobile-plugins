@@ -169,7 +169,7 @@ Platform = (function() {
   function Platform() {}
 
   /*
-  @param {Object} opts - config options
+  @param {String} pluginID pluginID
   */
 
 
@@ -182,11 +182,11 @@ Platform = (function() {
   /*
   向平台发送请求
   @private
-  @param {Object} request - request
-  @param {String} request.fn - 平台应执行的函数
-  @param {Object} request.args - 函数参数
-  @param {Object} request.success - The callback that handles data when success
-  @param {Object} request.error - The callback that handles error
+  @param {Object} request request
+  @param {String} request.fn 平台应执行的函数
+  @param {Object} request.args 函数参数
+  @param {Function} request.success The callback that handles data when success
+  @param {Function} request.error The callback that handles error
   */
 
 
@@ -335,7 +335,7 @@ KVDB = (function(_super) {
   /*
   删除记录
   
-  @param {String} key - key
+  @param {String} key key
   @param {Function} success The callback that handles data when success
   @param {Function} error The callback that handles error
   
@@ -429,11 +429,6 @@ Config = (function(_super) {
   /*
   写入设置
   
-  @param {String} key key
-  @param {String | Object} value value
-  @param {Function} success The callback that handles data when success
-  @param {Function} error The callback that handles error
-  
   @example
     var M = new QSCMobile('qiuShiGou');
     M.config.set('key', 'string');
@@ -446,6 +441,11 @@ Config = (function(_super) {
       console.log(e);
     };
     M.config.set('key', 'string', success, error);
+  
+  @param {String} key key
+  @param {String | Object} value value
+  @param {Function} success The callback that handles data when success
+  @param {Function} error The callback that handles error
   */
 
 
@@ -457,12 +457,6 @@ Config = (function(_super) {
   /*
   取出设置
   
-  @note 若存入是 Object 或 JSON String 则取出时自动解析为 Object
-  
-  @param {String} key key
-  @param {Function} success The callback that handles data when success
-  @param {Function} error The callback that handles error
-  
   @example
     var M = new QSCMobile('qiuShiGou');
     var success = function(data) {
@@ -472,6 +466,12 @@ Config = (function(_super) {
       console.log(e);
     };
     M.config.get('key', success, error);
+  
+  @param {String} key key
+  @param {Function} success The callback that handles data when success
+  @param {Function} error The callback that handles error
+  
+  @note 若存入是 Object 或 JSON String 则取出时自动解析为 Object
   */
 
 
@@ -483,10 +483,6 @@ Config = (function(_super) {
   /*
   删除设置
   
-  @param {String} key - key
-  @param {Function} success The callback that handles data when success
-  @param {Function} error The callback that handles error
-  
   @example
     var M = new QSCMobile('qiuShiGou');
     var success = function() {
@@ -496,6 +492,10 @@ Config = (function(_super) {
       console.log(e);
     };
     M.config.remove('key', success, error);
+  
+  @param {String} key - key
+  @param {Function} success The callback that handles data when success
+  @param {Function} error The callback that handles error
   */
 
 

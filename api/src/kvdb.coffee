@@ -79,7 +79,7 @@ class KVDB extends Platform
   ###
   删除记录
 
-  @param {String} key - key
+  @param {String} key key
   @param {Function} success The callback that handles data when success
   @param {Function} error The callback that handles error
 

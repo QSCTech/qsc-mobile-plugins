@@ -7,7 +7,7 @@ class Platform
 
 
   ###
-  @param {Object} opts - config options
+  @param {String} pluginID pluginID
   ###
   construtor: (@pluginID) ->
     @callbacks = {}
@@ -17,11 +17,11 @@ class Platform
   ###
   向平台发送请求
   @private
-  @param {Object} request - request
-  @param {String} request.fn - 平台应执行的函数
-  @param {Object} request.args - 函数参数
-  @param {Object} request.success - The callback that handles data when success
-  @param {Object} request.error - The callback that handles error
+  @param {Object} request request
+  @param {String} request.fn 平台应执行的函数
+  @param {Object} request.args 函数参数
+  @param {Function} request.success The callback that handles data when success
+  @param {Function} request.error The callback that handles error
   ###
   sendRequest: (request) ->
     {fn, args, success, error} = request

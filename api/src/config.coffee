@@ -14,11 +14,6 @@ class Config extends KVDB
   ###
   写入设置
 
-  @param {String} key key
-  @param {String | Object} value value
-  @param {Function} success The callback that handles data when success
-  @param {Function} error The callback that handles error
-
   @example
     var M = new QSCMobile('qiuShiGou');
     M.config.set('key', 'string');
@@ -32,6 +27,11 @@ class Config extends KVDB
     };
     M.config.set('key', 'string', success, error);
   
+  @param {String} key key
+  @param {String | Object} value value
+  @param {Function} success The callback that handles data when success
+  @param {Function} error The callback that handles error
+
   ###
   set: (key, value, success, error) =>
     key = "__config:#{key}"
@@ -39,12 +39,6 @@ class Config extends KVDB
 
   ###
   取出设置
-
-  @note 若存入是 Object 或 JSON String 则取出时自动解析为 Object
-
-  @param {String} key key
-  @param {Function} success The callback that handles data when success
-  @param {Function} error The callback that handles error
 
   @example
     var M = new QSCMobile('qiuShiGou');
@@ -56,6 +50,12 @@ class Config extends KVDB
     };
     M.config.get('key', success, error);
 
+  @param {String} key key
+  @param {Function} success The callback that handles data when success
+  @param {Function} error The callback that handles error
+
+  @note 若存入是 Object 或 JSON String 则取出时自动解析为 Object
+
   ###
   get: (key, success, error) =>
     key = "__config:#{key}"
@@ -63,10 +63,6 @@ class Config extends KVDB
 
   ###
   删除设置
-
-  @param {String} key - key
-  @param {Function} success The callback that handles data when success
-  @param {Function} error The callback that handles error
 
   @example
     var M = new QSCMobile('qiuShiGou');
@@ -77,6 +73,11 @@ class Config extends KVDB
       console.log(e);
     };
     M.config.remove('key', success, error);
+
+  @param {String} key - key
+  @param {Function} success The callback that handles data when success
+  @param {Function} error The callback that handles error
+
   ###
   remove: (key, success, error) =>
     key = "__config:#{key}"
