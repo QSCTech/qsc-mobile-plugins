@@ -25,9 +25,9 @@ class Platform
   ###
   sendRequest: (request) ->
     # 强制请求队列延时保证url跳转被截获
-    if (new Date().getTime()) - @lastRequest < 1
+    if (new Date().getTime()) - @lastRequest < 5
       fn = => @sendRequest request
-      setTimeout fn, 1
+      setTimeout fn, 5
       return
     @lastRequest = (new Date().getTime())
     {fn, args, success, error} = request

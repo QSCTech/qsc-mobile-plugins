@@ -3,7 +3,7 @@ ul,li{list-style:none}
 a{text-decoration:none;color:#533125}
 body{background:#e7cea9}
 #wrap{padding:1em}
-#header{font-size:1.5em;text-align:right;cursor:pointer;line-height:2em}#header i{font-size:2em;padding-top:.5em;display:inline-block}
+#header{padding-bottom:.5em;font-size:1.5em;text-align:right;cursor:pointer;vertical-align:middle}#header i{padding-left:.3em;font-size:1.5em;position:relative;top:.1em}
 #header img:first-child{float:left;padding-left:3%;width:30%}
 #header img:last-child{padding-right:3%;float:right;width:60%}
 #header:after{clear:both;display:block;content:''}

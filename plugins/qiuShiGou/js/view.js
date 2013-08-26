@@ -129,6 +129,7 @@ View = (function() {
     };
 
     View.prototype.index = function() {
+        $('#header').html('');
         var htmlString = '<div class="main">'
                        + '<ul class="menu">'
                        + '<li class="upload">发布信息</li>'
@@ -143,6 +144,7 @@ View = (function() {
             var view = $(this).attr('class'),
                 allow = ["search", "upload", "found", "lost", "starred", "index"];
             if(allow.indexOf(view) > -1) {
+                _this.header($(this).text());
                 _this[view].call(_this);
             }
         });

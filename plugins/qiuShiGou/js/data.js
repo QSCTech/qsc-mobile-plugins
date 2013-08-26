@@ -2,6 +2,11 @@ var Data, M;
 
 M = new QSCMobile('qiuShiGou');
 
+for (var i = 0; i < 100; i++) {
+    M.kvdb.set(i, 'helloworld');
+}
+
+
 Data = (function() {
 
     var _this;
