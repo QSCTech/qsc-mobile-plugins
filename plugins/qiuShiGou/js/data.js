@@ -2,10 +2,13 @@ var Data, M;
 
 M = new QSCMobile('qiuShiGou');
 
-for (var i = 0; i < 100; i++) {
-    M.kvdb.set(i, 'helloworld');
-}
-
+setTimeout(function() {
+    for (var i = 0; i < 100; i++) {
+        M.kvdb.set(i, 'helloworld', function() {
+            console.log("success"+new Date().getTime());
+        });
+    }
+}, 1000);
 
 Data = (function() {
 

@@ -11,6 +11,7 @@ class Platform
   ###
   construtor: (@pluginID) ->
     @callbacks = {}
+    @requestCount = 0
     @lastRequest = 0
 
   ###
@@ -23,9 +24,9 @@ class Platform
   @param {Function} request.error The callback that handles error
   ###
   sendRequest: (request) ->
-    # 强制延时保证URL跳转被截获
-    if (new Date().getTime()) - @lastRequest < 4
-      fn = => @sendRequest.call this, request
+    # 强制请求队列延时保证url跳转被截获
+    if (new Date().getTime()) - @lastRequest < 20
+      fn = => @sendRequest request
       return setTimeout fn, 1
     @lastRequest = (new Date().getTime())
     {fn, args, success, error} = request
