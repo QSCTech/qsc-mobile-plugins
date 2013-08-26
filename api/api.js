@@ -194,11 +194,11 @@ Platform = (function() {
   Platform.prototype.sendRequest = function(request) {
     var args, callback, callbackName, error, errorFn, fn, prefix, random, sdk, success,
       _this = this;
-    if ((new Date().getTime()) - this.lastRequest < 5) {
+    if ((new Date().getTime()) - this.lastRequest < 1) {
       fn = function() {
         return _this.sendRequest(request);
       };
-      setTimeout(fn, 5);
+      setTimeout(fn, 1);
       return;
     }
     this.lastRequest = new Date().getTime();
