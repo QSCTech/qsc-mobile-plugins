@@ -8,7 +8,7 @@ View = (function() {
         _this = this;
         this.data = data;
 
-        $('#header').on('click', function() {
+        $('body').on('click', '.icon-circle-arrow-left', function() {
             _this.index();
         });
     }
@@ -35,12 +35,14 @@ View = (function() {
         }
         var htmlString = data.map(function(elem) {
             // .info 默认收起
-            var html ='<li><div class="title">'+elem.name+' - '+elem.campus+'</div>'
-                     + '<div class="info">地点：'+elem.place+'<br>具体描述：'+elem.detail+'<br>联系方式：'+elem.contact+'</div></li>';
-            return html;
+            var arr = [['物品', elem.name], ['校区', elem.campus], ['地点', elem.place], ['具体描述', elem.detail], ['联系方式', elem.contact]];
+            arr = arr.map(function(elem) {
+                return '<tr>'+elem.map(function(el) { return '<td>'+el+'</td>' }).join('')+'</tr>';
+            });
+            return '<table>'+arr.join('')+'</table>';
         });
         if(!prepend) prepend = '';
-        htmlString = '<ul class="list">'+prepend+htmlString.join('')+'<a class="prev">上一页</a> / <a class="next">下一页</a></ul>';
+        htmlString = '<div class="list">'+prepend+htmlString.join('')+'<a class="prev">上一页</a><a class="next">下一页</a></div>';
         $('#content').html(htmlString);
         $('li').click(function() {
             $(this).find('.info').slideToggle();
@@ -48,10 +50,12 @@ View = (function() {
         $('.prev').click(function() {
             query.page--;
             _this.list(query, prepend);
+            $('html, body').animate({scrollTop: 0});
         });
         $('.next').click(function() {
             query.page++;
             _this.list(query, prepend);
+            $('html, body').animate({scrollTop: 0});
         });
     };
 
@@ -128,8 +132,14 @@ View = (function() {
         this.list(query);
     };
 
+    View.prototype.about = function() {
+        this.header('关于求失狗');
+        var htmlString = 'Designer: 林一角<br>Fontend Developer: Zeno Zeng<br>Backend Developer: Delostik';
+        $('#content').html(htmlString);
+    };
+
     View.prototype.index = function() {
-        $('#header').html('');
+        $('#header').html('<div id="logo"><image src="images/dog.png" /></div>');
         var htmlString = '<div class="main">'
                        + '<ul class="menu">'
                        + '<li class="upload">发布信息</li>'
@@ -138,8 +148,12 @@ View = (function() {
                        + '<li class="lost">寻物启事</li>'
                        + '<li class="starred">我发布的</li>'
                        + '</ul>'
+                       + '<div id="about"><i class="icon-info-sign"></i>求失狗</div>'
                        + '</div>';
         $('#content').html(htmlString);
+        $('#about').on('click', function() {
+            _this.about();
+        });
         $('li').on('click', function() {
             var view = $(this).attr('class'),
                 allow = ["search", "upload", "found", "lost", "starred", "index"];

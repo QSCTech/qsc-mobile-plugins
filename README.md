@@ -16,6 +16,18 @@ http://qsctech.github.io/qsc-mobile-plugins/doc/api/
 
 比如要调试求失狗这个plugin，访问 sdk/#qiuShiGou 就可以开始调试了哦，访问 sdk/#qiuShiGou#debug 就可以开启调试输出了哦。
 
+### 请不要显示滚动条
+
+Stylish:
+
+```css
+@namespace url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
+scrollbar {  
+    width: 0 !important;
+    display: none;
+}
+```
+
 ### 提交插件
 
 fork 这个仓库，然后直接 pull request 过来就可以了

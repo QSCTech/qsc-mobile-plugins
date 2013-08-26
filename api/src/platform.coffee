@@ -10,9 +10,6 @@ class Platform
   @param {String} pluginID pluginID
   ###
   construtor: (@pluginID) ->
-    @callbacks = {}
-    @requestCount = 0
-    @lastRequest = 0
 
   ###
   向平台发送请求

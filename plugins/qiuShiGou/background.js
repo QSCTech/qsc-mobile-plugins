@@ -1,6 +1,14 @@
-var M = new QSCMobile('qiuShiGou')
-
-M.view.card({
-    title: '求失狗',
-    content: '这是一个正文'
-});
+(function() {
+    // 注意所有的 background.js 运行在同一个Webview中
+    // 这里用匿名函数包装起来，防止变量污染
+    var M = new QSCMobile('qiuShiGou');
+    M.kvdb.get('qiuShiGouStarred', function(data) {
+        if(!data) {
+            data = [];
+        }
+        M.view.card({
+            title: '<em>求失狗</em>',
+            content: '我关注的物品：'+JSON.stringify(data)
+        });
+    });
+})();

@@ -34,10 +34,6 @@ class SDK extends API
       # hide scrollbar
       style = $('<link href="../../sdk/css/scrollbar.css" rel="stylesheet" type="text/css">')[0]
       style.onload = =>
-        width = $('#section').contents().find('html').width()
-        scrollbarWidth = 300 - width
-        $('#section-wrap').css({width: width, 'padding-left': scrollbarWidth})
-        $('#card-wrap').css({width: width})
         $('#wrap').animate({opacity: 1})
       $('#section').contents().find('head').append(style)
     $('#section-wrap').html iframe

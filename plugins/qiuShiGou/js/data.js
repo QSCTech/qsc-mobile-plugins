@@ -2,13 +2,13 @@ var Data, M;
 
 M = new QSCMobile('qiuShiGou');
 
-setTimeout(function() {
-    for (var i = 0; i < 100; i++) {
-        M.kvdb.set(i, 'helloworld', function() {
-            console.log("success"+new Date().getTime());
-        });
-    }
-}, 1000);
+// setTimeout(function() {
+//     for (var i = 0; i < 100; i++) {
+//         M.kvdb.set(i, 'helloworld', function() {
+//             console.log("success"+new Date().getTime());
+//         });
+//     }
+// }, 1000);
 
 Data = (function() {
 
@@ -36,12 +36,12 @@ Data = (function() {
      * @return {Array} 关注的物品的 ID
      */
     Data.prototype.starred = function(callback) {
-        var starred = M.kvdb.get('qiuShiGouStarred', function(data) {
-            if(!starred) {
-                starred = [];
+        M.kvdb.get('qiuShiGouStarred', function(data) {
+            if(!data) {
+                data = [];
             }
             if(callback)
-              callback(starred);
+              callback(data);
         });
     };
 

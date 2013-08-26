@@ -175,9 +175,6 @@ Platform = (function() {
 
   Platform.prototype.construtor = function(pluginID) {
     this.pluginID = pluginID;
-    this.callbacks = {};
-    this.requestCount = 0;
-    return this.lastRequest = 0;
   };
 
   /*
