@@ -56,13 +56,13 @@ View = (function() {
     };
 
     View.prototype.header = function(title) {
-        var htmlString = '<span class="title">'+title+'</span> | <a href="index.html">回到首页</a>';
+        var htmlString = '<span class="title">'+title+'</span><i class="icon-circle-arrow-left"></i>';
         $('#header').html(htmlString);
     };
 
     View.prototype.msg = function(msg, title) {
         if(!title)
-          title = '遇到错误了';
+          title = '嘛！出错了！';
         this.header(title);
         var htmlString = '<div class="msg"><img src="images/logo.png"><p>' + msg + '</p></div>';
         $('#content').html(htmlString);
@@ -104,7 +104,7 @@ View = (function() {
                 _this.msg('上传成功');
             };
             var fail = function() {
-                _this.msg('上传失败，请检查您的网络连接');
+                _this.msg('<em>上传失败</em><br>请检查您的网络连接');
             };
             _this.data.upload(obj, success, fail);
         });
