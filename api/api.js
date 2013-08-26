@@ -176,7 +176,8 @@ Platform = (function() {
   Platform.prototype.construtor = function(pluginID) {
     this.pluginID = pluginID;
     this.callbacks = {};
-    return this.requestCount = 0;
+    this.requestCount = 0;
+    return this.lastRequest = 0;
   };
 
   /*
@@ -191,7 +192,16 @@ Platform = (function() {
 
 
   Platform.prototype.sendRequest = function(request) {
-    var args, callback, callbackName, error, errorFn, fn, prefix, random, sdk, success;
+    var args, callback, callbackName, error, errorFn, fn, prefix, random, sdk, success,
+      _this = this;
+    if ((new Date().getTime()) - this.lastRequest < 1) {
+      fn = function() {
+        return _this.sendRequest(request);
+      };
+      setTimeout(fn, 1);
+      return;
+    }
+    this.lastRequest = new Date().getTime();
     fn = request.fn, args = request.args, success = request.success, error = request.error;
     errorFn = error;
     random = (Math.random() + '').replace(new RegExp('0\.', ''), '');

@@ -12,6 +12,7 @@ class Platform
   construtor: (@pluginID) ->
     @callbacks = {}
     @requestCount = 0
+    @lastRequest = 0
 
   ###
   向平台发送请求
@@ -23,6 +24,12 @@ class Platform
   @param {Function} request.error The callback that handles error
   ###
   sendRequest: (request) ->
+    # 强制请求队列延时保证url跳转被截获
+    if (new Date().getTime()) - @lastRequest < 1
+      fn = => @sendRequest request
+      setTimeout fn, 1
+      return
+    @lastRequest = (new Date().getTime())
     {fn, args, success, error} = request
     errorFn = error
     random = (Math.random()+'').replace(new RegExp('0\.', ''), '')
