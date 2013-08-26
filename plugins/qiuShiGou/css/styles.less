@@ -1,14 +1,20 @@
 @bg: #eee;
 @green: #d7efdc;
 @text: #838383;
+@padding: 6vw;
 
 // basic reset
-html, body, ul, li {
+html, body, ul, li, input, textarea {
     padding: 0;
     margin: 0;
 }
 ul, li {
     list-style: none;
+}
+
+// reset outline
+input, textarea, select {
+    outline: none;
 }
 
 // styles starts
@@ -17,20 +23,31 @@ body {
     color: @text;
 }
 
+input.search {
+    background: #f7f7e8;
+}
+
 a {
     text-decoration: none;
     color: @text;
 }
 
-#about {
+#about-icon {
     position: fixed;
     right: 4vw;
     top: 4vw;
     color: #ccc;
     cursor: pointer;
+    font-size: 5vw;
     i {
         padding-right: 1vw;
     }
+}
+
+#about {
+    font-size: 5vw;
+    line-height: 8vw;
+    padding: @padding;
 }
 
 #logo {
@@ -58,19 +75,27 @@ body {
 }
 
 #header {
-    padding-bottom: .5em;
-    font-size: 1.5em;
-    text-align: right;
+    background: #ffffc5;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    font-size: 8vw;
+    line-height: 16vw;
+    text-align: left;
     vertical-align: middle;
     i.icon-circle-arrow-left {
+        margin: 0 6vw;
+        font-size: 12vw;
         cursor: pointer;
-        padding-left: .3em;
-        font-size: 1.5em;
+        top: 1.2vw;
         position: relative;
-        top: .1em;
     }
 }
 
+#content {
+    margin-top: 16vw;
+}
 
 #wrap {
     min-height: 100%; // 保证撑满
@@ -80,11 +105,8 @@ body {
     input, textarea, select {
         border: none;
         display: block;
-        font-size: 1em;
-        margin: 1em 0;
-        background: #fff1db;
-        padding: .5em 2%;
-        width: 96%;
+        width: 100vw;
+        padding: 1em;
     }
     select, input[type="button"] {
         cursor: pointer;
@@ -99,30 +121,30 @@ body {
             content: '';
         }
         table {
-            padding: .5em;
-            margin-bottom: 1em;
+            font-size: 4vw;
+            padding: 2vw 6vw;
             width: 100%;
-            background: #fff;
+            border-bottom: 1px solid #ccc;
         }
         tr {
-            border-top: 1px solid #000;
         }
         td {
             padding-right: 1em;
         }
         .next, .prev {
             display: inline-block;
-            width: 48%;
+            width: 50%;
             text-align: center;
-            background: #fff;
             line-height: 2em;
             cursor: pointer;
         }
         .next {
             float: right;
+            width: 49%;
         }
         .prev {
             float: left;
+            border-right: 1px solid #ccc;
         }
     }
     .menu {

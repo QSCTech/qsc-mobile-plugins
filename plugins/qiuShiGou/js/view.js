@@ -60,7 +60,7 @@ View = (function() {
     };
 
     View.prototype.header = function(title) {
-        var htmlString = '<span class="title">'+title+'</span><i class="icon-circle-arrow-left"></i>';
+        var htmlString = '<i class="icon-circle-arrow-left"></i><span class="title">'+title+'</span>';
         $('#header').html(htmlString);
     };
 
@@ -134,24 +134,24 @@ View = (function() {
 
     View.prototype.about = function() {
         this.header('关于求失狗');
-        var htmlString = 'Designer: 林一角<br>Fontend Developer: Zeno Zeng<br>Backend Developer: Delostik';
+        var htmlString = '<div id="about">Designer: 林一角<br>Fontend Developer: Zeno Zeng<br>Backend Developer: Delostik</div>';
         $('#content').html(htmlString);
     };
 
     View.prototype.index = function() {
-        $('#header').html('<div id="logo"><image src="images/dog.png" /></div>');
-        var htmlString = '<div class="main">'
+        $('#header').html('');
+        var htmlString = '<div id="logo"><image src="images/dog.png" /></div>'
+                       + '<div class="main">'
                        + '<ul class="menu">'
                        + '<li class="upload">发布信息</li>'
                        + '<li class="search">物品搜索</li>'
                        + '<li class="found">失物招领</li>'
                        + '<li class="lost">寻物启事</li>'
-                       + '<li class="starred">我发布的</li>'
                        + '</ul>'
-                       + '<div id="about"><i class="icon-info-sign"></i>求失狗</div>'
+                       + '<div id="about-icon"><i class="icon-info-sign"></i>求失狗</div>'
                        + '</div>';
         $('#content').html(htmlString);
-        $('#about').on('click', function() {
+        $('#about-icon').on('click', function() {
             _this.about();
         });
         $('li').on('click', function() {

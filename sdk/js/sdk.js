@@ -146,16 +146,6 @@ SDK = (function(_super) {
       }
       style = $('<link href="../../sdk/css/scrollbar.css" rel="stylesheet" type="text/css">')[0];
       style.onload = function() {
-        var scrollbarWidth, width;
-        width = $('#section').contents().find('html').width();
-        scrollbarWidth = 300 - width;
-        $('#section-wrap').css({
-          width: width,
-          'padding-left': scrollbarWidth
-        });
-        $('#card-wrap').css({
-          width: width
-        });
         return $('#wrap').animate({
           opacity: 1
         });
@@ -208,7 +198,7 @@ $(function() {
     return window.location.reload();
   });
   _ref = window.location.hash.split('#'), nil = _ref[0], pluginID = _ref[1], debug = _ref[2];
-  if (pluginID.length < 1) {
+  if ((pluginID == null) || pluginID.length < 1) {
     return window.location.hash = 'qiuShiGou';
   } else {
     debug = debug === 'debug';

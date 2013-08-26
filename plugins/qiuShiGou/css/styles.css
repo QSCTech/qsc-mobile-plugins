@@ -1,21 +1,24 @@
-html,body,ul,li{padding:0;margin:0}
+html,body,ul,li,input,textarea{padding:0;margin:0}
 ul,li{list-style:none}
+input,textarea,select{outline:none}
 body{color:#838383}
+input.search{background:#f7f7e8}
 a{text-decoration:none;color:#838383}
-#about{position:fixed;right:4vw;top:4vw;color:#ccc;cursor:pointer}#about i{padding-right:1vw}
+#about-icon{position:fixed;right:4vw;top:4vw;color:#ccc;cursor:pointer;font-size:5vw}#about-icon i{padding-right:1vw}
+#about{font-size:5vw;line-height:8vw;padding:6vw}
 #logo{text-align:center;width:40vw;height:40vw;line-height:40vw;background:#fffed8;border-radius:40vw;margin:8vh auto;margin-top:12vh;font-size:25vw;color:#838383}#logo img{width:30vw;height:30vw;text-align:center;padding-top:5vw}
 body{background:#eee}
-#header{padding-bottom:.5em;font-size:1.5em;text-align:right;vertical-align:middle}#header i.icon-circle-arrow-left{cursor:pointer;padding-left:.3em;font-size:1.5em;position:relative;top:.1em}
+#header{background:#ffffc5;position:fixed;top:0;left:0;width:100%;font-size:8vw;line-height:16vw;text-align:left;vertical-align:middle}#header i.icon-circle-arrow-left{margin:0 6vw;font-size:12vw;cursor:pointer;top:1.2vw;position:relative}
+#content{margin-top:16vw}
 #wrap{min-height:100%}#wrap img{max-width:100%}
-#wrap input,#wrap textarea,#wrap select{border:none;display:block;font-size:1em;margin:1em 0;background:#fff1db;padding:.5em 2%;width:96%}
+#wrap input,#wrap textarea,#wrap select{border:none;display:block;width:100vw;padding:1em}
 #wrap select,#wrap input[type="button"]{cursor:pointer;padding:.5em 0;width:100%}
 #wrap .list:after{clear:both;display:block;content:''}
-#wrap .list table{padding:.5em;margin-bottom:1em;width:100%;background:#fff}
-#wrap .list tr{border-top:1px solid #000}
+#wrap .list table{font-size:4vw;padding:2vw 6vw;width:100%;border-bottom:1px solid #ccc}
 #wrap .list td{padding-right:1em}
-#wrap .list .next,#wrap .list .prev{display:inline-block;width:48%;text-align:center;background:#fff;line-height:2em;cursor:pointer}
-#wrap .list .next{float:right}
-#wrap .list .prev{float:left}
+#wrap .list .next,#wrap .list .prev{display:inline-block;width:50%;text-align:center;line-height:2em;cursor:pointer}
+#wrap .list .next{float:right;width:49%}
+#wrap .list .prev{float:left;border-right:1px solid #ccc}
 #wrap .menu{position:fixed;bottom:0;left:0;width:100vw;font-size:5vw}#wrap .menu li{padding:3vw;cursor:pointer;font-size:1.5em;text-align:center}
 #wrap .menu .upload{background:#fff8af}
 #wrap .menu .search{background:#ffffc5}
