@@ -9,10 +9,6 @@ Data = (function() {
     function Data() {
         _this = this;
         this.api = '//m.myqsc.com/qiuShiGou/';
-        // 快速测试
-        for(var i = 0; i < 100; i++) {
-            M.kvdb.get(i);
-        }
     }
 
     /**

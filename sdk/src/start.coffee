@@ -4,5 +4,4 @@ $ ->
   if pluginID.length < 1
     window.location.hash = 'qiuShiGou'
   else
-    sdk = new SDK(pluginID)
-
+    window.sdk = new SDK(pluginID)

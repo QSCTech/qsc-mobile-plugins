@@ -94,19 +94,6 @@ API = (function() {
 
 })();
 
-$(function() {
-  var pluginID, sdk;
-  $(window).on('hashchange', function() {
-    return window.location.reload();
-  });
-  pluginID = window.location.hash.replace(new RegExp('#', 'g'), '');
-  if (pluginID.length < 1) {
-    return window.location.hash = 'qiuShiGou';
-  } else {
-    return sdk = new SDK(pluginID);
-  }
-});
-
 SDK = (function(_super) {
 
   __extends(SDK, _super);
@@ -126,70 +113,6 @@ SDK = (function(_super) {
   }
 
   /*
-  重载 iframe 沙盒 #iframeID 中的API
-  
-  @param {String} iframeID iframID
-  */
-
-
-  SDK.prototype.overloadAPI = function(iframeID) {
-    var obj, prop, win,
-      _this = this;
-    win = document.getElementById(iframeID).contentWindow;
-    obj = win.Object;
-    if (!obj.prototype.watch) {
-      prop = {
-        enumerable: false,
-        configurable: true,
-        writable: false,
-        value: function(prop, handle) {
-          var getter, newval, oldval, setter;
-          oldval = this.prop;
-          newval = oldval;
-          getter = function() {
-            return newval;
-          };
-          setter = function(val) {
-            oldval = newval;
-            return newval = handle.call(this, prop, oldval, val);
-          };
-          return obj.defineProperty(this, prop, {
-            get: getter,
-            set: setter,
-            enumerable: true,
-            configurable: true
-          });
-        }
-      };
-      obj.defineProperty(obj.prototype, "watch", prop);
-    }
-    return win.watch('Platform', function(prop, oldval, val) {
-      val.prototype.sendRequest = function(request) {
-        var args, callbackName, error, errorFn, fn, random, success;
-        fn = request.fn, args = request.args, success = request.success, error = request.error;
-        errorFn = error;
-        random = (Math.random() + '').replace(new RegExp('0\.', ''), '');
-        callbackName = "QSCMobile" + random + "_" + (new Date().getTime());
-        win[callbackName] = function(data) {
-          var _ref;
-          _ref = data, data = _ref.data, error = _ref.error;
-          if (error) {
-            return typeof errorFn === "function" ? errorFn(error) : void 0;
-          } else {
-            return typeof success === "function" ? success(data) : void 0;
-          }
-        };
-        return _this.onRequest(win, {
-          fn: fn,
-          args: args,
-          callback: callbackName
-        });
-      };
-      return val;
-    });
-  };
-
-  /*
   在 iframe 沙盒 #background 中执行插件的 Background.js
   */
 
@@ -198,8 +121,7 @@ SDK = (function(_super) {
     var iframe, src;
     src = "background.html#" + this.pluginID;
     iframe = $('<iframe id="background" height="450" width="300" src="' + src + '"></iframe>')[0];
-    $('body').append(iframe);
-    return this.overloadAPI('background');
+    return $('body').append(iframe);
   };
 
   /*
@@ -208,14 +130,16 @@ SDK = (function(_super) {
 
 
   SDK.prototype.show = function() {
-    var html, iframe, src;
+    var html, iframe, src,
+      _this = this;
     html = "<div class=\"card " + this.pluginID + "\">    </div>";
     $('#cards').append(html);
-    $('#section').contents().find('head');
     src = "../plugins/" + this.pluginID + "/index.html";
     iframe = $('<iframe id="section" height="450" width="300" src="' + src + '"></iframe>')[0];
     iframe.onload = function() {
-      var style;
+      var href, style;
+      href = document.getElementById('section').contentWindow.location.href;
+      console.log("Plugin Loaded: " + href);
       style = $('<link href="../../sdk/css/scrollbar.css" rel="stylesheet" type="text/css">')[0];
       style.onload = function() {
         var scrollbarWidth, width;
@@ -234,8 +158,7 @@ SDK = (function(_super) {
       };
       return $('#section').contents().find('head').append(style);
     };
-    $('#section-wrap').html(iframe);
-    return this.overloadAPI('section');
+    return $('#section-wrap').html(iframe);
   };
 
   /*
@@ -272,3 +195,16 @@ SDK = (function(_super) {
   return SDK;
 
 })(API);
+
+$(function() {
+  var pluginID;
+  $(window).on('hashchange', function() {
+    return window.location.reload();
+  });
+  pluginID = window.location.hash.replace(new RegExp('#', 'g'), '');
+  if (pluginID.length < 1) {
+    return window.location.hash = 'qiuShiGou';
+  } else {
+    return window.sdk = new SDK(pluginID);
+  }
+});

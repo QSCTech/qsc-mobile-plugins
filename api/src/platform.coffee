@@ -13,7 +13,6 @@ class Platform
     @callbacks = {}
     @requestCount = 0
 
-
   ###
   向平台发送请求
   @private
@@ -40,7 +39,11 @@ class Platform
       fn: fn
       args: args
       callback: callbackName
-    request = JSON.stringify request
-    prefix = 'data:text/qscmobile-msg;base64,'
-    request = prefix + window.Base64.encode64(request)
-    window.location.href = request
+    sdk = window.parent.sdk
+    if sdk?
+      sdk.onRequest window, request
+    else
+      request = JSON.stringify request
+      prefix = 'data:text/qscmobile-msg;base64,'
+      request = prefix + window.Base64.encode64(request)
+      window.location.href = request

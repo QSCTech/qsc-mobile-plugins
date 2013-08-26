@@ -10,54 +10,12 @@ class SDK extends API
     @background()
 
   ###
-  重载 iframe 沙盒 #iframeID 中的API
-
-  @param {String} iframeID iframID
-  ###
-  overloadAPI: (iframeID) ->
-    win = document.getElementById(iframeID).contentWindow
-
-    # Add Watch Api (based on Eli Grey's object.watch polyfill)
-    obj = win.Object
-    unless obj.prototype.watch
-      prop =
-        enumerable: false
-        configurable: true
-        writable: false
-        value: (prop, handle) ->
-          oldval = @prop
-          newval = oldval
-          getter = -> newval
-          setter = (val) ->
-            oldval = newval
-            newval = handle.call(this, prop, oldval, val)
-          obj.defineProperty this, prop, {get: getter, set: setter, enumerable: true, configurable: true}
-      obj.defineProperty obj.prototype, "watch", prop
-    
-    # overload Platform API
-    win.watch 'Platform', (prop, oldval, val) =>
-      val.prototype.sendRequest = (request) =>
-        {fn, args, success, error} = request
-        errorFn = error
-        random = (Math.random()+'').replace(new RegExp('0\.', ''), '')
-        callbackName = "QSCMobile#{random}_#{(new Date().getTime())}"
-        win[callbackName] = (data) ->
-          {data, error} = data
-          if error
-            errorFn?(error)
-          else
-            success?(data)
-        @onRequest win, {fn: fn, args: args, callback: callbackName}
-      return val
-
-  ###
   在 iframe 沙盒 #background 中执行插件的 Background.js
   ###
   background: ->
     src = "background.html#"+@pluginID
     iframe = $('<iframe id="background" height="450" width="300" src="'+src+'"></iframe>')[0]
     $('body').append(iframe);
-    @overloadAPI 'background'
 
   ###
   显示 Card，并在 iframe 沙盒 #section 中运行插件的Section视图
@@ -67,13 +25,15 @@ class SDK extends API
     </div>"
     $('#cards').append(html)
 
-    $('#section').contents().find('head')
     src = "../plugins/#{@pluginID}/index.html"
+
     iframe = $('<iframe id="section" height="450" width="300" src="'+src+'"></iframe>')[0]
-    iframe.onload = ->
+    iframe.onload = =>
+      href = document.getElementById('section').contentWindow.location.href
+      console.log "Plugin Loaded: #{href}"
       # hide scrollbar
       style = $('<link href="../../sdk/css/scrollbar.css" rel="stylesheet" type="text/css">')[0]
-      style.onload = ->
+      style.onload = =>
         width = $('#section').contents().find('html').width()
         scrollbarWidth = 300 - width
         $('#section-wrap').css({width: width, 'padding-left': scrollbarWidth})
@@ -81,7 +41,7 @@ class SDK extends API
         $('#wrap').animate({opacity: 1})
       $('#section').contents().find('head').append(style)
     $('#section-wrap').html iframe
-    @overloadAPI 'section'
+
 
   ###
   Request 处理
@@ -99,4 +59,3 @@ class SDK extends API
     json = JSON.stringify {data: data.data, error: data.error}, null, 4
     console.log "\nResults: #{json}" if @debug
     win[callback]?(data)
-
