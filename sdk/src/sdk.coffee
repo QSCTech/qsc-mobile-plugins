@@ -5,7 +5,7 @@ class SDK extends API
   @param {Boolean} debug debug
   ###
   constructor: (@pluginID, @debug = on) ->
-    console.log "Starting QSC Mobile Plugin SDK"
+    console.log "Starting QSC Mobile Plugin SDK" if @debug
     @show()
     @background()
 
@@ -30,7 +30,7 @@ class SDK extends API
     iframe = $('<iframe id="section" height="450" width="300" src="'+src+'"></iframe>')[0]
     iframe.onload = =>
       href = document.getElementById('section').contentWindow.location.href
-      console.log "Plugin Loaded: #{href}"
+      console.log "Loaded: #{href}" if @debug
       # hide scrollbar
       style = $('<link href="../../sdk/css/scrollbar.css" rel="stylesheet" type="text/css">')[0]
       style.onload = =>
@@ -50,7 +50,7 @@ class SDK extends API
   ###
   onRequest: (win, request) ->
     {fn, args, callback} = request
-    console.log "\n\nQSCMobile-Plugins-API-Request-ID: #{callback}"
+    console.log "\n\nQSCMobile-Plugins-API-Request-ID: #{callback}" if @debug
     json = JSON.stringify {fn: fn, args: args}, null, 4
     console.log "\nRequest: #{json}" if @debug
     [part1, part2] = fn.split('.')

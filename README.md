@@ -14,7 +14,7 @@ http://qsctech.github.io/qsc-mobile-plugins/doc/api/
 
 ### SDK 使用说明
 
-比如要调试求失狗这个plugin，访问 index.html#qiuShiGou 就可以开始调试了哦
+比如要调试求失狗这个plugin，访问 sdk/#qiuShiGou 就可以开始调试了哦，访问 sdk/#qiuShiGou#debug 就可以开启调试输出了哦。
 
 ### 提交插件
 

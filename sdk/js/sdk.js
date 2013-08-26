@@ -107,7 +107,9 @@ SDK = (function(_super) {
   function SDK(pluginID, debug) {
     this.pluginID = pluginID;
     this.debug = debug != null ? debug : true;
-    console.log("Starting QSC Mobile Plugin SDK");
+    if (this.debug) {
+      console.log("Starting QSC Mobile Plugin SDK");
+    }
     this.show();
     this.background();
   }
@@ -139,7 +141,9 @@ SDK = (function(_super) {
     iframe.onload = function() {
       var href, style;
       href = document.getElementById('section').contentWindow.location.href;
-      console.log("Plugin Loaded: " + href);
+      if (_this.debug) {
+        console.log("Loaded: " + href);
+      }
       style = $('<link href="../../sdk/css/scrollbar.css" rel="stylesheet" type="text/css">')[0];
       style.onload = function() {
         var scrollbarWidth, width;
@@ -171,7 +175,9 @@ SDK = (function(_super) {
   SDK.prototype.onRequest = function(win, request) {
     var args, callback, data, fn, json, part1, part2, _ref;
     fn = request.fn, args = request.args, callback = request.callback;
-    console.log("\n\nQSCMobile-Plugins-API-Request-ID: " + callback);
+    if (this.debug) {
+      console.log("\n\nQSCMobile-Plugins-API-Request-ID: " + callback);
+    }
     json = JSON.stringify({
       fn: fn,
       args: args
@@ -197,14 +203,15 @@ SDK = (function(_super) {
 })(API);
 
 $(function() {
-  var pluginID;
+  var debug, nil, pluginID, _ref;
   $(window).on('hashchange', function() {
     return window.location.reload();
   });
-  pluginID = window.location.hash.replace(new RegExp('#', 'g'), '');
+  _ref = window.location.hash.split('#'), nil = _ref[0], pluginID = _ref[1], debug = _ref[2];
   if (pluginID.length < 1) {
     return window.location.hash = 'qiuShiGou';
   } else {
-    return window.sdk = new SDK(pluginID);
+    debug = debug === 'debug';
+    return window.sdk = new SDK(pluginID, debug);
   }
 });

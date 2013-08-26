@@ -176,7 +176,6 @@ Platform = (function() {
   Platform.prototype.construtor = function(pluginID) {
     this.pluginID = pluginID;
     this.callbacks = {};
-    this.requestCount = 0;
     return this.lastRequest = 0;
   };
 
@@ -196,10 +195,9 @@ Platform = (function() {
       _this = this;
     if ((new Date().getTime()) - this.lastRequest < 4) {
       fn = function() {
-        return _this.sendRequest(request);
+        return _this.sendRequest.call(_this, request);
       };
-      setTimeout(fn, 1);
-      return;
+      return setTimeout(fn, 1);
     }
     this.lastRequest = new Date().getTime();
     fn = request.fn, args = request.args, success = request.success, error = request.error;
