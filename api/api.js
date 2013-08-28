@@ -630,7 +630,6 @@ View = (function(_super) {
 
 
   View.prototype.card = function(data) {
-    data.pluginID = this.pluginID;
     return this.sendRequest({
       fn: 'view.card',
       args: data

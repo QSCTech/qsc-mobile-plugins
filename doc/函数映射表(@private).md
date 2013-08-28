@@ -15,7 +15,8 @@ window.location.href = "data:text/qscmobile-msg;base64,这里是一串Base64字�
     ```javascript
     {
         fn: 'view.card',
-        args: {pluginID: pluginID, title: title, content: content},
+        pluginID: 'qiuShiGou',
+        args: {title: title, content: content},
         callback: 'QSCMobile110206212797411717474_1377340579820'
     }
     ```
@@ -41,6 +42,7 @@ window.location.href = "data:text/qscmobile-msg;base64,这里是一串Base64字�
     ```javascript
     {
         fn: 'kvdb.set',
+        pluginID: 'qiuShiGou',
         args: {key: key, value: 'valueString'},
         callback: 'QSCMobile110206212797411717474_1377340579820'
     }
@@ -65,6 +67,7 @@ window.location.href = "data:text/qscmobile-msg;base64,这里是一串Base64字�
     ```javascript
     {
         fn: 'kvdb.get',
+        pluginID: 'qiuShiGou',
         args: {key: key},
         callback: 'QSCMobile110206212797411717474_1377340579820'
     }
@@ -89,6 +92,7 @@ window.location.href = "data:text/qscmobile-msg;base64,这里是一串Base64字�
     ```javascript
     {
         fn: 'kvdb.remove',
+        pluginID: 'qiuShiGou',
         args: {key: key},
         callback: 'QSCMobile110206212797411717474_1377340579820'
     }
@@ -114,6 +118,7 @@ window.location.href = "data:text/qscmobile-msg;base64,这里是一串Base64字�
     ```javascript
     {
         fn: 'kvdb.clear',
+        pluginID: 'qiuShiGou',
         callback: 'QSCMobile110206212797411717474_1377340579820'
     }
     ```
@@ -139,6 +144,7 @@ window.location.href = "data:text/qscmobile-msg;base64,这里是一串Base64字�
     ```javascript
     {
         fn: 'user.stuid',
+        pluginID: 'qiuShiGou',
         callback: 'QSCMobile110206212797411717474_1377340579820'
     }
     ```
@@ -163,6 +169,7 @@ window.location.href = "data:text/qscmobile-msg;base64,这里是一串Base64字�
     ```javascript
     {
         fn: 'user.pwd',
+        pluginID: 'qiuShiGou',
         callback: 'QSCMobile110206212797411717474_1377340579820'
     }
     ```

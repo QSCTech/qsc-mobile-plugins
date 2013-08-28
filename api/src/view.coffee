@@ -22,6 +22,4 @@ class View extends Platform
   @param {String} data.title card title
   @param {String} data.content card content
   ###
-  card: (data) =>
-    data.pluginID = @pluginID
-    @sendRequest {fn: 'view.card', args: data}
+  card: (data) => @sendRequest {fn: 'view.card', args: data}
