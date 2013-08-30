@@ -1,30 +1,35 @@
+@import 'reset';
+
 @bg: #eee;
 @green: #d7efdc;
 @text: #838383;
 @padding: 6vw;
-
-// basic reset
-html, body, ul, li, input, textarea {
-    padding: 0;
-    margin: 0;
-}
-ul, li {
-    list-style: none;
-}
-
-// reset outline
-input, textarea, select {
-    outline: none;
-}
-
-// styles starts
+@line-height: 16vw;
 
 body {
+    background: @bg;
     color: @text;
 }
 
-input.search {
+
+.icon {
+    background: #fffed8 + #222;
+    color: #bbb;
+    float: right;
+    width: 16vw;
+    height: 16vw;
+    line-height: 16vw;
+    text-align: center;
+    font-size: 12vw;
+    cursor: pointer;
+}
+
+#search-input {
+    height: 12vw;
+    line-height: 12vw;
+    padding: (@line-height - 12vw)/2 @padding;
     background: #f7f7e8;
+    width: 84vw - @padding*2;
 }
 
 a {
@@ -45,9 +50,27 @@ a {
 }
 
 #about {
-    font-size: 5vw;
+    font-size: 4vw;
     line-height: 8vw;
     padding: @padding;
+    em {
+        font-style: normal;
+        color: #555;
+        padding: 1vw;
+        font-size: 5vw;
+        &:first-child {
+            padding: 0;
+            font-size: 6vw;
+        }
+    }
+    ul {
+        li {
+            &:before {
+                content: '- ';
+                padding-left: 1em;
+            }
+        }
+    }
 }
 
 #logo {
@@ -70,26 +93,23 @@ a {
 }
 
 
-body {
-    background: @bg;
-}
 
 #header {
-    background: #ffffc5;
+    background: #fff8af;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     font-size: 8vw;
-    line-height: 16vw;
+    line-height: @line-height;
     text-align: left;
     vertical-align: middle;
-    i.icon-circle-arrow-left {
-        margin: 0 6vw;
-        font-size: 12vw;
-        cursor: pointer;
-        top: 1.2vw;
-        position: relative;
+    .title {
+        margin-left: @padding;
+    }
+    .icon {
+        color: #999;
+        background: #fffed8;
     }
 }
 
@@ -101,12 +121,6 @@ body {
     min-height: 100%; // 保证撑满
     img {
         max-width: 100%;
-    }
-    input, textarea, select {
-        border: none;
-        display: block;
-        width: 100vw;
-        padding: 1em;
     }
     select, input[type="button"] {
         cursor: pointer;
@@ -121,10 +135,49 @@ body {
             content: '';
         }
         table {
+            &:before {
+                vertical-align: top;
+                content: "\f107";
+                font-family: 'FontAwesome';
+                display: block;
+                float: right;
+                width: 16vw;
+                text-align: center;
+                line-height: 16vw;
+                font-size: 16vw;
+                color: #ccc;
+            }
+            cursor: pointer;
             font-size: 4vw;
-            padding: 2vw 6vw;
+            line-height: 6vw;
+            padding-top: 2vw;
+            padding-bottom: 2vw;
+            padding-left: 5vw;
+            padding-right: 0;
             width: 100%;
             border-bottom: 1px solid #ccc;
+            tr:nth-child(n+3) {
+                display: none;
+            }
+            td:first-child {
+                width: 20vw;
+            }
+            tbody {
+                display: block;
+                width: 75vw;
+                float: left;
+            }
+            &.clicked {
+                &:before {
+                    content: "\f106";
+                }
+                tr {
+                    display: table-row;
+                }
+            }
+            i.icon-sort-down {
+                font-size: 4vw;
+            }
         }
         tr {
         }

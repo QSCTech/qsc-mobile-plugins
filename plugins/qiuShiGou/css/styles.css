@@ -1,20 +1,27 @@
 html,body,ul,li,input,textarea{padding:0;margin:0}
 ul,li{list-style:none}
-input,textarea,select{outline:none}
-body{color:#838383}
-input.search{background:#f7f7e8}
+input,textarea,select{outline:none;border:none}
+body{background:#eee;color:#838383}
+.icon{background:#fffffa;color:#bbb;float:right;width:16vw;height:16vw;line-height:16vw;text-align:center;font-size:12vw;cursor:pointer}
+#search-input{height:12vw;line-height:12vw;padding:2vw 6vw;background:#f7f7e8;width:72vw}
 a{text-decoration:none;color:#838383}
 #about-icon{position:fixed;right:4vw;top:4vw;color:#ccc;cursor:pointer;font-size:5vw}#about-icon i{padding-right:1vw}
-#about{font-size:5vw;line-height:8vw;padding:6vw}
+#about{font-size:4vw;line-height:8vw;padding:6vw}#about em{font-style:normal;color:#555;padding:1vw;font-size:5vw}#about em:first-child{padding:0;font-size:6vw}
+#about ul li:before{content:'- ';padding-left:1em}
 #logo{text-align:center;width:40vw;height:40vw;line-height:40vw;background:#fffed8;border-radius:40vw;margin:8vh auto;margin-top:12vh;font-size:25vw;color:#838383}#logo img{width:30vw;height:30vw;text-align:center;padding-top:5vw}
-body{background:#eee}
-#header{background:#ffffc5;position:fixed;top:0;left:0;width:100%;font-size:8vw;line-height:16vw;text-align:left;vertical-align:middle}#header i.icon-circle-arrow-left{margin:0 6vw;font-size:12vw;cursor:pointer;top:1.2vw;position:relative}
+#header{background:#fff8af;position:fixed;top:0;left:0;width:100%;font-size:8vw;line-height:16vw;text-align:left;vertical-align:middle}#header .title{margin-left:6vw}
+#header .icon{color:#999;background:#fffed8}
 #content{margin-top:16vw}
 #wrap{min-height:100%}#wrap img{max-width:100%}
-#wrap input,#wrap textarea,#wrap select{border:none;display:block;width:100vw;padding:1em}
 #wrap select,#wrap input[type="button"]{cursor:pointer;padding:.5em 0;width:100%}
 #wrap .list:after{clear:both;display:block;content:''}
-#wrap .list table{font-size:4vw;padding:2vw 6vw;width:100%;border-bottom:1px solid #ccc}
+#wrap .list table{cursor:pointer;font-size:4vw;line-height:6vw;padding-top:2vw;padding-bottom:2vw;padding-left:5vw;padding-right:0;width:100%;border-bottom:1px solid #ccc}#wrap .list table:before{vertical-align:top;content:"\f107";font-family:'FontAwesome';display:block;float:right;width:16vw;text-align:center;line-height:16vw;font-size:16vw;color:#ccc}
+#wrap .list table tr:nth-child(n+3){display:none}
+#wrap .list table td:first-child{width:20vw}
+#wrap .list table tbody{display:block;width:75vw;float:left}
+#wrap .list table.clicked:before{content:"\f106"}
+#wrap .list table.clicked tr{display:table-row}
+#wrap .list table i.icon-sort-down{font-size:4vw}
 #wrap .list td{padding-right:1em}
 #wrap .list .next,#wrap .list .prev{display:inline-block;width:50%;text-align:center;line-height:2em;cursor:pointer}
 #wrap .list .next{float:right;width:49%}

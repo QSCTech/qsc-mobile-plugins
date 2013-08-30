@@ -8,7 +8,7 @@
         }
         M.view.card({
             title: '<em>求失狗</em>',
-            content: '我关注的物品：'+JSON.stringify(data)
+            content: '欢迎关注求失狗！'
         });
     });
 })();
