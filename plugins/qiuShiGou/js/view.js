@@ -76,8 +76,14 @@ View = (function() {
         var query = {keyword: keyword, page: page};
         var prepend = '<div id="search">'
                       + '<input type="text" id="search-input" placeholder="搜索">'
-                      + '<div class="icon"><i class="icon-search"></i></div>'
+                      + '<div class="icon search"><i class="icon-search"></i></div>'
                       + '</div>';
+        var _this = this;
+        $('body').on('click', '.icon.search', function() {
+            var keyword = $('#search-input').val();
+            var query = {keyword: keyword, page: page};
+            _this.list(query, prepend);
+        });
         this.list(query, prepend);
     };
 
