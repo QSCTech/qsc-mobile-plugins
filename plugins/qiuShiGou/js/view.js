@@ -102,6 +102,25 @@ View = (function() {
                        + '<div class="submit">发布</div>'
                        + '</div>';
         $('#content').html(htmlString);
+        // bind for .select
+        $('.select .option').click(function() {
+            $(this).parent().find('.selected').removeClass('selected');
+            $(this).addClass('selected');
+        });
+        // revert data
+        if(window.fileData) {
+            ['name', 'detail', 'place', 'contact'].forEach(function(elem) {
+                $('#upload .'+elem).val(window.fileData[elem]);
+            });
+            ['type', 'campus'].forEach(function(elem) {
+                $('#upload .'+elem+' .option').each(function() {
+                    if($(this).text() == window.fileData[elem]) {
+                        $(this).click();
+                    }
+                });
+            });
+        }
+        // submit
         $('#upload .submit').click(function() {
             var obj = {};
             ['name', 'detail', 'place', 'contact'].forEach(function(elem) {
@@ -110,6 +129,7 @@ View = (function() {
             ['type', 'campus'].forEach(function(elem) {
                 obj[elem] = $('#upload .'+elem).find('.selected').text();
             });
+            window.fileData = obj;
             var success = function() {
                 _this.msg('上传成功');
             };
@@ -117,10 +137,6 @@ View = (function() {
                 _this.msg('<em>上传失败</em><br>请检查您的网络连接');
             };
             _this.data.upload(obj, success, fail);
-        });
-        $('.select .option').click(function() {
-            $(this).parent().find('.selected').removeClass('selected');
-            $(this).addClass('selected');
         });
     };
 
