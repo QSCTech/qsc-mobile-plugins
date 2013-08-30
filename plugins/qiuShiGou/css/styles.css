@@ -32,8 +32,7 @@ a{text-decoration:none;color:#838383}
 #wrap .menu .found{background:#fffed8}
 #wrap .menu .lost{background:#f7f7e8}
 #wrap .menu .starred{background:#e7e7d8}
-#wrap .msg img{width:50%;display:block;margin:0 auto;padding:0 1em;padding-top:1em}
-#wrap .msg p{text-align:center;padding:0 1em;font-size:1.2em;line-height:2em}#wrap .msg p em{font-size:2em;font-style:normal}
+#wrap .msg{padding-top:3vw}#wrap .msg p{text-align:center;padding:0 1em;font-size:1.2em;line-height:2em}#wrap .msg p em{font-size:2em;font-style:normal}
 #upload{background:#fff;min-height:100vh}#upload .select{line-height:16vw;border-bottom:1px solid #ccc}#upload .select.type .option{width:50vw}
 #upload .select.campus .option{font-size:4vw;width:15vw}#upload .select.campus .option.selected{width:25vw}
 #upload .select .option{background:#fff;text-align:center;float:left}#upload .select .option.selected{background:#ddd;font-family:FontAwesome}#upload .select .option.selected:after{padding-left:2vw;content:'\f14a'}

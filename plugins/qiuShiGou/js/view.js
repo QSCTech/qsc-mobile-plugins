@@ -68,7 +68,7 @@ View = (function() {
         if(!title)
           title = '嘛！出错了！';
         this.header(title);
-        var htmlString = '<div class="msg"><img src="images/logo.png"><p>' + msg + '</p></div>';
+        var htmlString = '<div class="msg"><div id="logo"><image src="images/dog.png" /></div><p>' + msg + '</p></div>';
         $('#content').html(htmlString);
     };
 
@@ -102,10 +102,13 @@ View = (function() {
                        + '<div class="submit">发布</div>'
                        + '</div>';
         $('#content').html(htmlString);
-        $('input[type="button"]').click(function() {
+        $('#upload .submit').click(function() {
             var obj = {};
-            ['name', 'detail', 'type', 'campus', 'place', 'contact'].forEach(function(elem) {
-                obj.elem = $('.upload .'+elem).val();
+            ['name', 'detail', 'place', 'contact'].forEach(function(elem) {
+                obj[elem] = $('#upload .'+elem).val();
+            });
+            ['type', 'campus'].forEach(function(elem) {
+                obj[elem] = $('#upload .'+elem).find('.selected').text();
             });
             var success = function() {
                 _this.msg('上传成功');
