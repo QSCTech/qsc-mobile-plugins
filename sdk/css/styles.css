@@ -1,6 +1,7 @@
 body{background:#fff}
 #background{display:none}
 #wrap{width:650px;height:450px;position:fixed;top:50%;left:50%;margin-left:-325px;margin-top:-225px;text-align:center;opacity:0}
+#section-wrap,#card-wrap{box-shadow:0 0 8px #777}
 #card-wrap{text-align:left;vertical-align:top;display:inline-block;padding:20px 0;width:300px;height:410px;overflow:hidden;background:#eee;margin-right:20px}#card-wrap #card{margin:0 20px;padding:20px 0;box-shadow:0 0 7px #777;background:#fff}#card-wrap #card .title{font-weight:bold;color:#000;font-size:18px;padding:0 20px}
 #card-wrap #card .content{font-size:16px;padding:0 20px;word-wrap:break-word;word-break:break-all;white-space:normal}
 #card-wrap #card em{color:#007ef6;font-style:normal}

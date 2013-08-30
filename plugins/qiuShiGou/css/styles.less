@@ -11,7 +11,6 @@ body {
     color: @text;
 }
 
-
 .icon {
     background: #fffed8 + #222;
     color: #bbb;
@@ -246,5 +245,69 @@ a {
             font-size: 1.2em;
             line-height: 2em;
         }
+    }
+}
+
+#upload {
+    background: #fff;
+    min-height: 100vh;
+    .select {
+        line-height: @line-height;
+        border-bottom: 1px solid #ccc;
+        &.type {
+            .option {
+                width: 50vw;
+            }
+        }
+        &.campus {
+            .option {
+                font-size: 4vw;
+                width: 15vw;
+                &.selected {
+                    width: 25vw;
+                }
+            }
+        }
+        .option {
+            background: #fff;
+            text-align: center;
+            float: left;
+            &.selected {
+                background: #ddd;
+                font-family: FontAwesome;
+                &:after {
+                    padding-left: 2vw;
+                    content: '\f14a';
+                }
+            }
+        }
+        &:after {
+            clear: both;
+            content: '';
+            display: block;
+        }
+    }
+    input {
+        border: none;
+        padding: @padding;
+        width: 100vw - 2*@padding;
+        background: #fff;
+        border-bottom: 1px solid #ccc;
+    }
+    textarea {
+        vertical-align: top;
+        border: none;
+        padding: @padding;
+        width: 100vw - 2*@padding;
+        height: 4em;
+        border-bottom: 1px solid #ccc;
+        -webkit-appearance: none;
+    }
+    .submit {
+        background: #fff;
+        cursor: pointer;
+        line-height: @line-height;
+        text-align: center;
+        font-size: 8vw;
     }
 }

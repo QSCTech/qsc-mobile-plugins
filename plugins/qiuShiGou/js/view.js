@@ -82,24 +82,24 @@ View = (function() {
     };
 
     View.prototype.upload = function() {
-        var htmlString = '<div class="upload">'
-                       + '<select class="type">'
-                       + '<option>失物招领</option>'
-                       + '<option>寻物启事</option>'
-                       + '</select>'
+        var htmlString = '<div id="upload">'
+                       + '<div class="select type">'
+                       + '<div class="option selected">失物招领</div>'
+                       + '<div class="option">寻物启事</div>'
+                       + '</div>'
                        + '<input class="name" placeholder="物品名，如：校园卡，钥匙">'
+                       + '<div class="select campus">'
+                       + '<div class="option selected">紫金港</div>'
+                       + '<div class="option">玉泉</div>'
+                       + '<div class="option">西溪</div>'
+                       + '<div class="option">华家池</div>'
+                       + '<div class="option">之江</div>'
+                       + '<div class="option">舟山</div>'
+                       + '</div>'
                        + '<textarea class="detail" placeholder="物品具体描述，如钱包颜色，校园卡姓名等等"></textarea>'
-                       + '<select class="campus">'
-                       + '<option>紫金港校区</option>'
-                       + '<option>玉泉校区</option>'
-                       + '<option>西溪校区</option>'
-                       + '<option>华家池校区</option>'
-                       + '<option>之江校区</option>'
-                       + '<option>舟山校区</option>'
-                       + '</select>'
                        + '<input class="place" placeholder="详细地点">'
                        + '<input class="contact" placeholder="联系方式 / 联系地点">'
-                       + '<input type="button" value="发布">'
+                       + '<div class="submit">发布</div>'
                        + '</div>';
         $('#content').html(htmlString);
         $('input[type="button"]').click(function() {
@@ -114,6 +114,10 @@ View = (function() {
                 _this.msg('<em>上传失败</em><br>请检查您的网络连接');
             };
             _this.data.upload(obj, success, fail);
+        });
+        $('.select .option').click(function() {
+            $(this).parent().find('.selected').removeClass('selected');
+            $(this).addClass('selected');
         });
     };
 
