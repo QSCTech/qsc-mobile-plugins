@@ -16,7 +16,7 @@ Data = (function() {
 
     function Data() {
         _this = this;
-        this.api = '//m.myqsc.com/qiuShiGou/';
+        this.api = '//m.myqsc.com/qiu-shi-gou/process.php';
     }
 
     /**
