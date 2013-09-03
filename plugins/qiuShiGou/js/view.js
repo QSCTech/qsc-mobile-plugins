@@ -13,8 +13,9 @@ View = (function() {
         });
     }
 
-    View.prototype.list = function(query, prepend) {
+    View.prototype.list = function(query, header, prepend) {
         var success = function(data) {
+            _this.header(header);
             var currentPage = query.page ? query.page : 1;
             var htmlString = data.map(function(elem) {
                 var arr = [['物品', elem.name], ['校区', elem.campus], ['地点', elem.place], ['具体描述', elem.detail], ['联系方式', elem.contact]];
@@ -42,9 +43,9 @@ View = (function() {
             });
         };
         var fail = function() {
-            _this.msg('获取数据失败<br>请检查网络连接');
+            _this.msg('<em>获取数据失败</em><br>请检查网络连接');
         };
-        this.msg('稍等哦<br>努力加载中', '努力加载中');
+        this.msg('努力加载中', '汪！请稍等！');
         this.data.get(query, success, fail);
     };
 
@@ -71,9 +72,9 @@ View = (function() {
         $('body').on('click', '.icon.search', function() {
             var keyword = $('#search-input').val();
             var query = {keyword: keyword, page: page};
-            _this.list(query, prepend);
+            _this.list(query, '搜索', prepend);
         });
-        this.list(query, prepend);
+        this.list(query, '搜索', prepend);
     };
 
     View.prototype.upload = function() {
@@ -133,30 +134,25 @@ View = (function() {
                 _this.msg('<em>上传失败</em><br>请检查您的网络连接');
             };
             _this.data.upload(obj, success, fail);
+            _this.msg('努力上传中', '汪！请稍等！');
         });
     };
 
     // 失物招领
     View.prototype.found = function(page) {
         var query = {type: 'found', page: page};
-        this.list(query);
+        this.list(query, '失物招领');
     };
 
     // 寻物启事
     View.prototype.lost = function(page) {
         var query = {type: 'lost', page: page};
-        this.list(query);
-    };
-
-    // 我关注的
-    View.prototype.starred = function(page) {
-        var query = {uuids: this.data.starred(), page: page};
-        this.list(query);
+        this.list(query, '寻物启事');
     };
 
     View.prototype.about = function() {
         this.header('关于求失狗');
-        var htmlString = '<div id="about"><p><em>竺可桢学院学生会</em><br>携<em>丹青云峰蓝田校会权服部</em>倾情奉献</p><p>'
+        var htmlString = '<div id="about"><p><em>竺可桢学院学生会</em><br>携<em>丹青云峰蓝田校会权服部</em>倾情奉献</p>'
                        + '<ul>如有遗失物品或捡到物品，请这样联系我们'
                        + '<li>人人@求失狗</li>'
                        + '<li>微信ZJU树洞君</li>'
@@ -188,7 +184,7 @@ View = (function() {
         });
         $('li').on('click', function() {
             var view = $(this).attr('class'),
-                allow = ["search", "upload", "found", "lost", "starred", "index"];
+                allow = ["search", "upload", "found", "lost", "index"];
             if(allow.indexOf(view) > -1) {
                 _this.header($(this).text());
                 _this[view].call(_this);

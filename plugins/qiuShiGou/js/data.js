@@ -32,21 +32,6 @@ Data = (function() {
     };
 
     /**
-     * 获取关注的物品的 ID
-     *
-     * @return {Array} 关注的物品的 ID
-     */
-    Data.prototype.starred = function(callback) {
-        M.kvdb.get('qiuShiGouStarred', function(data) {
-            if(!data) {
-                data = [];
-            }
-            if(callback)
-              callback(data);
-        });
-    };
-
-    /**
      * 上传新的物品信息
      *
      * @param {Object} data 物品信息
@@ -56,14 +41,7 @@ Data = (function() {
     Data.prototype.upload = function(data, success, fail) {
         data.method = 'upload';
         data.uuid = Math.uuid();
-        var successFn = function() {
-            var uuid = data.uuid;
-            _this.starred(function(starred) {
-                starred.push(uuid);
-                M.kvdb.set('qiuShiGouStarred', starred);
-            });
-        };
-        this.get(data, successFn, fail);
+        this.get(data, success, fail);
     };
 
     return Data;
