@@ -8,7 +8,7 @@ http://qsctech.github.io/qsc-mobile-plugins/doc/api/
 
 ### SDK 使用说明
 
-比如要调试求失狗这个plugin，访问 sdk/#qiuShiGou 就可以开始调试了哦，访问 sdk/#qiuShiGou#debug 就可以开启调试输出了哦。
+比如要调试求失狗这个plugin，访问 sdk/#qiuShiGou 就可以开始调试了哦
 
 ### 请不要显示滚动条
 
@@ -26,7 +26,11 @@ scrollbar {
 
 fork 这个仓库，然后直接 pull request 过来就可以了
 
-## 面向内部开发者
+## 面向 SDK 开发者
+
+访问 sdk/#qiuShiGou#debug 开启调试输出
+
+## 面向内部开发者（iOS / Android）
 
 我们以 gh-pages 分支为稳定分支，从 gh-pages 分支拉取文件更新。
 

@@ -40,6 +40,7 @@ class KVDB extends Platform
     else
       value = ""+value
     val = {type: type, value: value}
+    val = JSON.stringify val
     # 转成安全的base64，避免整个JSON Request被解析时子对象被解析
     val = window.Base64.encode64(val)
     msg =
@@ -87,7 +88,7 @@ class KVDB extends Platform
       else if type is "boolean"
         value = value is "true"
       else if type is "object"
-        value = JSON.parse type
+        value = JSON.parse value
       else
         throw "KVDB.get: Invalid value type"
       success?(value)

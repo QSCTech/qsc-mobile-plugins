@@ -15,7 +15,6 @@ View = (function() {
 
     View.prototype.list = function(query, prepend) {
         var success = function(data) {
-            console.log(data);
             var currentPage = query.page ? query.page : 1;
             var htmlString = data.map(function(elem) {
                 var arr = [['物品', elem.name], ['校区', elem.campus], ['地点', elem.place], ['具体描述', elem.detail], ['联系方式', elem.contact]];
@@ -43,8 +42,9 @@ View = (function() {
             });
         };
         var fail = function() {
-            _this.msg('获取数据失败，请检查网络连接');
+            _this.msg('获取数据失败<br>请检查网络连接');
         };
+        this.msg('稍等哦<br>努力加载中', '努力加载中');
         this.data.get(query, success, fail);
     };
 
@@ -124,6 +124,7 @@ View = (function() {
             ['type', 'campus'].forEach(function(elem) {
                 obj[elem] = $('#upload .'+elem).find('.selected').text();
             });
+            obj['type'] = obj['type'] === '失物招领' ? 'found' : 'lost';
             window.fileData = obj;
             var success = function() {
                 _this.msg('<em>上传成功</em>', '汪，好的嘛！');

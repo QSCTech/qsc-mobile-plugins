@@ -301,6 +301,7 @@ KVDB = (function(_super) {
       type: type,
       value: value
     };
+    val = JSON.stringify(val);
     val = window.Base64.encode64(val);
     msg = {
       fn: 'kvdb.set',
@@ -357,7 +358,7 @@ KVDB = (function(_super) {
       } else if (type === "boolean") {
         value = value === "true";
       } else if (type === "object") {
-        value = JSON.parse(type);
+        value = JSON.parse(value);
       } else {
         throw "KVDB.get: Invalid value type";
       }
