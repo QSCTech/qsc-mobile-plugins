@@ -17,6 +17,9 @@ View = (function() {
         var success = function(data) {
             _this.header(header);
             var currentPage = query.page ? query.page : 1;
+            data = data.filter(function(elem) {
+                return elem ? true : false;
+            });
             var htmlString = data.map(function(elem) {
                 var arr = [['物品', elem.name], ['校区', elem.campus], ['地点', elem.place], ['具体描述', elem.detail], ['联系方式', elem.contact]];
                 arr = arr.map(function(elem) {
@@ -63,6 +66,12 @@ View = (function() {
     };
 
     View.prototype.search = function(keyword, page) {
+        if(!keyword) {
+            keyword = '';
+        }
+        if(!page) {
+            page = 1;
+        }
         var query = {keyword: keyword, page: page};
         var prepend = '<div id="search">'
                     + '<input type="text" id="search-input" placeholder="搜索">'

@@ -1,5 +1,9 @@
 # QSC Mobile Plugin 仓库
 
+## Plugins
+
+- 求失狗
+
 ## 面向开发者
 
 ### 文档
@@ -46,8 +50,4 @@ http://qsctech.github.io/qsc-mobile-plugins/resources.json
 所有插件Mainfest的合并文件：
 
 http://qsctech.github.io/qsc-mobile-plugins/plugins.json
-
-## Plugins
-
-- 求失狗
 

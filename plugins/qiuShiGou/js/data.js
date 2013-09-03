@@ -27,7 +27,8 @@ Data = (function() {
      * @param {Function} callback function to callback when fail
      */
     Data.prototype.get = function(args, success, error) {
-        args.method = 'query';
+        if(!args.method)
+          args.method = 'query';
         $.ajax({url: this.api, data: args, success: success, error: error});
     };
 
@@ -39,8 +40,8 @@ Data = (function() {
      * @param {Function} callback function to callback when fail
      */
     Data.prototype.upload = function(data, success, fail) {
-        data.method = 'upload';
         data.uuid = Math.uuid();
+        data.method = "upload";
         this.get(data, success, fail);
     };
 

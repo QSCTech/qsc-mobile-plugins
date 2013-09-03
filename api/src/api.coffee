@@ -7,5 +7,5 @@ class QSCMobile
     var M = new QSCMobile('qiuShiGou');
   ###
   constructor: (@pluginID) ->
-    for api in ['KVDB', 'Config', 'View', 'User']
+    for api in ['KVDB', 'View', 'User']
       @[api.toLowerCase()] = new window[api] @pluginID

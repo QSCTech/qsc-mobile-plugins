@@ -571,7 +571,7 @@ QSCMobile = (function() {
   function QSCMobile(pluginID) {
     var api, _j, _len1, _ref3;
     this.pluginID = pluginID;
-    _ref3 = ['KVDB', 'Config', 'View', 'User'];
+    _ref3 = ['KVDB', 'View', 'User'];
     for (_j = 0, _len1 = _ref3.length; _j < _len1; _j++) {
       api = _ref3[_j];
       this[api.toLowerCase()] = new window[api](this.pluginID);
