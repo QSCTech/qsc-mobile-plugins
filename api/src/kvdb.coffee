@@ -76,6 +76,7 @@ class KVDB extends Platform
     callback = (data) ->
       unless data?
         success?(null)
+        return
       data = window.Base64.decode64 data
       {type, value} = JSON.parse data
       if type is "number"

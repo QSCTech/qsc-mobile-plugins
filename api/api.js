@@ -344,6 +344,7 @@ KVDB = (function(_super) {
         if (typeof success === "function") {
           success(null);
         }
+        return;
       }
       data = window.Base64.decode64(data);
       _ref3 = JSON.parse(data), type = _ref3.type, value = _ref3.value;
