@@ -485,7 +485,7 @@ Config = (function(_super) {
     M.config.set('key', 'string', success, error);
   
   @param {String} key key
-  @param {String | Object} value value
+  @param {String | Object | Interger | Boolean} value value
   @param {Function} success The callback that handles data when success
   @param {Function} error The callback that handles error
   */
