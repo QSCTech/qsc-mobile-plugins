@@ -318,6 +318,7 @@ KVDB = (function(_super) {
   取出记录
   
   @note 若存入是 Object | String | Interger | Boolean 则取出时还是存入时的类型，其他类型会抛出异常
+  @note 若没有返回结果，则返回null
   
   @param {String} key key
   @param {Function} success The callback that handles data when success
@@ -339,6 +340,11 @@ KVDB = (function(_super) {
     var callback, msg;
     callback = function(data) {
       var type, value, _ref3;
+      if (data == null) {
+        if (typeof success === "function") {
+          success(null);
+        }
+      }
       data = window.Base64.decode64(data);
       _ref3 = JSON.parse(data), type = _ref3.type, value = _ref3.value;
       if (type === "number") {

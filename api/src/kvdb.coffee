@@ -55,6 +55,7 @@ class KVDB extends Platform
   取出记录
 
   @note 若存入是 Object | String | Interger | Boolean 则取出时还是存入时的类型，其他类型会抛出异常
+  @note 若没有返回结果，则返回null
 
   @param {String} key key
   @param {Function} success The callback that handles data when success
@@ -73,6 +74,8 @@ class KVDB extends Platform
   ###
   get: (key, success, error) =>
     callback = (data) ->
+      unless data?
+        success?(null)
       data = window.Base64.decode64 data
       {type, value} = JSON.parse data
       if type is "number"

@@ -291,6 +291,10 @@ M.kvdb.set(&#39;key&#39;, &#39;string&#39;, success, error);</code></pre>
     <strong>Note:</strong>
     若存入是 Object | String | Interger | Boolean 则取出时还是存入时的类型，其他类型会抛出异常
   </div>
+  <div class='note'>
+    <strong>Note:</strong>
+    若没有返回结果，则返回null
+  </div>
   <p>取出记录</p>
   <div class='examples'>
     <h3>Examples:</h3>
@@ -437,7 +441,7 @@ M.kvdb.clear(success, error);</code></pre>
     </div>
     <div id='footer'>
   Generated on
-  Tue Sep 03 2013 15:21:54 GMT+0800 (CST)
+  Tue Sep 03 2013 15:31:31 GMT+0800 (CST)
   by
   <a href='https://github.com/netzpirat/codo' title='CoffeeScript API documentation generator'>Codo</a>
   v1.7.1

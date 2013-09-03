@@ -1,11 +1,5 @@
 # QSC Mobile Plugin 仓库
 
-## Status
-
-SDK: 开发中
-
-求失狗: 开发中
-
 ## 面向开发者
 
 ### 文档
