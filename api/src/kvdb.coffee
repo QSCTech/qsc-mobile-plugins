@@ -11,14 +11,16 @@ class KVDB extends Platform
   写入记录
 
   @param {String} key key
-  @param {String | Object} value value
+  @param {String | Object | Interger | Boolean} value value
   @param {Function} success The callback that handles data when success
   @param {Function} error The callback that handles error
 
   @example
     var M = new QSCMobile('qiuShiGou');
     M.kvdb.set('key', 'string');
-    M.kvdb.set('key', {hello: world});
+    M.kvdb.set('key', 1);
+    M.kvdb.set('key', {key: "value"});
+    M.kvdb.set('key', true);
 
     var success = function(data) {
       console.log(data);
@@ -30,13 +32,21 @@ class KVDB extends Platform
 
   ###
   set: (key, value, success, error) =>
-    unless typeof value is 'string'
+    type = typeof value
+    unless type is "object" or type is "boolean" or type is "number"
+      throw "KVDB.set: Invalid value type"
+    if type is "object"
       value = JSON.stringify value
+    else
+      value = ""+value
+    val = {type: type, value: value}
+    # 转成安全的base64，避免整个JSON Request被解析时子对象被解析
+    val = window.Base64.encode64(val)
     msg =
       fn: 'kvdb.set'
       args:
-        key: key
-        value: value
+        key: ""+key # key 必须是字符串
+        value: val
       success: success
       error: error
     @sendRequest msg
@@ -44,7 +54,7 @@ class KVDB extends Platform
   ###
   取出记录
 
-  @note 若存入是 Object 或 JSON String 则取出时自动解析为 Object
+  @note 若存入是 Object | String | Interger | Boolean 则取出时还是存入时的类型，其他类型会抛出异常
 
   @param {String} key key
   @param {Function} success The callback that handles data when success
@@ -63,15 +73,24 @@ class KVDB extends Platform
   ###
   get: (key, success, error) =>
     callback = (data) ->
-      try
-        data = JSON.parse data
-        success?(data)
-      catch e
-        success?(data)
+      data = window.Base64.decode64 data
+      {type, value} = JSON.parse data
+      if type is "number"
+        if value.indexOf(".") > -1
+          value = parseFloat value
+        else
+          value = parseInt value
+      else if type is "boolean"
+        value = value is "true"
+      else if type is "object"
+        value = JSON.parse type
+      else
+        throw "KVDB.get: Invalid value type"
+      success?(value)
     msg =
       fn: 'kvdb.get'
       args:
-        key: key
+        key: ""+key
       success: callback
       error: error
     @sendRequest msg

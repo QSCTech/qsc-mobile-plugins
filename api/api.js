@@ -265,14 +265,16 @@ KVDB = (function(_super) {
   写入记录
   
   @param {String} key key
-  @param {String | Object} value value
+  @param {String | Object | Interger | Boolean} value value
   @param {Function} success The callback that handles data when success
   @param {Function} error The callback that handles error
   
   @example
     var M = new QSCMobile('qiuShiGou');
     M.kvdb.set('key', 'string');
-    M.kvdb.set('key', {hello: world});
+    M.kvdb.set('key', 1);
+    M.kvdb.set('key', {key: "value"});
+    M.kvdb.set('key', true);
   
     var success = function(data) {
       console.log(data);
@@ -285,15 +287,26 @@ KVDB = (function(_super) {
 
 
   KVDB.prototype.set = function(key, value, success, error) {
-    var msg;
-    if (typeof value !== 'string') {
-      value = JSON.stringify(value);
+    var msg, type, val;
+    type = typeof value;
+    if (!(type === "object" || type === "boolean" || type === "number")) {
+      throw "KVDB.set: Invalid value type";
     }
+    if (type === "object") {
+      value = JSON.stringify(value);
+    } else {
+      value = "" + value;
+    }
+    val = {
+      type: type,
+      value: value
+    };
+    val = window.Base64.encode64(val);
     msg = {
       fn: 'kvdb.set',
       args: {
-        key: key,
-        value: value
+        key: "" + key,
+        value: val
       },
       success: success,
       error: error
@@ -304,7 +317,7 @@ KVDB = (function(_super) {
   /*
   取出记录
   
-  @note 若存入是 Object 或 JSON String 则取出时自动解析为 Object
+  @note 若存入是 Object | String | Interger | Boolean 则取出时还是存入时的类型，其他类型会抛出异常
   
   @param {String} key key
   @param {Function} success The callback that handles data when success
@@ -325,17 +338,28 @@ KVDB = (function(_super) {
   KVDB.prototype.get = function(key, success, error) {
     var callback, msg;
     callback = function(data) {
-      try {
-        data = JSON.parse(data);
-        return typeof success === "function" ? success(data) : void 0;
-      } catch (e) {
-        return typeof success === "function" ? success(data) : void 0;
+      var type, value, _ref3;
+      data = window.Base64.decode64(data);
+      _ref3 = JSON.parse(data), type = _ref3.type, value = _ref3.value;
+      if (type === "number") {
+        if (value.indexOf(".") > -1) {
+          value = parseFloat(value);
+        } else {
+          value = parseInt(value);
+        }
+      } else if (type === "boolean") {
+        value = value === "true";
+      } else if (type === "object") {
+        value = JSON.parse(type);
+      } else {
+        throw "KVDB.get: Invalid value type";
       }
+      return typeof success === "function" ? success(value) : void 0;
     };
     msg = {
       fn: 'kvdb.get',
       args: {
-        key: key
+        key: "" + key
       },
       success: callback,
       error: error

@@ -230,7 +230,9 @@
     </h4>
     <pre><code class='coffee'>var M = new QSCMobile(&#39;qiuShiGou&#39;);
 M.kvdb.set(&#39;key&#39;, &#39;string&#39;);
-M.kvdb.set(&#39;key&#39;, {hello: world});
+M.kvdb.set(&#39;key&#39;, 1);
+M.kvdb.set(&#39;key&#39;, {key: &quot;value&quot;});
+M.kvdb.set(&#39;key&#39;, true);
 
 var success = function(data) {
   console.log(data);
@@ -255,7 +257,7 @@ M.kvdb.set(&#39;key&#39;, &#39;string&#39;, success, error);</code></pre>
     <li>
       <span class='name'>value</span>
       <span class='type'>
-        (<tt>String | Object</tt>)
+        (<tt>String | Object | Interger | Boolean</tt>)
       </span>
       &mdash;
       <span class='desc'>value</span>
@@ -287,7 +289,7 @@ M.kvdb.set(&#39;key&#39;, &#39;string&#39;, success, error);</code></pre>
     <div class='docstring'>
   <div class='note'>
     <strong>Note:</strong>
-    若存入是 Object 或 JSON String 则取出时自动解析为 Object
+    若存入是 Object | String | Interger | Boolean 则取出时还是存入时的类型，其他类型会抛出异常
   </div>
   <p>取出记录</p>
   <div class='examples'>
@@ -435,7 +437,7 @@ M.kvdb.clear(success, error);</code></pre>
     </div>
     <div id='footer'>
   Generated on
-  Wed Aug 28 2013 17:11:34 GMT+0800 (CST)
+  Tue Sep 03 2013 15:21:54 GMT+0800 (CST)
   by
   <a href='https://github.com/netzpirat/codo' title='CoffeeScript API documentation generator'>Codo</a>
   v1.7.1

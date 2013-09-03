@@ -27,6 +27,7 @@ Data = (function() {
      * @param {Function} callback function to callback when fail
      */
     Data.prototype.get = function(args, success, error) {
+        args.method = 'query';
         $.ajax({url: this.api, data: args, success: success, error: error});
     };
 
