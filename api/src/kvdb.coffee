@@ -150,4 +150,3 @@ class KVDB extends Platform
       success: success
       error: error
     @sendRequest msg
-

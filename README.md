@@ -34,6 +34,9 @@ fork 这个仓库，然后直接 pull request 过来就可以了
 
 我们以 gh-pages 分支为稳定分支，从 gh-pages 分支拉取文件更新。
 
+每次插件更新前先检查当前 Java / Obj-C 是不是最新版本，如果不是，更新，否则不允许更新插件或安装插件。
+如果是最新就按照索引文件的版本号更新文件。
+
 ### Plugins.json & Resources.json
 
 /lib和/api的Manifest的合并文件：
