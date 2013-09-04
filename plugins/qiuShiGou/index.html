@@ -6,15 +6,82 @@
 <script src="../../api/api.js"></script>
 <script src="../../lib/jquery.js"></script>
 <script src="js/Math.uuid.js"></script>
-<script src="js/data.js"></script>
-<script src="js/view.js"></script>
-<script src="js/app.js"></script>
+<script src="js/qsg.js"></script>
 <div id="wrap">
-  <div id="header">
-    <img src="images/logo.png">
-    <img src="images/text.png">
+
+  <div id="list" class="section">
+    <div class="header">
+      <span class="title"></span>
+      <div class="icon"><i class="icon-circle-arrow-left"></i></div>
+    </div>
+    <div class="content">
+      <div id="search">
+        <input type="text" id="search-input" placeholder="搜索">
+        <div class="icon search"><i class="icon-search"></i></div>
+      </div>
+      <div id="items">
+      </div>
+      <a class="prev">上一页</a><a class="next">下一页</a>
+    </div>
   </div>
-  <div id="content">
+
+  <div id="index" class="section">
+    <div id="logo"><image src="images/dog.png" /></div>
+    <div id="about-icon"><i class="icon-info-sign"></i>求失狗</div>
+    <div class="content">
+      <ul class="menu">
+        <li class="upload">发布信息</li>
+        <li class="search">物品搜索</li>
+        <li class="found">失物招领</li>
+        <li class="lost">寻物启事</li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="about" class="section">
+    <div class="header">
+      <span class="title">关于</span>
+      <div class="icon"><i class="icon-circle-arrow-left"></i></div>
+    </div>
+    <div class="content">
+      <p><em>竺可桢学院学生会</em><br>携<em>丹青云峰蓝田校会权服部</em>倾情奉献</p>
+      <ul>如有遗失物品或捡到物品，请这样联系我们
+        <li>人人@求失狗</li>
+        <li>微信ZJU树洞君</li>
+        <li>人人@各学园权服部</li>
+      </ul>
+      <ul>您捡到的东西可以交到
+        <li>教学区东区西区指定点</li>
+        <li>各个食堂门口招领处</li>
+      </ul>
+      <p>Designer: 林一角<br>Icons: Font-Awesome & 斯基<br>Fontend Developer: Zeno Zeng<br>Backend Developer: Delostik</p>
+    </div>
+  </div>
+
+  <div id="upload" class="section">
+    <div class="header">
+      <span class="title">发布信息</span>
+      <div class="icon"><i class="icon-circle-arrow-left"></i></div>
+    </div>
+    <div class="content">
+      <div class="select type">
+        <div class="option selected">失物招领</div>
+        <div class="option">寻物启事</div>
+      </div>
+      <input class="name" placeholder="物品名，如：校园卡，钥匙">
+      <div class="select campus">
+        <div class="option selected">紫金港</div>
+        <div class="option">玉泉</div>
+        <div class="option">西溪</div>
+        <div class="option">华家池</div>
+        <div class="option">之江</div>
+        <div class="option">舟山</div>
+      </div>
+      <textarea class="detail" placeholder="物品具体描述，如钱包颜色，校园卡姓名等等"></textarea>
+      <input class="place" placeholder="详细地点">
+      <input class="contact" placeholder="联系方式 / 联系地点">
+      <div class="submit">发布</div>
+    </div>
   </div>
 </div>
 <script src="js/vunits.js"></script>

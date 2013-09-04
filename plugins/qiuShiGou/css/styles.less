@@ -11,6 +11,10 @@ body {
     color: @text;
 }
 
+.section {
+    display: none;
+}
+
 .icon {
     background: #fffed8 + #222;
     color: #bbb;
@@ -25,6 +29,7 @@ body {
 
 #search-input {
     height: 12vw;
+    float: left;
     line-height: 12vw;
     padding: (@line-height - 12vw)/2 @padding;
     background: #f7f7e8;
@@ -93,7 +98,7 @@ a {
 
 
 
-#header {
+.header {
     background: #fff8af;
     position: fixed;
     top: 0;
@@ -112,8 +117,8 @@ a {
     }
 }
 
-#content {
-    margin-top: 16vw;
+.content {
+    margin-top: @line-height;
 }
 
 #wrap {
@@ -127,78 +132,7 @@ a {
         width: 100%;
     }
     
-    .list {
-        &:after {
-            clear: both;
-            display: block;
-            content: '';
-        }
-        table {
-            &:before {
-                vertical-align: top;
-                content: "\f107";
-                font-family: 'FontAwesome';
-                display: block;
-                float: right;
-                width: 16vw;
-                text-align: center;
-                line-height: 16vw;
-                font-size: 16vw;
-                color: #ccc;
-            }
-            cursor: pointer;
-            font-size: 4vw;
-            line-height: 6vw;
-            padding-top: 2vw;
-            padding-bottom: 2vw;
-            padding-left: 5vw;
-            padding-right: 0;
-            width: 100%;
-            border-bottom: 1px solid #ccc;
-            tr:nth-child(n+3) {
-                display: none;
-            }
-            td:first-child {
-                width: 20vw;
-            }
-            tbody {
-                display: block;
-                width: 75vw;
-                float: left;
-            }
-            &.clicked {
-                &:before {
-                    content: "\f106";
-                }
-                tr {
-                    display: table-row;
-                }
-            }
-            i.icon-sort-down {
-                font-size: 4vw;
-            }
-        }
-        tr {
-        }
-        td {
-            padding-right: 1em;
-        }
-        .next, .prev {
-            display: inline-block;
-            width: 50%;
-            text-align: center;
-            line-height: 2em;
-            cursor: pointer;
-        }
-        .next {
-            float: right;
-            width: 49%;
-        }
-        .prev {
-            float: left;
-            border-right: 1px solid #ccc;
-        }
-    }
+
     .menu {
         position: fixed;
         bottom: 0;
@@ -239,6 +173,78 @@ a {
             font-size: 1.2em;
             line-height: 2em;
         }
+    }
+}
+
+#list {
+    .content {
+        padding-bottom: @line-height;
+    }
+    table {
+        &:before {
+            vertical-align: top;
+            content: "\f107";
+            font-family: 'FontAwesome';
+            display: block;
+            float: right;
+            width: 16vw;
+            text-align: center;
+            line-height: 16vw;
+            font-size: 16vw;
+            color: #ccc;
+        }
+        cursor: pointer;
+        font-size: 4vw;
+        line-height: 6vw;
+        padding-top: 2vw;
+        padding-bottom: 2vw;
+        padding-left: 5vw;
+        padding-right: 0;
+        width: 100%;
+        border-bottom: 1px solid #ccc;
+        tr:nth-child(n+3) {
+            display: none;
+        }
+        td:first-child {
+            width: 20vw;
+        }
+        tbody {
+            display: block;
+            width: 75vw;
+            float: left;
+        }
+        &.clicked {
+            &:before {
+                content: "\f106";
+            }
+            tr {
+                display: table-row;
+            }
+        }
+        i.icon-sort-down {
+            font-size: 4vw;
+        }
+    }
+    td {
+        padding-right: 1em;
+    }
+    .next, .prev {
+        position: fixed;
+        bottom: 0;
+        display: inline-block;
+        width: 50%;
+        text-align: center;
+        line-height: @line-height;
+        cursor: pointer;
+        background: #dfdfdf;
+    }
+    .next {
+        right: 0;
+    }
+    .prev {
+        left: 0;
+        border-right: 1px solid #ccc;
+        z-index: 999;
     }
 }
 
