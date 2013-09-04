@@ -31,7 +31,7 @@ a{text-decoration:none;color:#838383}
 #list table.clicked tr{display:table-row}
 #list table i.icon-sort-down{font-size:4vw}
 #list td{padding-right:1em}
-#list .next,#list .prev{position:fixed;bottom:0;display:inline-block;width:50%;text-align:center;line-height:16vw;cursor:pointer;background:#dfdfdf}
+#list .next,#list .prev{position:fixed;bottom:0;display:inline-block;width:50%;text-align:center;line-height:16vw;cursor:pointer;background:#dfdfdf}#list .next.disabled,#list .prev.disabled{color:#aaa}
 #list .next{right:0}
 #list .prev{left:0;border-right:1px solid #ccc;z-index:999}
 #upload{background:#fff;min-height:100vh}#upload .select{line-height:16vw;border-bottom:1px solid #ccc}#upload .select.type .option{width:50vw}

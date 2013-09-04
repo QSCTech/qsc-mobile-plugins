@@ -6,8 +6,8 @@ $ ->
   $('#about-icon').on 'click', -> view.about()
   $('body').on 'click', '.icon-circle-arrow-left', -> view.index()
   $('body').on 'click', 'table', -> $(this).toggleClass 'clicked'
-  $('body').on 'click', '.prev', -> view.prevPage()
-  $('body').on 'click', '.next', -> view.nextPage()
+  $('body').on 'click', '.prev', -> view.prevPage() unless $(this).hasClass 'disabled'
+  $('body').on 'click', '.next', -> view.nextPage() unless $(this).hasClass 'disabled'
 
   # search
   $('.icon.search').on 'click', ->

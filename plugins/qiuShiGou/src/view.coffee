@@ -22,7 +22,8 @@ class View
           "<tr>#{elem.join('')}</tr>"
         "<table>#{arr.join('')}</table>"
       $('#items').html html.join('')
-      #$('.prev').toggleClass('disabled', query.page is 1)
+      $('.prev').toggleClass('disabled', query.page is 1)
+      $('.next').toggleClass('disabled', items.length isnt 10)
 
     fail = => @msg '<em>获取数据失败</em><br>请检查网络连接'
       

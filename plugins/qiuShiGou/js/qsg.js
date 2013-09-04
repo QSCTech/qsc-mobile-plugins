@@ -86,7 +86,9 @@ View = (function() {
         });
         return "<table>" + (arr.join('')) + "</table>";
       });
-      return $('#items').html(html.join(''));
+      $('#items').html(html.join(''));
+      $('.prev').toggleClass('disabled', query.page === 1);
+      return $('.next').toggleClass('disabled', items.length !== 10);
     };
     fail = function() {
       return _this.msg('<em>获取数据失败</em><br>请检查网络连接');
@@ -176,10 +178,14 @@ $(function() {
     return $(this).toggleClass('clicked');
   });
   $('body').on('click', '.prev', function() {
-    return view.prevPage();
+    if (!$(this).hasClass('disabled')) {
+      return view.prevPage();
+    }
   });
   $('body').on('click', '.next', function() {
-    return view.nextPage();
+    if (!$(this).hasClass('disabled')) {
+      return view.nextPage();
+    }
   });
   $('.icon.search').on('click', function() {
     var query;
