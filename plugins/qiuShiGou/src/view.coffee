@@ -25,9 +25,9 @@ class View
       $('.prev').toggleClass('disabled', query.page is 1)
       $('.next').toggleClass('disabled', items.length isnt 10)
 
-    fail = => @msg '<em>获取数据失败</em><br>请检查网络连接'
+    error = => @msg '获取数据失败，请检查网络连接'
       
-    @data.get query, success, fail
+    @data.get query, success, error
 
   nextPage: ->
     $('html, body').scrollTop(0)
@@ -67,4 +67,4 @@ class View
     @list {keyword: '', page: 1}
     @section 'list'
     
-  msg: (msg) -> $('#msg').html '<div class="msg"><div id="logo"><image src="images/dog.png" /></div><p>'+msg+'</p></div>'
+  msg: (msg) -> alert msg

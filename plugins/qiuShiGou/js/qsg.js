@@ -67,7 +67,7 @@ View = (function() {
   };
 
   View.prototype.list = function(query) {
-    var fail, success,
+    var error, success,
       _this = this;
     this.query = query;
     success = function(items) {
@@ -90,10 +90,10 @@ View = (function() {
       $('.prev').toggleClass('disabled', query.page === 1);
       return $('.next').toggleClass('disabled', items.length !== 10);
     };
-    fail = function() {
-      return _this.msg('<em>获取数据失败</em><br>请检查网络连接');
+    error = function() {
+      return _this.msg('获取数据失败，请检查网络连接');
     };
-    return this.data.get(query, success, fail);
+    return this.data.get(query, success, error);
   };
 
   View.prototype.nextPage = function() {
@@ -156,7 +156,7 @@ View = (function() {
   };
 
   View.prototype.msg = function(msg) {
-    return $('#msg').html('<div class="msg"><div id="logo"><image src="images/dog.png" /></div><p>' + msg + '</p></div>');
+    return alert(msg);
   };
 
   return View;
@@ -219,13 +219,12 @@ $(function() {
     }
     obj['type'] = obj['type'] === '失物招领' ? 'found' : 'lost';
     success = function() {
-      return view.msg('<em>上传成功</em>', '汪，好的嘛！');
+      return view.msg('上传成功');
     };
     fail = function() {
-      return view.msg('<em>上传失败</em><br>请检查您的网络连接');
+      return view.msg('上传失败，请检查您的网络连接');
     };
-    data.upload(obj, success, fail);
-    return view.msg('努力上传中', '汪！请稍等！');
+    return data.upload(obj, success, fail);
   });
   return view.index();
 });

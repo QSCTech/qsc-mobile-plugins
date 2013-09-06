@@ -31,10 +31,9 @@ $ ->
     for elem in ['type', 'campus']
       obj[elem] = $('#upload .'+elem).find('.selected').text()
     obj['type'] = if obj['type'] is '失物招领' then 'found' else 'lost'
-    success = -> view.msg '<em>上传成功</em>', '汪，好的嘛！'
-    fail = -> view.msg '<em>上传失败</em><br>请检查您的网络连接'
+    success = -> view.msg '上传成功'
+    fail = -> view.msg '上传失败，请检查您的网络连接'
     data.upload obj, success, fail
-    view.msg '努力上传中', '汪！请稍等！'
 
   # init
   view.index()
