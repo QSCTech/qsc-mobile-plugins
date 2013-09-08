@@ -21,10 +21,11 @@ class Platform
   @param {Function} request.error The callback that handles error
   ###
   sendRequest: (request) ->
-    # 强制请求队列延时保证url跳转被截获
-    if (new Date().getTime()) - @lastRequest < 20
-      fn = => @sendRequest request
-      return setTimeout fn, 1
+    unless window.parent.sdk? or window.QSCAndroid?
+      # iOS要强制请求队列延时保证url跳转被截获
+      if (new Date().getTime()) - @lastRequest < 20
+        fn = => @sendRequest request
+        return setTimeout fn, 1
     @lastRequest = (new Date().getTime())
     {fn, args, success, error} = request
     errorFn = error
@@ -43,10 +44,13 @@ class Platform
       args: args
       callback: callbackName
     sdk = window.parent.sdk
-    if sdk?
+    if sdk? # Web SDK
       sdk.onRequest window, request
     else
       request = JSON.stringify request
-      prefix = 'data:text/qscmobile-msg;base64,'
-      request = prefix + window.Base64.encode64(request)
-      window.location.href = request
+      if window.QSCAndroid? # Android
+        window.QSCAndroid.sendRequest request
+      else # iOS
+        prefix = 'data:text/qscmobile-msg;base64,'
+        request = prefix + window.Base64.encode64(request)
+        window.location.href = request

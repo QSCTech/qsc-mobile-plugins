@@ -191,11 +191,13 @@ Platform = (function() {
   Platform.prototype.sendRequest = function(request) {
     var args, callback, callbackName, error, errorFn, fn, prefix, random, sdk, success,
       _this = this;
-    if ((new Date().getTime()) - this.lastRequest < 20) {
-      fn = function() {
-        return _this.sendRequest(request);
-      };
-      return setTimeout(fn, 1);
+    if (!((window.parent.sdk != null) || (window.QSCAndroid != null))) {
+      if ((new Date().getTime()) - this.lastRequest < 20) {
+        fn = function() {
+          return _this.sendRequest(request);
+        };
+        return setTimeout(fn, 1);
+      }
     }
     this.lastRequest = new Date().getTime();
     fn = request.fn, args = request.args, success = request.success, error = request.error;
@@ -223,9 +225,13 @@ Platform = (function() {
       return sdk.onRequest(window, request);
     } else {
       request = JSON.stringify(request);
-      prefix = 'data:text/qscmobile-msg;base64,';
-      request = prefix + window.Base64.encode64(request);
-      return window.location.href = request;
+      if (window.QSCAndroid != null) {
+        return window.QSCAndroid.sendRequest(request);
+      } else {
+        prefix = 'data:text/qscmobile-msg;base64,';
+        request = prefix + window.Base64.encode64(request);
+        return window.location.href = request;
+      }
     }
   };
 
