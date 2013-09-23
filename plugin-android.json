@@ -1,28 +1,28 @@
 [
-  {
-    "id": "qiuShiGou",
-    "name": "æ±‚å¤±ç‹—",
-    "description": "æ±‚å¤±ç‹— -- å¤±ç‰©æ‹›é¢†ï¼Œå¯»ç‰©å¯äº‹å¹³å°",
-    "version": "1.0.2",
-    "developer": {
-      "name": "Zeno Zeng",
-      "email": "work@zenoes.com",
-      "url": "http://zenoes.com"
-    },
-    "permissions": {
-      "kvdb": {
-        "description": "éœ€è¦æ¥å­˜å‚¨`æˆ‘å…³æ³¨çš„ç‰©å“`"
-      }
-    },
-    "web_accessible_resources": [
-      "index.html",
-      "background.js",
-      "js/Math.uuid.js",
-      "js/qsg.js",
-      "js/vunits.js",
-      "css/styles.css",
-      "images/dog.png"
-    ],
-    "path": "plugins/qiuShiGou"
-  }
+{
+"id": "qiuShiGou",
+"name": "ÇóÊ§¹·",
+"description": "ÇóÊ§¹· -- Ê§ÎïÕĞÁì£¬Ñ°ÎïÆôÊÂÆ½Ì¨",
+"version": "1.0.2",
+"developer": {
+"name": "Zeno Zeng",
+"email": "work@zenoes.com",
+"url": "http://zenoes.com"
+},
+"permissions": {
+"kvdb": {
+"description": "ĞèÒªÀ´´æ´¢`ÎÒ¹Ø×¢µÄÎïÆ·`"
+}
+},
+"web_accessible_resources": [
+"index.html",
+"background.js",
+"js/Math.uuid.js",
+"js/qsg.js",
+"js/vunits.js",
+"css/styles.css",
+"images/dog.png"
+],
+"path": "plugins/qiuShiGou"
+}
 ]
