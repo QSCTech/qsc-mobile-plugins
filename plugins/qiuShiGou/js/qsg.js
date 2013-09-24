@@ -67,6 +67,7 @@ View = (function() {
   };
 
   View.prototype.list = function(query) {
+	
     var error, success,
       _this = this;
     this.query = query;
@@ -77,7 +78,8 @@ View = (function() {
       });
       html = items.map(function(item) {
         var arr;
-        arr = [['物品', item.name], ['校区', item.campus], ['地点', item.place], ['具体描述', item.detail], ['联系方式', item.contact]];
+		var announcedate = new Date(item.announcedate*1000);
+        arr = [['物品', item.name], ['校区', item.campus], ['地点', item.place], ['具体描述', item.detail], ['联系方式', item.contact], ['发布时间', announcedate.toLocaleDateString()]];
         arr = arr.map(function(elem) {
           elem = elem.map(function(el) {
             return '<td>' + el + '</td>';
@@ -95,6 +97,8 @@ View = (function() {
     };
     return this.data.get(query, success, error);
   };
+  
+
 
   View.prototype.nextPage = function() {
     $('html, body').scrollTop(0);
