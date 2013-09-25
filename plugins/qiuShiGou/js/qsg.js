@@ -5,7 +5,7 @@ function modify_stat(uuid){
 	var obj={};
 	obj['uuid']=uuid;
 	success = function() {
-      return view.msg('修改成功');
+      return view.msg('恭喜主人~汪~');
     };
     fail = function() {
       return view.msg('修改失败，请检查您的网络连接');
@@ -16,7 +16,7 @@ function modify_stat(uuid){
 
 Data = (function() {
   function Data() {
-    this.api = '//localhost/qiushigou/process.php';
+    this.api = '//m.myqsc.com/qiu-shi-gou/process.php';
   }
   /*
     获取物品信息
