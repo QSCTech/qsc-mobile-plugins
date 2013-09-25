@@ -8,7 +8,7 @@ function modify_stat(uuid){
       return view.msg('恭喜主人~汪~');
     };
     fail = function() {
-      return view.msg('修改失败，请检查您的网络连接');
+      console.log('error');
     };
     return data.modify(obj, success, fail);
 }
@@ -95,7 +95,7 @@ View = (function() {
       });
       html = items.map(function(item) {
         var arr;
-        arr = [['物品', item.name], ['校区', item.campus], ['地点', item.place], ['具体描述', item.detail], ['联系方式', item.contact], ['发布时间', (new Date(item.announcedate * 1000)).toLocaleDateString()], ['当前状态', item.stat==0?'求失中':'已找到'], ['     ',item.stat==0?'<a onclick=modify_stat('+item.uuid+')>我已找到&nbsp点我修改状态</a> ':'']];
+        arr = [['物品', item.name], ['校区', item.campus], ['地点', item.place], ['具体描述', item.detail], ['联系方式', item.contact], ['发布时间', (new Date(item.announcedate * 1000)).toLocaleDateString()], ['当前状态', item.stat==0?'求失中':'已找到'], ['     ',item.stat==0?'<a onclick=modify_stat('+"'"+item.uuid+"'"+')>我已找到&nbsp点我修改状态</a> ':'']];
         arr = arr.map(function(elem) {
           elem = elem.map(function(el) {
             return '<td>' + el + '</td>';
