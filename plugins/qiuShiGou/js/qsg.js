@@ -1,4 +1,4 @@
-var Data, View, data, view;
+var Data, View, data, view,Stuid;
 var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 function modify_stat(uuid){
@@ -16,7 +16,8 @@ function modify_stat(uuid){
 
 Data = (function() {
   function Data() {
-    this.api = '//m.myqsc.com/qiu-shi-gou/process.php';
+    /*this.api = '//m.myqsc.com/qiu-shi-gou/process.php';*/
+	this.api='//localhost/qiushigou/process.php';
   }
   /*
     获取物品信息
@@ -179,7 +180,7 @@ View = (function() {
     return this.section('upload');
   };
   View.prototype.starred = function() {
-    var M, Stuid, error, success;
+    var M, error, success;
     M = new QSCMobile('qiuShiGou');
     Stuid = 0;
     success = function(stuid) {
@@ -267,6 +268,7 @@ $(function() {
       obj[elem] = $('#upload .' + elem).find('.selected').text();
     }
     obj['type'] = obj['type'] === '失物招领' ? 'found' : 'lost';
+	obj['stuid'] = Stuid;
     success = function() {
       return view.msg('上传成功');
     };
