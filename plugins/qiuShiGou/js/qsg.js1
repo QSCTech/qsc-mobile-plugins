@@ -1,22 +1,8 @@
 var Data, View, data, view;
 var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-
-function modify_stat(uuid){
-	var obj={};
-	obj['uuid']=uuid;
-	success = function() {
-      return view.msg('修改成功');
-    };
-    fail = function() {
-      return view.msg('修改失败，请检查您的网络连接');
-    };
-    return data.modify(obj, success, fail);
-}
-	
-
 Data = (function() {
   function Data() {
-    this.api = '//localhost/qiushigou/process.php';
+    this.api = '//m.myqsc.com/qiu-shi-gou/process.php';
   }
   /*
     获取物品信息
@@ -51,29 +37,9 @@ Data = (function() {
       error: error
     });
   };
-  /*
-    修改物品信息
-  
-    @param {Object} args 参数
-    @param {Function} callback function to callback when success
-    @param {Function} callback function to callback when fail
-    */
-  Data.prototype.modify = function(data, sucess, error) {
-    data.method = 'modify';
-    return $.ajax({
-      url: this.api,
-      data: data,
-      success: success,
-      error: error
-    });
-  };
   return Data;
 })();
 View = (function() {
-  var test;
-  test = function() {
-    return view.msg('test');
-  };
   function View(data) {
     this.data = data;
     this.query = {};
@@ -83,34 +49,6 @@ View = (function() {
     */
   View.prototype.headerHTML = function(title) {
     return '<span class="title">' + title + '</span><div class="icon"><i class="icon-circle-arrow-left"></i></div>';
-  };
-  View.prototype.list_starred = function(query) {
-    var error, success;
-    this.query = query;
-    success = function(items) {
-      var html;
-      items = items.filter(function(item) {
-        return item != null;
-      });
-      html = items.map(function(item) {
-        var arr;
-        arr = [['物品', item.name], ['校区', item.campus], ['地点', item.place], ['具体描述', item.detail], ['联系方式', item.contact], ['发布时间', (new Date(item.announcedate * 1000)).toLocaleDateString()], ['当前状态', item.stat==0?'求失中':'已找到'], ['     ',item.stat==0?'<a onclick=modify_stat('+item.uuid+')>我已找到&nbsp点我修改状态</a> ':'']];
-        arr = arr.map(function(elem) {
-          elem = elem.map(function(el) {
-            return '<td>' + el + '</td>';
-          });
-          return "<tr>" + (elem.join('')) + "</tr>";
-        });
-        return "<table>" + (arr.join('')) + "</table>";
-      });
-      $('#items').html(html.join(''));
-      $('.prev').toggleClass('disabled', query.page === 1);
-      return $('.next').toggleClass('disabled', items.length !== 10);
-    };
-    error = __bind(function() {
-      return this.msg('获取数据失败，请检查网络连接');
-    }, this);
-    return this.data.get(query, success, error);
   };
   View.prototype.list = function(query) {
     var error, success;
@@ -122,7 +60,7 @@ View = (function() {
       });
       html = items.map(function(item) {
         var arr;
-        arr = [['物品', item.name], ['校区', item.campus], ['地点', item.place], ['具体描述', item.detail], ['联系方式', item.contact], ['发布时间', (new Date(item.announcedate * 1000)).toLocaleDateString()], ['当前状态', item.stat==0?'求失中':'已找到']];
+        arr = [['物品', item.name], ['校区', item.campus], ['地点', item.place], ['具体描述', item.detail], ['联系方式', item.contact], ['发布时间', (new Date(item.announcedate * 1000)).toLocaleDateString()]];
         arr = arr.map(function(elem) {
           elem = elem.map(function(el) {
             return '<td>' + el + '</td>';
@@ -177,25 +115,6 @@ View = (function() {
   };
   View.prototype.upload = function() {
     return this.section('upload');
-  };
-  View.prototype.starred = function() {
-    var M, Stuid, error, success;
-    M = new QSCMobile('qiuShiGou');
-    Stuid = 0;
-    success = function(stuid) {
-      return Stuid = stuid;
-    };
-    error = function(e) {
-      return console.log(e);
-    };
-    M.user.stuid(success, error);
-    $('#list .header .title').html('我发布的');
-    this.list_starred({
-      stuid: Stuid,
-      page: 1
-    });
-    $('#search').hide();
-    return this.section('list');
   };
   View.prototype.index = function() {
     return this.section('index');
