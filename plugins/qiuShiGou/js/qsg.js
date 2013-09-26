@@ -5,19 +5,24 @@ function modify_stat(uuid){
 	var obj={};
 	obj['uuid']=uuid;
 	success = function() {
-      return view.msg('恭喜主人~汪~');
+      view.msg('恭喜主人~汪~');
+	  return view.section('list');
     };
     fail = function() {
       console.log('error');
     };
+	view.list_starred({
+      stuid: Stuid,
+      page: 1
+    });
     return data.modify(obj, success, fail);
 }
 	
 
 Data = (function() {
   function Data() {
-    this.api = '//m.myqsc.com/qiu-shi-gou/process.php';
-	/*this.api='//localhost/qiushigou/process.php';*/
+    /*this.api = '//m.myqsc.com/qiu-shi-gou/process.php';*/
+	this.api='//localhost/qiushigou/process.php';
   }
   /*
     获取物品信息
@@ -71,10 +76,6 @@ Data = (function() {
   return Data;
 })();
 View = (function() {
-  var test;
-  test = function() {
-    return view.msg('test');
-  };
   function View(data) {
     this.data = data;
     this.query = {};
@@ -270,10 +271,11 @@ $(function() {
     obj['type'] = obj['type'] === '失物招领' ? 'found' : 'lost';
 	obj['stuid'] = Stuid;
     success = function() {
-      return view.msg('上传成功');
+      return view.msg('发布成功');
+	  //return view.index();
     };
     fail = function() {
-      return view.msg('上传失败，请检查您的网络连接');
+      return view.msg('发布失败，网络异常或发布过于频繁');
     };
     return data.upload(obj, success, fail);
   });
