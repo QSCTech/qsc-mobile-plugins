@@ -21,8 +21,8 @@ function modify_stat(uuid){
 
 Data = (function() {
   function Data() {
-    /*this.api = '//m.myqsc.com/qiu-shi-gou/process.php';*/
-	this.api='//localhost/qiushigou/process.php';
+    this.api = '//m.myqsc.com/qiu-shi-gou/process.php';
+	/*this.api='//localhost/qiushigou/process.php';*/
   }
   /*
     获取物品信息
@@ -271,8 +271,8 @@ $(function() {
     obj['type'] = obj['type'] === '失物招领' ? 'found' : 'lost';
 	obj['stuid'] = Stuid;
     success = function() {
-      return view.msg('发布成功');
-	  //return view.index();
+      view.msg('发布成功');
+	  return view.index();
     };
     fail = function() {
       return view.msg('发布失败，网络异常或发布过于频繁');
