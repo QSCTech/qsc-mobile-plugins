@@ -21,7 +21,8 @@ function modify_stat(uuid){
 
 Data = (function() {
   function Data() {
-    this.api = '//m.myqsc.com/qiu-shi-gou/process.php';
+    //this.api = '//m.myqsc.com/qiu-shi-gou/process.php';
+	this.api= '//localhost/delostik/qiushigou/process.php';
   }
   /*
     获取物品信息
@@ -34,6 +35,7 @@ Data = (function() {
     args.method = 'query';
     return $.ajax({
       url: this.api,
+	  dataType: "jsonp",
       data: args,
       success: success,
       error: error
@@ -51,6 +53,7 @@ Data = (function() {
     data.method = 'upload';
     return $.ajax({
       url: this.api,
+	  dataType: "jsonp",
       data: data,
       success: success,
       error: error
@@ -68,6 +71,7 @@ Data = (function() {
     return $.ajax({
       url: this.api,
       data: data,
+	  dataType: "jsonp",
       success: success,
       error: error
     });
