@@ -34,6 +34,7 @@ Data = (function() {
     args.method = 'query';
     return $.ajax({
       url: this.api,
+	  dataType: "jsonp",
       data: args,
       success: success,
       error: error
@@ -51,6 +52,7 @@ Data = (function() {
     data.method = 'upload';
     return $.ajax({
       url: this.api,
+	  dataType: "jsonp",
       data: data,
       success: success,
       error: error
@@ -68,6 +70,7 @@ Data = (function() {
     return $.ajax({
       url: this.api,
       data: data,
+	  dataType: "jsonp",
       success: success,
       error: error
     });
