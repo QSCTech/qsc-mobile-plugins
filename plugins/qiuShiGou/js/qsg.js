@@ -21,7 +21,7 @@ function modify_stat(uuid){
 
 Data = (function() {
   function Data() {
-    this.api = '//m.myqsc.com/qiu-shi-gou/process.php';
+    this.api = 'http://m.myqsc.com/qiu-shi-gou/process.php';
   }
   /*
     获取物品信息
