@@ -20,5 +20,13 @@
       "font-awesome/font/fontawesome-webfont.woff"
     ],
     "path": "lib"
+  },
+  {
+    "version": "1",
+    "web_accessible_resources": [
+      "background.html",
+      "background.js"
+    ],
+    "path": "background"
   }
 ]
