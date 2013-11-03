@@ -215,7 +215,8 @@ $(function() {
     M = new QSCMobile('qiuShiGou');
     Stuid = 0;
     success = function(stuid) {
-      view.msg(Stuid = stuid);
+	Stuid=stuid;
+      view.msg(Stuid);
     };
     error = function(e) {
       return console.log(e);
