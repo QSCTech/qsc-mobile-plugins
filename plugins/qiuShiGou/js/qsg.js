@@ -211,14 +211,12 @@ View = (function() {
 data = new Data;
 view = new View(data);
 $(function() {
-    var M, error, success;
-    M = new QSCMobile('qiuShiGou');
-    Stuid = 0;
-    success = function(stuid) {
-	Stuid=stuid;
-      view.msg(Stuid);
+    var M = new QSCMobile('qiuShiGou');
+    var success = function(stuid) {
+	  Stuid=stuid;
+      view.msg(stuid);
     };
-    error = function(e) {
+    var error = function(e) {
       return console.log(e);
     };
     M.user.stuid(success, error);
