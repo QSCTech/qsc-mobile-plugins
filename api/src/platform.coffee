@@ -32,9 +32,13 @@ class Platform
     random = (Math.random()+'').replace(new RegExp('0\.', ''), '')
     callbackName = "QSCMobile#{random}_#{(new Date().getTime())}"
     callback = (data) ->
-      {data, error} = data
-      if error
-        errorFn?(error)
+      isObject = (a) -> (!!a) && (a.constructor is Object)
+      if isObject data
+        {data, error} = data
+        if error
+          errorFn?(error)
+        else
+          success?(data)
       else
         success?(data)
     window[callbackName] = callback
