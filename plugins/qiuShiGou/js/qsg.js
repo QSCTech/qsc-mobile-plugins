@@ -213,8 +213,7 @@ view = new View(data);
 $(function() {
     var M = new QSCMobile('qiuShiGou');
     var success = function(stuid) {
-	  Stuid=stuid;
-      view.msg(stuid);
+	  Stuid = stuid;
     };
     var error = function(e) {
       return console.log(e);
