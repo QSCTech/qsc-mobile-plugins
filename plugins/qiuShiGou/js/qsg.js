@@ -183,16 +183,6 @@ View = (function() {
     return this.section('upload');
   };
   View.prototype.starred = function() {
-    var M, error, success;
-    M = new QSCMobile('qiuShiGou');
-    Stuid = 0;
-    success = function(stuid) {
-      return Stuid = stuid;
-    };
-    error = function(e) {
-      return console.log(e);
-    };
-    M.user.stuid(success, error);
     $('#list .header .title').html('我发布的');
     this.list_starred({
       stuid: Stuid,
@@ -221,6 +211,16 @@ View = (function() {
 data = new Data;
 view = new View(data);
 $(function() {
+  var M, error, success;
+    M = new QSCMobile('qiuShiGou');
+    Stuid = 0;
+    success = function(stuid) {
+      return Stuid = stuid;
+    };
+    error = function(e) {
+      return console.log(e);
+    };
+    M.user.stuid(success, error);
   $('#about-icon').on('click', function() {
     return view.about();
   });
