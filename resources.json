@@ -1,12 +1,5 @@
 [
   {
-    "version": "27",
-    "web_accessible_resources": [
-      "api.js"
-    ],
-    "path": "api"
-  },
-  {
     "version": "1",
     "web_accessible_resources": [
       "base.css",
@@ -20,6 +13,13 @@
       "font-awesome/font/fontawesome-webfont.woff"
     ],
     "path": "lib"
+  },
+  {
+    "version": "28",
+    "web_accessible_resources": [
+      "api.js"
+    ],
+    "path": "api"
   },
   {
     "version": "1",
