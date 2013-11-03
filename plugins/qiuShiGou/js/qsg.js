@@ -221,6 +221,7 @@ $(function() {
       return console.log(e);
     };
     M.user.stuid(success, error);
+	alert(Stuid);
   $('#about-icon').on('click', function() {
     return view.about();
   });
