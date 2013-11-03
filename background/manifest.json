@@ -1,0 +1,7 @@
+{
+    "version": "1",
+    "web_accessible_resources": [
+        "background.html",
+        "background.js"
+    ]
+}

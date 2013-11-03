@@ -22,11 +22,11 @@ manifest = (dirs, filename, callback) ->
 
 build = (callback) ->
 
-  manifest ['api', 'lib'], 'resources.json', ->
+  manifest ['api', 'lib', 'background'], 'resources.json', ->
     fs.readdir 'plugins', (err, dirs) ->
       throw err if err
       dirs = dirs.map (dir) -> "plugins/#{dir}"
       manifest dirs, 'plugins.json'
 
 task "build", "Combine all plugins' manifest & api/manifest, lib/manifest into packages.json", ->
-  build()  
+  build()
