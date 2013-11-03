@@ -54,4 +54,4 @@ class SDK extends API
     data = fn.call this, args
     json = JSON.stringify {data: data.data, error: data.error}, null, 4
     console.log "\nResults: #{json}" if @debug
-    win[callback]?(data)
+    win[callback]?(data.data)

@@ -185,7 +185,7 @@ SDK = (function(_super) {
     if (this.debug) {
       console.log("\nResults: " + json);
     }
-    return typeof win[callback] === "function" ? win[callback](data) : void 0;
+    return typeof win[callback] === "function" ? win[callback](data.data) : void 0;
   };
 
   return SDK;

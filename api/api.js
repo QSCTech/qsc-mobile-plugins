@@ -205,12 +205,12 @@ Platform = (function() {
     random = (Math.random() + '').replace(new RegExp('0\.', ''), '');
     callbackName = "QSCMobile" + random + "_" + (new Date().getTime());
     callback = function(data) {
-      var isObject, _ref3;
+      var isObject;
       isObject = function(a) {
         return (!!a) && (a.constructor === Object);
       };
       if (isObject(data)) {
-        _ref3 = data, data = _ref3.data, error = _ref3.error;
+        error = data.error;
         if (error) {
           return typeof errorFn === "function" ? errorFn(error) : void 0;
         } else {

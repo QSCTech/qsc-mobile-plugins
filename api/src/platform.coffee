@@ -34,7 +34,7 @@ class Platform
     callback = (data) ->
       isObject = (a) -> (!!a) && (a.constructor is Object)
       if isObject data
-        {data, error} = data
+        {error} = data
         if error
           errorFn?(error)
         else

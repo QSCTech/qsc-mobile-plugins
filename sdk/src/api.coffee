@@ -61,5 +61,3 @@ class API
       catch e
         msg.error = e
       msg
-
-  
