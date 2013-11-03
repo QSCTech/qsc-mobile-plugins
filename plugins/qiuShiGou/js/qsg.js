@@ -211,17 +211,16 @@ View = (function() {
 data = new Data;
 view = new View(data);
 $(function() {
-  var M, error, success;
+    var M, error, success;
     M = new QSCMobile('qiuShiGou');
     Stuid = 0;
     success = function(stuid) {
-      return Stuid = stuid;
+      view.msg(Stuid = stuid);
     };
     error = function(e) {
       return console.log(e);
     };
     M.user.stuid(success, error);
-	view.msg(Stuid);
   $('#about-icon').on('click', function() {
     return view.about();
   });
