@@ -11,7 +11,7 @@
     },
     "permissions": {
       "kvdb": {
-        "description": "需要来存储`我发布的数据`"
+        "description": "需要来存储`我关注的物品`"
       }
     },
     "web_accessible_resources": [
