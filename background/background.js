@@ -8,7 +8,7 @@ for (i = 0; i < plugins.length; i++) {
         console.log(plugin);
         script = document.createElement("script");
         script.type = "text/javascript";
-        script.src = 'plugins/'+plugin+'/background.js';
+        script.src = '../plugins/'+plugin+'/background.js';
         head.appendChild(script);
     }
 }
