@@ -2,11 +2,11 @@
     "id": "qiuShiGou",
     "name": "求失狗",
     "description": "求失狗 -- 失物招领，寻物启事平台",
-    "version": "1.0.3",
+    "version": "1.0.9",
     "developer": {
-        "name": "Zeno Zeng",
-        "email": "work@zenoes.com",
-        "url": "http://zenoes.com"
+        "name": "求是潮",
+        "email": "tech@myqsc.com",
+        "url": "http://www.qsc.zju.edu.cn"
     },
     "permissions": {
         "kvdb": {
