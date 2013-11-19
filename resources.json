@@ -1,5 +1,12 @@
 [
   {
+    "version": "28",
+    "web_accessible_resources": [
+      "api.js"
+    ],
+    "path": "api"
+  },
+  {
     "version": "1",
     "web_accessible_resources": [
       "base.css",
@@ -15,14 +22,7 @@
     "path": "lib"
   },
   {
-    "version": "28",
-    "web_accessible_resources": [
-      "api.js"
-    ],
-    "path": "api"
-  },
-  {
-    "version": "1",
+    "version": "2",
     "web_accessible_resources": [
       "background.html",
       "background.js"
