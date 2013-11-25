@@ -3,10 +3,14 @@
     "name": "求失狗",
     "description": "求失狗 -- 失物招领，寻物启事平台",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "version": "1.0.9",
 =======
     "version": "1.0.10",
 >>>>>>> 8868ed26d5e0f4d4d9a4954c06dd0d04892e9286
+=======
+    "version": "1.0.11",
+>>>>>>> master
     "developer": {
         "name": "求是潮",
         "email": "tech@myqsc.com",
