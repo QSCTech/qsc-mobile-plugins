@@ -8,7 +8,8 @@
 
 ### 文档
 
-http://qsctech.github.io/qsc-mobile-plugins/doc/api/
+github:http://qsctech.github.io/qsc-mobile-plugins/doc/api/
+gitcafe:http://qsctech.gitcafe.com/qsc-mobile-plugins/doc/api/
 
 ### SDK 使用说明
 
@@ -45,9 +46,10 @@ fork 这个仓库，然后直接 pull request 过来就可以了
 
 /lib和/api的Manifest的合并文件：
 
-http://qsctech.github.io/qsc-mobile-plugins/resources.json
+github:http://qsctech.github.io/qsc-mobile-plugins/resources.json
+gitcafe:http://qsctech.gitcafe.com/qsc-mobile-plugins/resources.json
 
 所有插件Mainfest的合并文件：
 
-http://qsctech.github.io/qsc-mobile-plugins/plugins.json
-
+github:http://qsctech.github.io/qsc-mobile-plugins/plugins.json
+gitcafe:http://qsctech.gitcafe.com/qsc-mobile-plugins/plugins.json
