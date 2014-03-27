@@ -52,9 +52,6 @@ class Platform
       sdk.onRequest window, request
     else
       request = JSON.stringify request
-      if window.QSCAndroid? # Android
-        window.QSCAndroid.sendRequest request
-      else # iOS
-        prefix = 'data:text/qscmobile-msg;base64,'
-        request = prefix + window.Base64.encode64(request)
-        window.location.href = request
+      prefix = 'data:text/qscmobile-msg;base64,'
+      request = prefix + window.Base64.encode64(request)
+      window.location.href = request
